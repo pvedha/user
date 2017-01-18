@@ -40,6 +40,6 @@ public class RestController {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/version")
 	public Response getVersion() {
-		return Response.ok().entity("1.1").build();
+		return Response.ok().entity("1.2").build();
 	}
 }

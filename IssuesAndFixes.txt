@@ -1,0 +1,9 @@
+Oracle 12g doesnt go good with old ojdbc.
+Add this entry in sqlnet.ora
+SQLNET.ALLOWED_LOGON_VERSION=8
+
+ExceptionInInitializing issue thrown while initializing OracleDAOImpl(). Due to static entitymanager reference. 
+But removing static and couple of compilations later adding static again fixed it. Not sure whether something else changed in meantime.
+
+Squirrel showing entries as <other> for nvarchar2 contents. 
+ 

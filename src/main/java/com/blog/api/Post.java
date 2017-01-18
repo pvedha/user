@@ -1,21 +1,32 @@
 package com.blog.api;
 
+import java.sql.Date;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.xml.bind.annotation.XmlRootElement;
+
+import org.hibernate.annotations.ForeignKey;
+import org.hibernate.annotations.Nationalized;
 
 @Entity
 @XmlRootElement
 public class Post {
 
 	@Id
-	@GeneratedValue
-	protected int postId;
+	@GeneratedValue( strategy=GenerationType.AUTO ) //Check whether this works while posting
+	protected int post_Id;
 	protected String title;
-	protected String message;
-	protected String postedBy;
-	protected String createdOn;
+	protected String message;	
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name="posted_by")
+	protected BlogUser postedBy;	
+	protected Date posted_on;
 	protected String tags;
 	protected String category;
 	
@@ -24,23 +35,23 @@ public class Post {
 		
 	}
 
-	public Post(int postId, String title, String message, String postedBy, String createdOn, String tags,
+	public Post(int postId, String title, String message, BlogUser postedBy, Date createdOn, String tags,
 			String category) {
 		super();
-		this.postId = postId;
+		this.post_Id = postId;
 		this.title = title;
 		this.message = message;
 		this.postedBy = postedBy;
-		this.createdOn = createdOn;
+		this.posted_on = createdOn;
 		this.tags = tags;
 		this.category = category;
 	}
 	
 	public int getPostId() {
-		return postId;
+		return post_Id;
 	}
 	public void setPostId(int postId) {
-		this.postId = postId;
+		this.post_Id = postId;
 	}
 	public String getTitle() {
 		return title;
@@ -54,17 +65,17 @@ public class Post {
 	public void setMessage(String message) {
 		this.message = message;
 	}
-	public String getPostedBy() {
+	public BlogUser getPostedBy() {
 		return postedBy;
 	}
-	public void setPostedBy(String postedBy) {
+	public void setPostedBy(BlogUser postedBy) {
 		this.postedBy = postedBy;
 	}
-	public String getCreatedOn() {
-		return createdOn;
+	public Date getCreatedOn() {
+		return posted_on;
 	}
-	public void setCreatedOn(String createdOn) {
-		this.createdOn = createdOn;
+	public void setCreatedOn(Date createdOn) {
+		this.posted_on = createdOn;
 	}
 	public String getTags() {
 		return tags;
