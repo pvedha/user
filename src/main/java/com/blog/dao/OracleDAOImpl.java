@@ -1,13 +1,16 @@
 package com.blog.dao;
 
+import java.awt.List;
+import java.util.ArrayList;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
 import com.blog.api.Post;
 
-public class relDAO implements DAO {
-	static EntityManagerFactory factory = Persistence.createEntityManagerFactory("bank");
+public class OracleDAOImpl implements DAO {
+	EntityManagerFactory factory = Persistence.createEntityManagerFactory("blog");
 
 	@Override
 	public int create(Post post) {
@@ -29,7 +32,6 @@ public class relDAO implements DAO {
 
 	@Override
 	public void update(Post post) {
-		// TODO Auto-generated method stub
 		EntityManager em = factory.createEntityManager();
 		em.getTransaction().begin();
 		em.merge(post);
@@ -39,6 +41,15 @@ public class relDAO implements DAO {
 	
 	public void addComment() {
 	
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public ArrayList<Post> readAllPost() {
+		EntityManager em = factory.createEntityManager();
+		ArrayList<Post> posts = (ArrayList<Post>) em.createNativeQuery("select * from post").getResultList();
+		em.close();
+		return posts;
 	}
 
 }

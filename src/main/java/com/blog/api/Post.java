@@ -14,7 +14,7 @@ public class Post {
 	protected int postId;
 	protected String title;
 	protected String message;
-	protected User postedBy;
+	protected String postedBy;
 	protected String createdOn;
 	protected String tags;
 	protected String category;
@@ -24,7 +24,7 @@ public class Post {
 		
 	}
 
-	public Post(int postId, String title, String message, User postedBy, String createdOn, String tags,
+	public Post(int postId, String title, String message, String postedBy, String createdOn, String tags,
 			String category) {
 		super();
 		this.postId = postId;
@@ -54,10 +54,10 @@ public class Post {
 	public void setMessage(String message) {
 		this.message = message;
 	}
-	public User getPostedBy() {
+	public String getPostedBy() {
 		return postedBy;
 	}
-	public void setPostedBy(User postedBy) {
+	public void setPostedBy(String postedBy) {
 		this.postedBy = postedBy;
 	}
 	public String getCreatedOn() {
