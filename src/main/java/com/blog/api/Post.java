@@ -1,7 +1,5 @@
 package com.blog.api;
 
-import java.sql.Date;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -26,16 +24,17 @@ public class Post {
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name="posted_by")
 	protected BlogUser postedBy;	
-	protected Date posted_on;
+	protected String posted_on;
 	protected String tags;
 	protected String category;
+	// Need to add comment array
 	
 	
 	public Post() {
 		
 	}
 
-	public Post(int postId, String title, String message, BlogUser postedBy, Date createdOn, String tags,
+	public Post(int postId, String title, String message, BlogUser postedBy, String createdOn, String tags,
 			String category) {
 		super();
 		this.post_Id = postId;
@@ -71,10 +70,10 @@ public class Post {
 	public void setPostedBy(BlogUser postedBy) {
 		this.postedBy = postedBy;
 	}
-	public Date getCreatedOn() {
+	public String getCreatedOn() {
 		return posted_on;
 	}
-	public void setCreatedOn(Date createdOn) {
+	public void setCreatedOn(String createdOn) {
 		this.posted_on = createdOn;
 	}
 	public String getTags() {
@@ -90,6 +89,5 @@ public class Post {
 		this.category = category;
 	}
 	
-
 }
 

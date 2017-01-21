@@ -9,13 +9,14 @@ import javax.persistence.Persistence;
 
 import org.hibernate.annotations.Nationalized;
 
+import com.blog.api.BlogUser;
 import com.blog.api.Post;
 
 public class OracleDAOImpl implements DAO {
 	static EntityManagerFactory factory = Persistence.createEntityManagerFactory("blog");
 
 	@Override
-	public int create(Post post) {
+	public int postCreate(Post post) {
 		EntityManager em = factory.createEntityManager();
 		em.getTransaction().begin();
 		em.persist(post);
@@ -37,8 +38,22 @@ public class OracleDAOImpl implements DAO {
 		return post;
 		//return posts.get(0);
 	}
-
+	
+	@SuppressWarnings("unchecked")
 	@Override
+	public BlogUser readUser(String userid) {
+		EntityManager em = factory.createEntityManager();
+		
+		BlogUser user = em.find(BlogUser.class, userid); //This is throwing NVarchar abstract error
+		//ArrayList<Post> posts = (ArrayList<Post>) em.createNativeQuery("select * from post",Post.class).getResultList();
+		//catch exception here, multiple items
+		//System.out.println("Items" + objects.size());
+		em.close();
+		return user;
+		//return posts.get(0);
+	}
+
+	@Override // We need either update/add comment
 	public void update(Post post) {
 		EntityManager em = factory.createEntityManager();		
 		em.getTransaction().begin();
@@ -60,4 +75,14 @@ public class OracleDAOImpl implements DAO {
 		return posts;
 	}
 
+
+	@Override
+	public int userCreate(BlogUser user) {
+		EntityManager em = factory.createEntityManager();
+		em.getTransaction().begin();
+		em.persist(user);
+		em.getTransaction().commit();
+		em.close();
+		return 0;
+	}
 }

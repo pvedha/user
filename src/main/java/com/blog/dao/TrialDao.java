@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
+import com.blog.api.BlogUser;
 import com.blog.api.Post;
 import com.blog.biz.BlogInterface;
 
@@ -13,7 +14,7 @@ public class TrialDao implements DAO {
 	EntityManagerFactory factory = Persistence.createEntityManagerFactory("blog");
 	
 	@Override
-	public int create(Post post) {
+	public int postCreate(Post post) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
@@ -34,6 +35,18 @@ public class TrialDao implements DAO {
 	public void update(Post post) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public int userCreate(BlogUser user) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public BlogUser readUser(String userid) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 

@@ -1,18 +1,15 @@
 package com.blog.api;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.xml.bind.annotation.XmlRootElement;
-
-import org.hibernate.annotations.Nationalized;
 
 @Entity
 @XmlRootElement
 public class BlogUser {
 	@Id
 	protected String userid;
-	protected String name;
+	protected String name;     
 	protected String password;
 	protected String about;
 	
