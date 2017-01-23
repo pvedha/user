@@ -29,28 +29,18 @@ public class OracleDAOImpl implements DAO {
 	@Override
 	public Post read(int postId) {
 		EntityManager em = factory.createEntityManager();
-		
 		Post post = em.find(Post.class, postId); //This is throwing NVarchar abstract error
-		//ArrayList<Post> posts = (ArrayList<Post>) em.createNativeQuery("select * from post",Post.class).getResultList();
-		//catch exception here, multiple items
-		//System.out.println("Items" + objects.size());
 		em.close();
 		return post;
-		//return posts.get(0);
 	}
 	
 	@SuppressWarnings("unchecked")
 	@Override
 	public BlogUser readUser(String userid) {
 		EntityManager em = factory.createEntityManager();
-		
 		BlogUser user = em.find(BlogUser.class, userid); //This is throwing NVarchar abstract error
-		//ArrayList<Post> posts = (ArrayList<Post>) em.createNativeQuery("select * from post",Post.class).getResultList();
-		//catch exception here, multiple items
-		//System.out.println("Items" + objects.size());
 		em.close();
 		return user;
-		//return posts.get(0);
 	}
 
 	@Override // We need either update/add comment
@@ -70,7 +60,7 @@ public class OracleDAOImpl implements DAO {
 	@Override
 	public ArrayList<Post> readAllPost() {
 		EntityManager em = factory.createEntityManager();
-		ArrayList<Post> posts = (ArrayList<Post>) em.createNativeQuery("select * from post").getResultList();
+		ArrayList<Post> posts = (ArrayList<Post>) em.createNativeQuery("select * from post",Post.class).getResultList();
 		em.close();
 		return posts;
 	}
@@ -78,6 +68,7 @@ public class OracleDAOImpl implements DAO {
 
 	@Override
 	public int userCreate(BlogUser user) {
+		System.out.println("OracleDAO Create user");
 		EntityManager em = factory.createEntityManager();
 		em.getTransaction().begin();
 		em.persist(user);

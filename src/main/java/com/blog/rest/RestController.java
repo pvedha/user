@@ -62,6 +62,21 @@ public class RestController {
 	@Path("/makeUser")
 	public Response makeUser(BlogUser user) throws InvalidUserException, DuplicateUserException {
 		Blog blog = new Blog();
+		System.out.println("make user");
+		int number = blog.createUser(user);
+		return Response.ok().entity(number + "").build();
+	}
+	
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Path("/addUser/{userid}/{name}/{password}/{about}")
+	public Response addUser(@PathParam("userid") String userId, 
+			@PathParam("name") String name, 
+			@PathParam("password") String password, 
+			@PathParam("about") String about) throws InvalidUserException, DuplicateUserException {
+		Blog blog = new Blog();
+		BlogUser user = new BlogUser(userId, name, password, about);
+		System.out.println("make user 1");
 		int number = blog.createUser(user);
 		return Response.ok().entity(number + "").build();
 	}

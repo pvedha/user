@@ -13,6 +13,19 @@ public class BlogUser {
 	protected String password;
 	protected String about;
 	
+	
+	public BlogUser(String userid, String name, String password, String about) {
+		super();
+		this.userid = userid;
+		this.name = name;
+		this.password = password;
+		this.about = about;
+	}
+	
+	public BlogUser(){
+		
+	}
+	
 	public String getUserid() {
 		return userid;
 	}
