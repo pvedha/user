@@ -30,9 +30,9 @@ public class Blog implements BlogInterface {
 		return dao.read(number);
 	}
 	
-	@Override
-	public int createPost(Post post) {
-		post.setCreatedOn(new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date()));
+	@Override	
+	public int createPost(Post post) 	{
+		//	post.setCreatedOn(new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date()));
 		return dao.postCreate(post);
 	}
 
