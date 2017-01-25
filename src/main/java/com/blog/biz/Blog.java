@@ -1,11 +1,10 @@
 package com.blog.biz;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
 import com.blog.api.BlogUser;
-import com.blog.api.Comment;
+import com.blog.api.Comments;
 import com.blog.api.DuplicateUserException;
 import com.blog.api.InvalidCommentException;
 import com.blog.api.InvalidPostException;
@@ -33,15 +32,11 @@ public class Blog implements BlogInterface {
 		return dao.read(number);
 	}
 	
-<<<<<<< HEAD
-	@Override
-	public int createPost(Post post) {
-		//post.setCreatedOn(new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date()));
-=======
+
 	@Override	
 	public int createPost(Post post) 	{
 		//	post.setCreatedOn(new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date()));
->>>>>>> branch 'master' of https://github.com/pvedha/cmadblog
+
 		return dao.postCreate(post);
 	}
 
@@ -59,7 +54,7 @@ public class Blog implements BlogInterface {
 	}
 
 	@Override
-	public int addComment(Comment comment) throws InvalidCommentException {
+	public int addComment(Comments comment) throws InvalidCommentException {
 		if (comment == null || comment.getPostedBy() == null
 				|| comment.getMessage() == null
 				|| this.readPost(comment.getPostId()) == null) {
@@ -68,13 +63,26 @@ public class Blog implements BlogInterface {
 		return dao.commentCreate(comment);
 	}
 	
-	public ArrayList<Comment> readCommentsOfPost(int postId) throws InvalidPostException {
+	public ArrayList<Comments> readCommentsOfPost(int postId) throws InvalidPostException {
 		if (this.readPost(postId) == null) {
 			throw new InvalidPostException();
 		}
 		return dao.readComments(postId);
 	}
-	
-	
+
+	@Override
+	public ArrayList<BlogUser> readAllUsers() {
+		return dao.readAllUsers();
+	}
+
+	@Override
+	public ArrayList<String> readUserIds() {		
+		return dao.readUserIds();
+	}
+
+	@Override
+	public BlogUser validateLogin(String userId, String password) {
+		return dao.validateLogin(userId, password);
+	}	
 
 }

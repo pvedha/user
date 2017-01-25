@@ -1,5 +1,6 @@
 package com.blog.dao;
 
+import java.awt.List;
 import java.util.ArrayList;
 
 import javax.persistence.EntityManager;
@@ -7,7 +8,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
 import com.blog.api.BlogUser;
-import com.blog.api.Comment;
+import com.blog.api.Comments;
 import com.blog.api.Post;
 
 public class OracleDAOImpl implements DAO {
@@ -75,7 +76,7 @@ public class OracleDAOImpl implements DAO {
 	}
 
 	@Override
-	public int commentCreate(Comment comment) {
+	public int commentCreate(Comments comment) {
 		EntityManager em = factory.createEntityManager();
 		em.getTransaction().begin();
 		em.persist(comment);
@@ -85,12 +86,46 @@ public class OracleDAOImpl implements DAO {
 	}
 
 	@Override
-	public ArrayList<Comment> readComments(int postId) {
+	public ArrayList<Comments> readComments(int postId) {
 		// TODO Auto-generated method stub
 		EntityManager em = factory.createEntityManager();
-		ArrayList<Comment> comments = null;
+		ArrayList<Comments> comments = null;
 				//(ArrayList<Comment>) em.createNativeQuery("select * from Comment",Comment.class).getResultList();
 		em.close();
 		return comments;
+	}
+	
+		@SuppressWarnings("unchecked")
+	@Override
+	public ArrayList<BlogUser> readAllUsers() {
+		EntityManager em = factory.createEntityManager();
+		ArrayList<BlogUser> blogUsers = (ArrayList<BlogUser>) em.createNativeQuery("select * from bloguser",BlogUser.class).getResultList();
+		em.close();
+		return blogUsers;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public ArrayList<String> readUserIds() {
+		EntityManager em = factory.createEntityManager();
+		ArrayList<String> userIds = (ArrayList<String>) em.createNativeQuery("select userid from bloguser").getResultList();
+		em.close();
+		return userIds;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public BlogUser validateLogin(String userId, String password) {
+		EntityManager em = factory.createEntityManager();
+		String validateQuery = "select * from bloguser where "
+				+ " userid = '" + userId + "' and password = '" + password + "'";
+		//System.out.println("The query is : " + validateQuery);
+		ArrayList<BlogUser> blogUsers = (ArrayList<BlogUser>) em.createNativeQuery(validateQuery, BlogUser.class).getResultList();
+		em.close();
+		if(blogUsers.size() == 1){
+			return blogUsers.get(0);
+		}else{
+			return null;
+		}
 	}
 }

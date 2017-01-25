@@ -13,7 +13,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
 @XmlRootElement
-public class Comment {
+public class Comments {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO) // Check whether this works
@@ -66,12 +66,12 @@ public class Comment {
 		this.posted_on = posted_on;
 	}
 
-	public Comment() {
+	public Comments() {
 		// TODO Auto-generated constructor stub
 		
 	}
 
-	public Comment(int comment_Id, int post_Id, String message, BlogUser postedBy, Date posted_on) {
+	public Comments(int comment_Id, int post_Id, String message, BlogUser postedBy, Date posted_on) {
 		super();
 		this.comment_Id = comment_Id;
 		this.post_Id = post_Id;

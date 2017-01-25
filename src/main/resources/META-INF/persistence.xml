@@ -7,6 +7,7 @@
 		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 		<class>com.blog.api.Post</class>
 		<class>com.blog.api.BlogUser</class>
+		<class>com.blog.api.Comments</class>
 		<properties>
 			<property name="javax.persistence.jdbc.driver" value="oracle.jdbc.OracleDriver" />
 			<property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@10.78.213.217:1521:cmad" />

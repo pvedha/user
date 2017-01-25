@@ -17,16 +17,16 @@ import com.blog.api.InvalidUserException;
 import com.blog.api.Post;
 import com.blog.biz.Blog;
 
-@Path("/")
-public class RestController {
+@Path("/post")
+public class PostController {
 
-	public RestController() {
+	public PostController() {
 		// TODO Auto-generated constructor stub
 	}
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	@Path("/post")
+	@Path("/all")
 	public Response readAllPosts() {
 		Blog blog = new Blog();
 		ArrayList<Post> posts = blog.readAllPost();
@@ -35,7 +35,7 @@ public class RestController {
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	@Path("/post/{no}")
+	@Path("/{no}")
 	public Response read(@PathParam("no") int number) {
 		Blog blog = new Blog();
 		return Response.ok().entity(blog.readPost(number)).build();
@@ -55,29 +55,6 @@ public class RestController {
 		Blog blog = new Blog();
 		int number = blog.createPost(post);
 		return Response.ok().entity(number + "").build();
-	}
+	}	
 	
-	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Path("/makeUser")
-	public Response makeUser(BlogUser user) throws InvalidUserException, DuplicateUserException {
-		Blog blog = new Blog();
-		System.out.println("make user");
-		int number = blog.createUser(user);
-		return Response.ok().entity(number + "").build();
-	}
-	
-	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Path("/addUser/{userid}/{name}/{password}/{about}")
-	public Response addUser(@PathParam("userid") String userId, 
-			@PathParam("name") String name, 
-			@PathParam("password") String password, 
-			@PathParam("about") String about) throws InvalidUserException, DuplicateUserException {
-		Blog blog = new Blog();
-		BlogUser user = new BlogUser(userId, name, password, about);
-		System.out.println("make user 1");
-		int number = blog.createUser(user);
-		return Response.ok().entity(number + "").build();
-	}
 }

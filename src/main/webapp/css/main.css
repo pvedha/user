@@ -1,0 +1,155 @@
+h1 {
+    text-align: center;    
+    color: blue;    
+}
+
+.red-error {
+    font-size: 1em;
+    color: red;
+}
+
+.green-fine {
+    font-size: 1em;
+    color: green;
+}
+
+.center-div{
+    background: #e7f4f8;
+    background-size: cover;
+    padding: 2em 2em;
+    text-align: center;
+    width: 50%;
+    margin: 0 auto;
+    box-shadow: 3px 3px 50px 5px blue inset;
+}
+
+.signin-form {
+	background: #e7f4f8;
+    background-size: cover;
+    padding: 2em 2em;
+    text-align: center;
+    width: 50%;
+    margin: 0 auto;
+}
+.signin-form h3 {
+    font-size: 2em;
+    color: #212121;
+    font-weight: 700;
+    margin: 1em 0;
+    text-transform: uppercase;
+}
+.signin-form h3 span {
+    color: #67e1ff;
+}
+.signin-form img {
+    border-radius: 50%;
+}
+.login-form {
+    margin: 1em 0 2.5em;
+}
+.signin-form input[type="email"],.signin-form input[type="text"], .signin-form input[type="password"], textarea {
+    width: 100%;
+    padding: 1em 1em 1em 1em;
+    font-size: 0.8em;
+    margin: 1em 0;
+    outline: none;
+    color: #1a07fc;
+    border: none;
+    border-bottom: 2px solid #212121;
+    letter-spacing: 1px;
+    text-align: center;    
+}
+
+.signin-form input[type="email"] {
+    background: none;
+    display: block;
+}
+.signin-form input[type="text"] {
+    background: none;
+    display: block;
+}
+.signin-form input[type="password"] {
+     background: none;
+    display: block;
+}
+
+.signin-form textarea {
+     background: none;
+    display: block;
+    margin: 1em 0 1.5em;
+}
+
+::-webkit-input-placeholder{
+	color:#868585 !important;
+}
+.signin-form input[type="submit"] {
+    outline: none;
+    padding: 0.9em 0;
+    width: 100%;
+    text-align: center;
+    font-size: 1em;
+    margin-top: 1em;
+    border: none;
+    color: #FFFFFF;
+    cursor: pointer;
+    background: #86c724;
+    box-shadow: 0px 2px 1px rgba(28, 28, 29, 0.42);
+	border-radius: 22px;
+	
+}
+.signin-form input[type="submit"]:hover {
+    color: #fff;
+    background: #212121;
+    transition: .5s all;
+	-webkit-transition: .5s all;
+    -moz-transition: .5s all;
+    -o-transition: .5s all;
+    -ms-transition: .5s all;
+}
+
+button.btn1 {
+	color: #FFFFFF;
+    font-size: .9em;
+    padding: 1em 2em;
+    text-align: center;
+    text-decoration: none;
+    background: #86c724;
+    margin-right: 10px;
+    margin-left: 10px;
+    border: #467204;
+    border-radius: 5px;
+    transition: 0.5s all;
+    -webkit-transition: 0.5s all;
+    -moz-transition: 0.5s all;
+    -o-transition: 0.5s all;
+    -ms-transition: 0.5s all;
+}
+button.btn1:hover{
+	background:#1f71f5;
+	border: #0846a8;
+}
+
+button.btn1 span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+button.btn1 span:after {
+  content: '»';
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+
+button.btn1:hover span {
+  padding-right: 25px;
+}
+
+button.btn1:hover span:after {
+  opacity: 1;
+  right: 0;
+}
