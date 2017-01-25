@@ -3,8 +3,8 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>MyBlogSite</title>
-<link rel="stylesheet" href="css/main.css" >
 <link href="css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
+<link rel="stylesheet" href="css/main.css" >
 <script src="js/jquery-1.11.1.min.js"></script>
 <script src="js/bootstrap.js"></script>
 <script src="js/signing.js"></script>
@@ -12,17 +12,61 @@
     jQuery(document).ready(function($) {
         $("#signup-form").hide();     
         $("#result-div").hide();
+        $("#mainPage").hide();
         
     });    
 </script>       
     
 </head>
 <body>
-    <div>
-        <h1>Welcome to CMAD Blog Site</h1>
+    <div class="header-div">
+        <div id="title-div" class="title-left-div">
+        <h1 class="h1-title">CMAD Blog Site</h1>
+        </div>
+        <div id="user-div" class="user-right-div">
+            <br>
+            User not logged
+        </div>
     </div>
+    <br>
+    <hr style="height:3px" color=brown>
+    
+<!--    mainpage-->
+    <div id="mainPage">
+    
+    <div id="controlBar">
+        
+    <button type="button" id="newPost-button" class="control-button">New Post</button>
+    <button type="button" id="search-button" class="control-button">Search Contents</button>
+    <input type="text" id="search-text" placeholder="Enter Search Text..."/>
+        
+    </div>
+    <hr style="height:3px" color=brown>
+        
+    
+    <div class="center-align-div">
+    <div id="shortlinks-div" class="left-div">
+        <h2>Quick Links</h2>
+        hello text<p>next line</p>
+    </div>    
+    <div id="post-div" class="center-div">
+        <h2>Latest Posts</h2>
+        hello text<p>next line</p>
+        hello text<p>next line</p>hello text<p>next line</p>hello text<p>next line</p>hello text<p>next line</p>hello text<p>next line</p>hello text<p>next line</p>
+    </div>
+    <div id="chat-div" class="right-div">
+        <h2>Latest Messages</h2>
+        hello text<p>next line</p>
+    </div>
+    </div>
+        
+    </div>
+    <!--    End of mainpage-->
+    
     <hr>
-    <div class="center-div" id="signin-form">
+    
+    <div id="loginPage">
+    <div class="login-div" id="signin-form">
        <h3> Please login / Signup</h3>
         <h4 id="loginMessage" class="green-fine"></h4>
         <form class="signin-form">
@@ -32,7 +76,7 @@
             <button class="btn1" type="button" id="login-button">Login</button>
         </form>              
     </div>   
-    <div class="center-div" id="signup-form">
+    <div class="login-div" id="signup-form">
        <h3 id="signup-title">Please fill in your details</h3>
         <h4 id="validUser" class="red-error"></h4>
         <form class="signin-form">
@@ -45,6 +89,7 @@
             <button type="button" class="btn1" onclick="toggleSignform()">Login</button>
             <button type="button" class="btn1" id="signup-button">SignUp</button>
         </form>              
+    </div>
     </div>
     <hr>
     <button class="btn1" id="trythis-button">TryThis</button>

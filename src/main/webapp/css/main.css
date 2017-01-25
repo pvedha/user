@@ -1,6 +1,41 @@
-h1 {
+.h1-title {
     text-align: center;    
-    color: blue;    
+    color: blue;  
+}
+
+h2 {
+    text-align: center;    
+    color: blue;  
+    font-size: 1em;
+}
+
+/*
+.hr-divider {
+    height: 5px;
+    color: brown;
+    width: 300px;
+}
+*/
+
+.header-div {
+    height: 55px;
+}
+
+.title-left-div {
+    float: left;
+    width: 70%;
+    display: inline-block;
+    height: inherit;
+}
+
+.user-right-div {
+    float: right;
+    width: 30%;
+    display: inline-block;
+    height: inherit;
+}
+.inline-div{
+    display: inline-block;
 }
 
 .red-error {
@@ -13,7 +48,67 @@ h1 {
     color: green;
 }
 
+.center-align-div{
+    align-content: center;
+    align-items: center;
+}
+
+.left-div{
+    float: left;
+    background: #e7f4f8;
+    background-size: cover;
+/*    padding: 2em 2em;*/
+    text-align: center;
+    width: 20%;
+    height: 400px;
+    border-right: 2px solid brown;
+    border-left: 2px solid brown;
+    border-radius: 5px;
+/*    margin: 0 auto;*/
+/*    box-shadow: 3px 3px 50px 5px blue inset;*/
+    display: inline-block;
+}
+
 .center-div{
+    background: #e7f4f8;
+    background-size: cover;
+/*    padding: 2em 2em;*/
+    text-align: center;
+    width: 60%;
+    height: 400px;
+/*    margin: 0 auto;*/
+    border-right: 2px solid brown;
+    border-left: 2px solid brown;
+    border-radius: 5px;
+/*    box-shadow: 3px 3px 50px 5px blue inset;*/
+    display: inline-block;
+}
+
+.right-div{
+    float: right;
+    background: #e7f4f8;
+/*    background-size: cover;*/
+/*    padding: 2em 2em;*/
+    text-align: center;
+    width: 20%;
+    height: 400px;
+    border-right: 2px solid brown;
+    border-left: 2px solid brown;
+    border-radius: 5px;
+/*    margin: 0 auto;*/
+/*    box-shadow: 3px 3px 50px 5px blue inset;*/
+    display: inline-block;
+}
+
+.clear-div { /*do we need this? */
+  clear: both;
+  height: 1px;
+  overflow: hidden;
+  font-size: 0pt;
+  margin-top: -1px;
+}
+
+.login-div{
     background: #e7f4f8;
     background-size: cover;
     padding: 2em 2em;

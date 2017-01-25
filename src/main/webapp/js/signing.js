@@ -140,8 +140,8 @@ function getUserIds() {
 };
 
 function login() {
-    $("#login-message").html("Please wait, validating credentials...");
-    $("#login-message").css({ 'color': 'green', 'font-size': '100%' });
+    $("#loginMessage").html("Please wait, validating credentials...");
+    $("#loginMessagee").css({ 'color': 'green', 'font-size': '100%' });
     var userId = $("#loginId").val();
     var password = $("#loginPassword").val();
     $.ajax({
@@ -152,10 +152,16 @@ function login() {
                 global: false,
                 success : function(response) {
                     //$("#viewForm").hide();
-                    console.log("Valid user");                    
+                    console.log("Valid user");
+                    $("#user-div").html("<br>User : " + response.name + "<p><i>" + response.about);
+                    
+                    $("#loginPage").hide();
+                    $("#mainPage").show().fadeIn(500);
                 },
                 error : function(XMLHttpRequest, textStatus, errorThrown) {
                     console.log("Invalid user credentials");
+                    $("#loginMessage").html("Invalid crendentials, please try again");
+                    //$("#login-message").css({ 'color': 'green', 'font-size': '100%' });
                 }
             })
 };
