@@ -1,15 +1,13 @@
 package com.blog.dao;
 
-import java.awt.List;
 import java.util.ArrayList;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
-import org.hibernate.annotations.Nationalized;
-
 import com.blog.api.BlogUser;
+import com.blog.api.Comment;
 import com.blog.api.Post;
 
 public class OracleDAOImpl implements DAO {
@@ -68,12 +66,31 @@ public class OracleDAOImpl implements DAO {
 
 	@Override
 	public int userCreate(BlogUser user) {
-		System.out.println("OracleDAO Create user");
 		EntityManager em = factory.createEntityManager();
 		em.getTransaction().begin();
 		em.persist(user);
 		em.getTransaction().commit();
 		em.close();
 		return 0;
+	}
+
+	@Override
+	public int commentCreate(Comment comment) {
+		EntityManager em = factory.createEntityManager();
+		em.getTransaction().begin();
+		em.persist(comment);
+		em.getTransaction().commit();
+		em.close();
+		return 0;
+	}
+
+	@Override
+	public ArrayList<Comment> readComments(int postId) {
+		// TODO Auto-generated method stub
+		EntityManager em = factory.createEntityManager();
+		ArrayList<Comment> comments = null;
+				//(ArrayList<Comment>) em.createNativeQuery("select * from Comment",Comment.class).getResultList();
+		em.close();
+		return comments;
 	}
 }

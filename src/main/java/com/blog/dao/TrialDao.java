@@ -6,6 +6,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
 import com.blog.api.BlogUser;
+import com.blog.api.Comment;
 import com.blog.api.Post;
 import com.blog.biz.BlogInterface;
 
@@ -45,6 +46,18 @@ public class TrialDao implements DAO {
 
 	@Override
 	public BlogUser readUser(String userid) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int commentCreate(Comment comment) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public ArrayList<Comment> readComments(int postId) {
 		// TODO Auto-generated method stub
 		return null;
 	}

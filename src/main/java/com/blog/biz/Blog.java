@@ -5,7 +5,10 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import com.blog.api.BlogUser;
+import com.blog.api.Comment;
 import com.blog.api.DuplicateUserException;
+import com.blog.api.InvalidCommentException;
+import com.blog.api.InvalidPostException;
 import com.blog.api.InvalidUserException;
 import com.blog.api.Post;
 import com.blog.dao.DAO;
@@ -32,7 +35,7 @@ public class Blog implements BlogInterface {
 	
 	@Override
 	public int createPost(Post post) {
-		post.setCreatedOn(new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date()));
+		//post.setCreatedOn(new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date()));
 		return dao.postCreate(post);
 	}
 
@@ -48,5 +51,24 @@ public class Blog implements BlogInterface {
 		};
 		return dao.userCreate(user);
 	}
+
+	@Override
+	public int addComment(Comment comment) throws InvalidCommentException {
+		if (comment == null || comment.getPostedBy() == null
+				|| comment.getMessage() == null
+				|| this.readPost(comment.getPostId()) == null) {
+			throw new InvalidCommentException();
+		}
+		return dao.commentCreate(comment);
+	}
+	
+	public ArrayList<Comment> readCommentsOfPost(int postId) throws InvalidPostException {
+		if (this.readPost(postId) == null) {
+			throw new InvalidPostException();
+		}
+		return dao.readComments(postId);
+	}
+	
+	
 
 }

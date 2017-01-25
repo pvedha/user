@@ -3,6 +3,7 @@ package com.blog.dao;
 import java.util.ArrayList;
 
 import com.blog.api.BlogUser;
+import com.blog.api.Comment;
 import com.blog.api.Post;
 
 public interface DAO {
@@ -13,4 +14,6 @@ public interface DAO {
 	ArrayList<Post> readAllPost();
 	void update(Post post);
 	BlogUser readUser(String userid);
+	int commentCreate(Comment comment);
+	ArrayList<Comment> readComments(int postId);
 }
