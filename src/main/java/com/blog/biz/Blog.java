@@ -33,9 +33,15 @@ public class Blog implements BlogInterface {
 		return dao.read(number);
 	}
 	
+<<<<<<< HEAD
 	@Override
 	public int createPost(Post post) {
 		//post.setCreatedOn(new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date()));
+=======
+	@Override	
+	public int createPost(Post post) 	{
+		//	post.setCreatedOn(new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date()));
+>>>>>>> branch 'master' of https://github.com/pvedha/cmadblog
 		return dao.postCreate(post);
 	}
 
