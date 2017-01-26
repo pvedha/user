@@ -66,9 +66,9 @@ function addUser() {
                 type : 'post',
                 contentType : 'application/json',
                 success : function(response) {
-                    alert("success");
                     $("#signup-title")
-                            .html("Thanks for signing. Please login.");														
+                            .html("Thanks for signing. Please login.");		
+                    toggleSignform();
                 },
                 error: function(XMLHttpRequest, textStatus, errorThrown) {                                                         
                     $("#signup-title")
@@ -123,6 +123,7 @@ function login() {
                     console.log("Valid user");
                     $("#user-div").html("<br>User : " + response.name + "<p><i>" + response.about);
                     currentUserId = response.userid;
+                    console.log("user id assigned" + currentUserId);
                     $("#loginPage").hide();
                     $("#mainPage").show().fadeIn(50000);
                     $("#mainPage").fadeIn(5000);

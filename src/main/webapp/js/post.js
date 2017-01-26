@@ -27,8 +27,11 @@ function newPost(){
                 success : function(response) {
                     //$("#viewForm").hide();
                     //displayPosts(response);
-                    $("#post-div").fadeOut(5000);
-                    $("#new-post-div").fadeIn(5000);
+                    console.log("Posting done");
+                    $("#new-post-info").html("Successfullt Posted.");
+                    //$("#post-div").hide();//.fadeOut(5000);
+                    $("#new-post-div").hide();//.fadeIn(5000);
+                     $("#post-div").fadeIn(2000);
                     readAllPosts();
                     
                 },
@@ -116,6 +119,6 @@ function displayPosts(response){
 }
 
 function showNewPost(){
-    $("#post-div").fadeOut(1000);
+    $("#post-div").hide();//.fadeOut(1000);
     $("#new-post-div").fadeIn(1000);
 }
