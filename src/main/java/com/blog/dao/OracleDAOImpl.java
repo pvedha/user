@@ -11,6 +11,7 @@ import javax.xml.stream.events.Comment;
 import com.blog.api.BlogUser;
 import com.blog.api.Comments;
 import com.blog.api.Post;
+import com.blog.dto.NewPost;
 
 public class OracleDAOImpl implements DAO {
 	static EntityManagerFactory factory = Persistence.createEntityManagerFactory("blog");
@@ -144,6 +145,39 @@ public class OracleDAOImpl implements DAO {
 		} else {
 			return null;
 		}
+	}
+
+	@Override
+	public int getNextPostId() {
+		EntityManager em = factory.createEntityManager();
+		Object postId = em.createNativeQuery("select max(post_id)+1 from post").getSingleResult();
+		System.out.println("Object to string " + postId.toString());
+		System.out.println("The next post id is " + postId);
+		return 5;
+	}
+
+	@Override
+	public int postCreate(NewPost newPost) {
+		EntityManager em = factory.createEntityManager();
+//		String query = "insert into post values((select max(post_id)+1 from post),'"
+//				+ newPost.getTitle() + "','" + newPost.getMessage() + "','" 
+//				+ newPost.getUserId() + "',sysdate, '" + newPost.getTags() + "','"
+//				+ newPost.getCategory() + "')";
+		em.getTransaction().begin();
+//		System.out.println("The query formed is " + query);
+//		int result = em.createNativeQuery(query).executeUpdate();
+//		
+		int resultx = em.createNativeQuery("insert into post values((select max(post_id)+1 from post),"
+				+ ":title,:message,:userid,sysdate,:tags,:category)")
+				.setParameter("title", newPost.getTitle())
+				.setParameter("message", newPost.getMessage())
+				.setParameter("userid", newPost.getTitle())
+				.setParameter("tags", newPost.getTitle())
+				.setParameter("category", newPost.getTitle())
+				.executeUpdate();
+		em.getTransaction().commit();
+		em.close();
+		return resultx;
 	}
 
 }

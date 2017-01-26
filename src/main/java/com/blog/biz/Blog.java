@@ -12,9 +12,9 @@ import com.blog.api.InvalidUserException;
 import com.blog.api.Post;
 import com.blog.dao.DAO;
 import com.blog.dao.OracleDAOImpl;
-import com.blog.dao.TrialDao;
 import com.blog.dto.AuthenticationDto;
 import com.blog.dto.CommentDto;
+import com.blog.dto.NewPost;
 import com.blog.dto.PostDto;
 
 public class Blog implements BlogInterface {
@@ -145,12 +145,27 @@ public class Blog implements BlogInterface {
 
 	private AuthenticationDto makeAuthDto(BlogUser user) {
 		// TODO Auto-generated method stub		
-		return (new AuthenticationDto(user.getUserid()));
+		return (new AuthenticationDto(user.getUserid(), 
+				user.getName(), user.getAbout()));
 	}
 	
 	public Boolean validateToken(AuthenticationDto requestToken) {
-		AuthenticationDto temp = new AuthenticationDto(requestToken.getUsername());
+		AuthenticationDto temp = new AuthenticationDto(requestToken.getUserId(),
+				requestToken.getName(), requestToken.getAbout());
 		return temp.getToken().equals(requestToken.getToken());		
+	}
+
+	@Override
+	public int createPost(NewPost newPost) {
+//		Post post = new Post();
+//		post.setPostId(dao.getNextPostId());
+//		post.setPostedBy(dao.readUser(newPost.getUserId()));
+//		post.setTitle(newPost.getTitle());
+//		post.setMessage(newPost.getMessage());
+//		post.setTags(newPost.getTags());
+//		post.setCategory(newPost.getCategory());
+//		post.setCreatedOn(new java.sql.Date(new java.util.Date().getTime()));
+		return dao.postCreate(newPost);
 	}
 	
 

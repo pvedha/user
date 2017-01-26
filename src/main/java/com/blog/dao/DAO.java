@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.blog.api.BlogUser;
 import com.blog.api.Comments;
 import com.blog.api.Post;
+import com.blog.dto.NewPost;
 
 public interface DAO {
 
@@ -20,4 +21,6 @@ public interface DAO {
 	ArrayList<String> readUserIds();
 	BlogUser validateLogin(String userId, String password);
 	ArrayList<Comments> readComments(ArrayList<Integer> postIds);
+	int getNextPostId();
+	int postCreate(NewPost newPost);
 }

@@ -10,6 +10,7 @@ import com.blog.api.InvalidPostException;
 import com.blog.api.InvalidUserException;
 import com.blog.api.Post;
 import com.blog.dto.AuthenticationDto;
+import com.blog.dto.NewPost;
 import com.blog.dto.PostDto;
 
 public interface BlogInterface {
@@ -17,6 +18,7 @@ public interface BlogInterface {
 	ArrayList<PostDto> readAllPost();
 	PostDto readPost(int number);
 	int createPost(Post post);
+	int createPost(NewPost newPost);
 	
 	//comment
 	int addComment(Comments comment) throws InvalidCommentException;	
@@ -27,4 +29,5 @@ public interface BlogInterface {
 	ArrayList<String> readUserIds();
 	int createUser(BlogUser user) throws InvalidUserException, DuplicateUserException;
 	AuthenticationDto validateLogin(String userId, String password);
+	
 }

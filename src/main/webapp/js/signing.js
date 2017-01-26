@@ -1,6 +1,7 @@
 var userIdsResponse = "";
 var userIdsResponseReceived = false;
 var validUserId = true;
+var currentUserId = "";
 $(document)
 		.ready(
 				function() {
@@ -35,6 +36,11 @@ $(document)
                     $('#signup-button').click( 
                         function() {
                         addUser();
+                    });
+                                        
+                    $('#new-post-button').click( 
+                        function() {
+                        newPost();
                     });
 				});
 
@@ -116,7 +122,7 @@ function login() {
                     //$("#viewForm").hide();
                     console.log("Valid user");
                     $("#user-div").html("<br>User : " + response.name + "<p><i>" + response.about);
-                    
+                    currentUserId = response.userid;
                     $("#loginPage").hide();
                     $("#mainPage").show().fadeIn(50000);
                     $("#mainPage").fadeIn(5000);

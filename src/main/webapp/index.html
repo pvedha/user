@@ -15,6 +15,8 @@
         $("#result-div").hide();
         //$("#mainPage").hide();
         $("#loginPage").hide();
+        //$("#post-div").hide();
+        $("#new-post-div").hide();
         
     });    
 </script>       
@@ -38,7 +40,7 @@
     
     <div id="controlBar">
         
-    <button type="button" id="newPost-button" class="control-button">New Post</button>
+    <button type="button" id="newPost-button" class="control-button" onclick="showNewPost()">New Post</button>
     <button type="button" id="search-button" class="control-button">Search Contents</button>
     <input type="text" id="search-text" placeholder="Enter Search Text..."/>
         
@@ -66,6 +68,26 @@
         <hr class="post-hr">
         <p>My post message comes here, it will get truncated to 50 chars in case its more. </p>
         
+        </div>        
+    </div>
+    <div id="new-post-div" class="center-div">
+        <h2>Add a new Post</h2>
+        <h4 id="new-post-info"></h4>
+        <div id="new-post-contents">
+        
+        <form class="signin-form">
+            <input type="text" name="new-post-title" class="" id="new-post-title" placeholder="Title of the post"/>
+            <textarea name="new-post-message" id="new-post-message" rows="3" placeholder="Your message..."></textarea>
+            <input type="text" name="new-post-tags" class="" id="new-post-tags" placeholder="Add related tags"/>
+            Select Category : 
+            <select name="Category" id="new-post-category" placeholder="Select Category">
+              <option value="entertainment">Entertainment</option>
+              <option value="news">News</option>
+              <option value="technical">Technical</option>
+              <option value="generic">Generic</option>
+            </select>
+            <button type="button" class="btn1" id="new-post-button">Post it!</button>            
+        </form>
         </div>        
     </div>
     <div id="chat-div" class="right-div">

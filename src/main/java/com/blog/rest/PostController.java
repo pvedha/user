@@ -16,6 +16,7 @@ import com.blog.api.DuplicateUserException;
 import com.blog.api.InvalidUserException;
 import com.blog.api.Post;
 import com.blog.biz.Blog;
+import com.blog.dto.NewPost;
 import com.blog.dto.PostDto;
 
 @Path("/post")
@@ -58,4 +59,12 @@ public class PostController {
 		return Response.ok().entity(number + "").build();
 	}	
 	
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Path("/newPost")
+	public Response newPost(NewPost newPost) {
+		Blog blog = new Blog();
+		int number = blog.createPost(newPost);
+		return Response.ok().entity(number + "").build();
+	}
 }
