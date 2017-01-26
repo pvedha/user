@@ -13,6 +13,7 @@ import com.blog.api.Post;
 import com.blog.dao.DAO;
 import com.blog.dao.OracleDAOImpl;
 import com.blog.dao.TrialDao;
+import com.blog.dto.AuthenticationDto;
 import com.blog.dto.CommentDto;
 import com.blog.dto.PostDto;
 
@@ -55,6 +56,7 @@ public class Blog implements BlogInterface {
 		postDto.setMessage(post.getMessage());
 		postDto.setPostedBy(post.getPostedBy().getUserid());
 		postDto.setTags(post.getTags());
+		postDto.setPosted_on(post.getCreatedOn());
 		postDto.setCategory(post.getCategory());
 
 		// This needs a better logic like multimap.
@@ -134,8 +136,21 @@ public class Blog implements BlogInterface {
 	}
 
 	@Override
-	public BlogUser validateLogin(String userId, String password) {
-		return dao.validateLogin(userId, password);
+	public AuthenticationDto validateLogin(String userId, String password) {
+		BlogUser user = dao.validateLogin(userId, password);
+		AuthenticationDto token = null;
+		if (user != null) token = this.makeAuthDto(user);
+		return token;
+	}
+
+	private AuthenticationDto makeAuthDto(BlogUser user) {
+		// TODO Auto-generated method stub		
+		return (new AuthenticationDto(user.getUserid()));
+	}
+	
+	public Boolean validateToken(AuthenticationDto requestToken) {
+		AuthenticationDto temp = new AuthenticationDto(requestToken.getUsername());
+		return temp.getToken().equals(requestToken.getToken());		
 	}
 
 }

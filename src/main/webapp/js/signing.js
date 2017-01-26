@@ -4,45 +4,6 @@ var validUserId = true;
 $(document)
 		.ready(
 				function() {
-					$('#viewLink').click(function() {
-						$("#viewForm").show();
-						$("#openForm").hide();
-						$("#openResults").hide();
-						$("#viewResults").hide();
-					});
-					$('#openLink').click(function() {
-						$("#openForm").show();
-						$("#viewForm").hide();
-						$("#openResults").hide();
-						$("#viewResults").hide();
-					});
-					$('#openButton')
-							.click(
-									function() {
-										var name = $("#name").val();
-										var phoneNumber = $("#phoneNumber")
-												.val();
-										var data = {
-											name : name,
-											phoneNumber : phoneNumber
-										};
-										$
-												.ajax({
-													url : 'http://localhost:8080/cmad/online/bank/account',
-													type : 'post',
-													contentType : 'application/json',
-													success : function(response) {
-														$("#openResults")
-																.html(
-																		"Your Account No: "
-																				+ response);
-														$("#openForm").hide();
-														$("#openResults")
-																.show();
-													},
-													data : JSON.stringify(data)
-												});
-									});
 					$('#trythis-button')
 							.click(function(){
                                var userIds = getUserIds();
@@ -54,8 +15,9 @@ $(document)
                     $('#trythis2-button')
 							.click(function(){                               
                                //alert(userIdsResponseReceived + userIdsResponse);
-                                console.log(userIdsResponse[2]);
-                                console.log(userIdsResponse.length);
+//                                console.log(userIdsResponse[2]);
+//                                console.log(userIdsResponse.length);
+                                readAllPosts();
                             }
 				    );
                     
@@ -156,7 +118,9 @@ function login() {
                     $("#user-div").html("<br>User : " + response.name + "<p><i>" + response.about);
                     
                     $("#loginPage").hide();
-                    $("#mainPage").show().fadeIn(500);
+                    $("#mainPage").show().fadeIn(50000);
+                    $("#mainPage").fadeIn(5000);
+                    readAllPosts();
                 },
                 error : function(XMLHttpRequest, textStatus, errorThrown) {
                     console.log("Invalid user credentials");
@@ -165,6 +129,8 @@ function login() {
                 }
             })
 };
+
+
 
 function sleep(milliseconds) {
   var start = new Date().getTime();
@@ -188,8 +154,6 @@ function validateUser(value){
             } else {
                 $("#validUser").html("User Id " + value + " available");                
                 $("#validUser").css({ 'color': 'green', 'font-size': '100%' });
-//                $("#validUser").removeClass("red-error");
-//                $("#validUser").addClass("green-fine");
                 validUserId = true;
             }        
     }
