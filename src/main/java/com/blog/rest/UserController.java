@@ -17,6 +17,7 @@ import com.blog.api.DuplicateUserException;
 import com.blog.api.InvalidUserException;
 import com.blog.api.Post;
 import com.blog.biz.Blog;
+import com.blog.dto.AuthenticationDto;
 
 @Path("/user")
 public class UserController {
@@ -49,9 +50,9 @@ public class UserController {
 	@Path("/{userid}/{password}")
 	public Response login(@PathParam("userid") String userId, @PathParam("password") String password) {
 		Blog blog = new Blog();
-		BlogUser blogUser = blog.validateLogin(userId, password);
-		if (blogUser != null) {
-			return Response.ok().entity(blogUser).build();
+		AuthenticationDto token = blog.validateLogin(userId, password);
+		if (token != null) {
+			return Response.ok().entity(token).build();
 		} else {
 			return Response.status(Status.NOT_FOUND).build();
 		}

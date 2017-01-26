@@ -60,7 +60,6 @@ public class CommentDto {
 		return postedOn;
 	}
 
-
 	public void setPostedOn(Date postedOn) {
 		this.postedOn = postedOn;
 	}
