@@ -10,7 +10,7 @@ public interface DAO {
 
 	int postCreate(Post post);
 	int userCreate(BlogUser user);
-	Post read(int p);
+	Post readPost(int p);
 	ArrayList<Post> readAllPost();
 	void update(Post post);
 	BlogUser readUser(String userid);
@@ -19,4 +19,5 @@ public interface DAO {
 	ArrayList<BlogUser> readAllUsers();
 	ArrayList<String> readUserIds();
 	BlogUser validateLogin(String userId, String password);
+	ArrayList<Comments> readComments(ArrayList<Integer> postIds);
 }

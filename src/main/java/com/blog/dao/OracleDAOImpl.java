@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.xml.stream.events.Comment;
 
 import com.blog.api.BlogUser;
 import com.blog.api.Comments;
@@ -26,44 +27,46 @@ public class OracleDAOImpl implements DAO {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public Post read(int postId) {
+	public Post readPost(int postId) {
 		EntityManager em = factory.createEntityManager();
-		Post post = em.find(Post.class, postId); //This is throwing NVarchar abstract error
+		Post post = em.find(Post.class, postId); 		
 		em.close();
 		return post;
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public BlogUser readUser(String userid) {
 		EntityManager em = factory.createEntityManager();
-		BlogUser user = em.find(BlogUser.class, userid); //This is throwing NVarchar abstract error
+		BlogUser user = em.find(BlogUser.class, userid); // This is throwing
+															// NVarchar abstract
+															// error
 		em.close();
 		return user;
 	}
 
 	@Override // We need either update/add comment
 	public void update(Post post) {
-		EntityManager em = factory.createEntityManager();		
+		EntityManager em = factory.createEntityManager();
 		em.getTransaction().begin();
 		em.merge(post);
 		em.getTransaction().commit();
 		em.close();
 	}
-	
+
 	public void addComment() {
-	
+
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public ArrayList<Post> readAllPost() {
 		EntityManager em = factory.createEntityManager();
-		ArrayList<Post> posts = (ArrayList<Post>) em.createNativeQuery("select * from post",Post.class).getResultList();
+		ArrayList<Post> posts = (ArrayList<Post>) em.createNativeQuery("select * from post", Post.class)
+				.getResultList();
 		em.close();
 		return posts;
 	}
-
 
 	@Override
 	public int userCreate(BlogUser user) {
@@ -85,21 +88,33 @@ public class OracleDAOImpl implements DAO {
 		return 0;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public ArrayList<Comments> readComments(int postId) {
-		// TODO Auto-generated method stub
 		EntityManager em = factory.createEntityManager();
-		ArrayList<Comments> comments = null;
-				//(ArrayList<Comment>) em.createNativeQuery("select * from Comment",Comment.class).getResultList();
+		ArrayList<Comments> comments = (ArrayList<Comments>) em
+		.createNativeQuery("select * from comments where post_id = :id", Comments.class)
+		.setParameter("id", postId).getResultList();
 		em.close();
 		return comments;
 	}
-	
-		@SuppressWarnings("unchecked")
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public ArrayList<Comments> readComments(ArrayList<Integer> postIds) {
+		EntityManager em = factory.createEntityManager();
+		ArrayList<Comments> comments = (ArrayList<Comments>) em
+				.createNativeQuery("select * from comments where post_id in :ids", Comments.class)
+				.setParameter("ids", postIds).getResultList();
+		return comments;
+	}
+
+	@SuppressWarnings("unchecked")
 	@Override
 	public ArrayList<BlogUser> readAllUsers() {
 		EntityManager em = factory.createEntityManager();
-		ArrayList<BlogUser> blogUsers = (ArrayList<BlogUser>) em.createNativeQuery("select * from bloguser",BlogUser.class).getResultList();
+		ArrayList<BlogUser> blogUsers = (ArrayList<BlogUser>) em
+				.createNativeQuery("select * from bloguser", BlogUser.class).getResultList();
 		em.close();
 		return blogUsers;
 	}
@@ -108,7 +123,8 @@ public class OracleDAOImpl implements DAO {
 	@Override
 	public ArrayList<String> readUserIds() {
 		EntityManager em = factory.createEntityManager();
-		ArrayList<String> userIds = (ArrayList<String>) em.createNativeQuery("select userid from bloguser").getResultList();
+		ArrayList<String> userIds = (ArrayList<String>) em.createNativeQuery("select userid from bloguser")
+				.getResultList();
 		em.close();
 		return userIds;
 	}
@@ -117,15 +133,17 @@ public class OracleDAOImpl implements DAO {
 	@Override
 	public BlogUser validateLogin(String userId, String password) {
 		EntityManager em = factory.createEntityManager();
-		String validateQuery = "select * from bloguser where "
-				+ " userid = '" + userId + "' and password = '" + password + "'";
-		//System.out.println("The query is : " + validateQuery);
-		ArrayList<BlogUser> blogUsers = (ArrayList<BlogUser>) em.createNativeQuery(validateQuery, BlogUser.class).getResultList();
+		String validateQuery = "select * from bloguser where " + " userid = '" + userId + "' and password = '"
+				+ password + "'";
+		// System.out.println("The query is : " + validateQuery);
+		ArrayList<BlogUser> blogUsers = (ArrayList<BlogUser>) em.createNativeQuery(validateQuery, BlogUser.class)
+				.getResultList();
 		em.close();
-		if(blogUsers.size() == 1){
+		if (blogUsers.size() == 1) {
 			return blogUsers.get(0);
-		}else{
+		} else {
 			return null;
 		}
 	}
+
 }

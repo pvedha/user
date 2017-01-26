@@ -21,7 +21,7 @@ public class TrialDao implements DAO {
 	}
 
 	@Override
-	public Post read(int p) {
+	public Post readPost(int p) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -76,6 +76,12 @@ public class TrialDao implements DAO {
 
 	@Override
 	public BlogUser validateLogin(String userId, String password) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ArrayList<Comments> readComments(ArrayList<Integer> postIds) {
 		// TODO Auto-generated method stub
 		return null;
 	}

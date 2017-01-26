@@ -30,7 +30,7 @@ public class Post {
 	protected Date posted_on;
 	protected String tags;
 	protected String category;
-	// Need to add comment array
+	// Need to add comment array - dont. 
 
 	public Post() {
 

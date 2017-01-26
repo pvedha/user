@@ -16,6 +16,7 @@ import com.blog.api.DuplicateUserException;
 import com.blog.api.InvalidUserException;
 import com.blog.api.Post;
 import com.blog.biz.Blog;
+import com.blog.dto.PostDto;
 
 @Path("/post")
 public class PostController {
@@ -29,7 +30,7 @@ public class PostController {
 	@Path("/all")
 	public Response readAllPosts() {
 		Blog blog = new Blog();
-		ArrayList<Post> posts = blog.readAllPost();
+		ArrayList<PostDto> posts = blog.readAllPost();
 		return Response.ok().entity(posts).build();
 	}
 	

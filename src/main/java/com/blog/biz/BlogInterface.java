@@ -9,11 +9,12 @@ import com.blog.api.InvalidCommentException;
 import com.blog.api.InvalidPostException;
 import com.blog.api.InvalidUserException;
 import com.blog.api.Post;
+import com.blog.dto.PostDto;
 
 public interface BlogInterface {
 	//post
-	ArrayList<Post> readAllPost();
-	Post readPost(int number);
+	ArrayList<PostDto> readAllPost();
+	PostDto readPost(int number);
 	int createPost(Post post);
 	
 	//comment
