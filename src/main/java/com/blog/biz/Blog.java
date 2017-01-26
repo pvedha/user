@@ -48,7 +48,7 @@ public class Blog implements BlogInterface {
 		return postDtos;
 	}
 
-	private PostDto getPostDto(Post post, ArrayList<Comments> comments) {
+	public PostDto getPostDto(Post post, ArrayList<Comments> comments) {
 		PostDto postDto = new PostDto();
 		int postId = post.getPostId();
 		postDto.setPostId(postId);
@@ -152,5 +152,6 @@ public class Blog implements BlogInterface {
 		AuthenticationDto temp = new AuthenticationDto(requestToken.getUsername());
 		return temp.getToken().equals(requestToken.getToken());		
 	}
+	
 
 }

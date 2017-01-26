@@ -2,15 +2,20 @@ package com.blog.api;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.ws.rs.FormParam;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
 @XmlRootElement
 public class BlogUser {
 	@Id
+	@FormParam("userid")
 	protected String userid;
-	protected String name;     
+	@FormParam("name")
+	protected String name; 
+	@FormParam("password")
 	protected String password;
+	@FormParam("about")
 	protected String about;
 	
 	
