@@ -32,5 +32,6 @@ public interface BlogInterface {
 	AuthenticationDto validateLogin(String userId, String password);
 	ArrayList<PostDto> searchPost(String keys) throws InvalidSearchKeyException;
 	int createPostPersist(NewPost newPost);
+	ArrayList<String> readCategory();
 	
 }

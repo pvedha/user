@@ -2,14 +2,13 @@ var userIdsResponse = "";
 var userIdsResponseReceived = false;
 var validUserId = true;
 var currentUserId = "";
+var baseURL = "http://localhost:8080/blog/blog";
 $(document)
 		.ready(
 				function() {
 					$('#trythis-button')
 							.click(function(){
-                               var userIds = getUserIds();
-                               alert(userIds);
-                                alert(userIdsResponse);
+                                       retrieveCategory();                       
                             }
 				    );
                     
@@ -38,7 +37,7 @@ $(document)
                         addUser();
                     });
                                         
-                    $('#new-post-button').click( 
+                    $('#newPost-submit-button').click( 
                         function() {
                         newPost();
                     });
@@ -107,6 +106,8 @@ function getUserIds() {
             })
 };
 
+
+//Main Functionality after logging in. 
 function login() {
     $("#loginMessage").html("Please wait, validating credentials...");
     $("#loginMessagee").css({ 'color': 'green', 'font-size': '100%' });
@@ -128,6 +129,7 @@ function login() {
                     $("#mainPage").show().fadeIn(50000);
                     $("#mainPage").fadeIn(5000);
                     readAllPosts();
+                    retrieveCategory();
                 },
                 error : function(XMLHttpRequest, textStatus, errorThrown) {
                     console.log("Invalid user credentials");

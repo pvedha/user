@@ -9,10 +9,12 @@ import javax.persistence.Persistence;
 import javax.xml.stream.events.Comment;
 
 import com.blog.api.BlogUser;
+import com.blog.api.Category;
 import com.blog.api.Comments;
 import com.blog.api.Post;
 import com.blog.dto.NewPost;
 
+@SuppressWarnings("unchecked")
 public class OracleDAOImpl implements DAO {
 	static EntityManagerFactory factory = Persistence.createEntityManagerFactory("blog");
 
@@ -39,7 +41,7 @@ public class OracleDAOImpl implements DAO {
 	@Override
 	public Post readPost(int postId) {
 		EntityManager em = factory.createEntityManager();
-		Post post = em.find(Post.class, postId); 		
+		Post post = em.find(Post.class, postId);
 		em.close();
 		return post;
 	}
@@ -48,7 +50,7 @@ public class OracleDAOImpl implements DAO {
 	@Override
 	public BlogUser readUser(String userid) {
 		EntityManager em = factory.createEntityManager();
-		BlogUser user = em.find(BlogUser.class, userid); 
+		BlogUser user = em.find(BlogUser.class, userid);
 		em.close();
 		return user;
 	}
@@ -101,8 +103,8 @@ public class OracleDAOImpl implements DAO {
 	public ArrayList<Comments> readComments(int postId) {
 		EntityManager em = factory.createEntityManager();
 		ArrayList<Comments> comments = (ArrayList<Comments>) em
-		.createNativeQuery("select * from comments where post_id = :id", Comments.class)
-		.setParameter("id", postId).getResultList();
+				.createNativeQuery("select * from comments where post_id = :id", Comments.class)
+				.setParameter("id", postId).getResultList();
 		em.close();
 		return comments;
 	}
@@ -137,7 +139,7 @@ public class OracleDAOImpl implements DAO {
 		return userIds;
 	}
 
-	private void tryThis(){
+	private void tryThis() {
 		EntityManager em = factory.createEntityManager();
 		System.out.println("starting transaction");
 		em.getTransaction().begin();
@@ -146,13 +148,12 @@ public class OracleDAOImpl implements DAO {
 		System.out.println("Committed dummy entry");
 		em.close();
 	}
-	
-	@SuppressWarnings("unchecked")
+
 	@Override
 	public BlogUser validateLogin(String userId, String password) {
-		
+
 		tryThis();
-		
+
 		EntityManager em = factory.createEntityManager();
 		String validateQuery = "select * from bloguser where " + " userid = '" + userId + "' and password = '"
 				+ password + "'";
@@ -180,32 +181,53 @@ public class OracleDAOImpl implements DAO {
 	public int postCreate(NewPost newPost) {
 		EntityManager em = factory.createEntityManager();
 		em.getTransaction().begin();
-		int result = em.createNativeQuery("insert into post values((select max(post_id)+1 from post),"
-				+ ":title,:message,:userid,sysdate,:tags,:category)")
-				.setParameter("title", newPost.getTitle())
-				.setParameter("message", newPost.getMessage())
-				.setParameter("userid", newPost.getUserId())
-				.setParameter("tags", newPost.getTags())
-				.setParameter("category", newPost.getCategory())
-				.executeUpdate();
+		int result = em
+				.createNativeQuery("insert into post values((select max(post_id)+1 from post),"
+						+ ":title,:message,:userid,sysdate,:tags,:category)")
+				.setParameter("title", newPost.getTitle()).setParameter("message", newPost.getMessage())
+				.setParameter("userid", newPost.getUserId()).setParameter("tags", newPost.getTags())
+				.setParameter("category", newPost.getCategory()).executeUpdate();
 		em.getTransaction().commit();
 		em.close();
 		return result;
 	}
 
-	@SuppressWarnings({ "unchecked", "null" })
+	@SuppressWarnings("null")
 	@Override
 	public ArrayList<Post> searchPost(ArrayList<String> keys) {
 		EntityManager em = factory.createEntityManager();
 		ArrayList<Post> posts = null;
 		for (String key : keys) {
 			ArrayList<Post> temp = (ArrayList<Post>) em
-				.createNativeQuery("select * from post where title like :key or message like :key'", Post.class)
-				.setParameter("key", "%"+key+"%").getResultList();
-			if (!temp.isEmpty()) posts.addAll(temp);
+					.createNativeQuery("select * from post where title like :key or message like :key'", Post.class)
+					.setParameter("key", "%" + key + "%").getResultList();
+			if (!temp.isEmpty())
+				posts.addAll(temp);
 		}
 		em.close();
-		return posts;		
+		return posts;
+	}
+
+	@Override
+	public ArrayList<String> readCategory() {
+		EntityManager em = factory.createEntityManager();
+		ArrayList<Category> categories = (ArrayList<Category>) em
+				.createNativeQuery("select * from category", Category.class).getResultList();
+		ArrayList<String> categoryString = new ArrayList<>();
+		for (Category category : categories) {
+			categoryString.add(category.getCategory());
+		}
+		return categoryString;
+	}
+
+	@Override
+	public ArrayList<Post> searchByCategory(String category) {
+		EntityManager em = factory.createEntityManager();
+		System.out.println("Search by category " + category);
+		ArrayList<Post> posts = (ArrayList<Post>) em
+				.createNativeQuery("select * from post where category = :cat", Post.class).setParameter("cat", category)
+				.getResultList();
+		return posts;
 	}
 
 }

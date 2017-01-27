@@ -1,5 +1,6 @@
 package com.blog.biz;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import com.blog.api.BlogUser;
@@ -55,9 +56,8 @@ public class Blog implements BlogInterface {
 		postDto.setTitle(post.getTitle());
 		postDto.setMessage(post.getMessage());
 		postDto.setPostedBy(post.getPostedBy().getUserid());
-		postDto.setTags(post.getTags());
-		postDto.setPosted_on(post.getCreatedOn());
-		postDto.setPosted_on(post.getCreatedOn().toString());
+		postDto.setTags(post.getTags());		
+		postDto.setPosted_on(new SimpleDateFormat("dd-MMM-yyyy, HH:mm:ss").format(post.getCreatedOn()));
 		postDto.setCategory(post.getCategory());
 
 		// This needs a better logic like multimap.
@@ -182,5 +182,16 @@ public class Blog implements BlogInterface {
 		//post.setCreatedOn(new java.sql.Date(new java.util.Date().getTime()));
 		return dao.postCreate(post);
 	}
+
+	@Override
+	public ArrayList<String> readCategory() {		
+		return dao.readCategory();
+	}
+
+	public ArrayList<PostDto> searchByCategory(String category) {
+		ArrayList<Post> posts = dao.searchByCategory(category);
+		ArrayList<Comments> comments = dao.readComments(getPostIds(posts));
+		return getPostDto(posts, comments);
+	}	
 
 }

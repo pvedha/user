@@ -46,8 +46,8 @@ public class PostController {
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	@Path("/search")
-	public Response search(String keys) throws InvalidSearchKeyException {
+	@Path("/search/{keys}")
+	public Response search(@PathParam("keys") String keys) throws InvalidSearchKeyException {
 		Blog blog = new Blog();
 		ArrayList<PostDto> posts = blog.searchPost(keys);
 		return Response.ok().entity(posts).build();
@@ -55,11 +55,14 @@ public class PostController {
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	@Path("/version")
-	public Response getVersion() {
-		return Response.ok().entity("1.2").build();
+	@Path("/category/{category}")
+	public Response searchByCategory(@PathParam("category") String category) throws InvalidSearchKeyException {
+		Blog blog = new Blog();
+		ArrayList<PostDto> posts = blog.searchByCategory(category);
+		return Response.ok().entity(posts).build();
 	}
 	
+	//not used??
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("/makePost")
