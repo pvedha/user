@@ -29,9 +29,9 @@ function newPost(){
                     //displayPosts(response);
                     console.log("Posting done");
                     $("#new-post-info").html("Successfullt Posted.");
-                    //$("#post-div").hide();//.fadeOut(5000);
+                    $("#new-post-div").fadeOut(2000);//.fadeOut(5000);
                     $("#new-post-div").hide();//.fadeIn(5000);
-                     $("#post-div").fadeIn(2000);
+                    $("#post-div").fadeIn(2000);
                     readAllPosts();
                     
                 },

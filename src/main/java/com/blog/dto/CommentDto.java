@@ -1,6 +1,7 @@
 package com.blog.dto;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 public class CommentDto {
 
@@ -8,7 +9,7 @@ public class CommentDto {
 	private int postId;
 	private String message;
 	private String userId;
-	private Date postedOn;
+	private Timestamp postedOn;
 	
 	
 	public CommentDto() {
@@ -56,11 +57,11 @@ public class CommentDto {
 	}
 
 
-	public Date getPostedOn() {
+	public Timestamp getPostedOn() {
 		return postedOn;
 	}
 
-	public void setPostedOn(Date postedOn) {
+	public void setPostedOn(Timestamp postedOn) {
 		this.postedOn = postedOn;
 	}
 	

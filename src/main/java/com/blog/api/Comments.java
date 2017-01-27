@@ -1,6 +1,7 @@
 package com.blog.api;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -24,7 +25,7 @@ public class Comments {
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "posted_by")
 	protected BlogUser postedBy;
-	protected Date posted_on;
+	protected Timestamp posted_on;
 	
 	public int getCommentId() {
 		return comment_Id;
@@ -58,11 +59,11 @@ public class Comments {
 		this.postedBy = postedBy;
 	}
 
-	public Date getPostedOn() {
+	public Timestamp getPostedOn() {
 		return posted_on;
 	}
 
-	public void setPostedOn(Date posted_on) {
+	public void setPostedOn(Timestamp posted_on) {
 		this.posted_on = posted_on;
 	}
 
@@ -71,7 +72,7 @@ public class Comments {
 		
 	}
 
-	public Comments(int comment_Id, int post_Id, String message, BlogUser postedBy, Date posted_on) {
+	public Comments(int comment_Id, int post_Id, String message, BlogUser postedBy, Timestamp posted_on) {
 		super();
 		this.comment_Id = comment_Id;
 		this.post_Id = post_Id;

@@ -16,7 +16,7 @@ public class PostDto {
 	private String title;
 	private String message;	
 	private String postedBy;
-	private Date posted_on;
+	private String posted_on;
 	private String tags;
 	private String category;
 	private ArrayList<CommentDto> comments = new ArrayList<>();
@@ -55,11 +55,11 @@ public class PostDto {
 		this.postedBy = postedBy;
 	}
 
-	public Date getPosted_on() {
+	public String getPosted_on() {
 		return posted_on;
 	}
 
-	public void setPosted_on(Date posted_on) {
+	public void setPosted_on(String posted_on) {
 		this.posted_on = posted_on;
 	}
 

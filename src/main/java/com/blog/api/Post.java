@@ -1,10 +1,15 @@
 package com.blog.api;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Embedded;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.GeneratedValue;
@@ -15,19 +20,18 @@ import org.hibernate.annotations.ForeignKey;
 import org.hibernate.annotations.Nationalized;
 
 @Entity
-@XmlRootElement
 public class Post {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO) // Check whether this works
-													// while posting
+	//@GeneratedValue(strategy = GenerationType.AUTO) // Check whether this works
+											// while posting
 	protected int post_Id;
 	protected String title;
 	protected String message;
-	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "posted_by")
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+	@JoinColumn(name = "posted_by", referencedColumnName="userid")	
 	protected BlogUser postedBy;
-	protected Date posted_on;
+	protected Timestamp posted_on;
 	protected String tags;
 	protected String category;
 	// Need to add comment array - dont. 
@@ -36,7 +40,7 @@ public class Post {
 
 	}
 
-	public Post(int postId, String title, String message, BlogUser postedBy, Date createdOn, String tags,
+	public Post(int postId, String title, String message, BlogUser postedBy, Timestamp createdOn, String tags,
 			String category) {
 		super();
 		this.post_Id = postId;
@@ -80,11 +84,11 @@ public class Post {
 		this.postedBy = postedBy;
 	}
 
-	public Date getCreatedOn() {
+	public Timestamp getCreatedOn() {
 		return posted_on;
 	}
 
-	public void setCreatedOn(Date createdOn) {
+	public void setCreatedOn(Timestamp createdOn) {
 		this.posted_on = createdOn;
 	}
 

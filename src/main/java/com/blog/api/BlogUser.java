@@ -1,12 +1,13 @@
 package com.blog.api;
 
+import javax.persistence.Embeddable;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.ws.rs.FormParam;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
-@XmlRootElement
 public class BlogUser {
 	@Id
 	@FormParam("userid")

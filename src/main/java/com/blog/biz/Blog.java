@@ -57,6 +57,7 @@ public class Blog implements BlogInterface {
 		postDto.setPostedBy(post.getPostedBy().getUserid());
 		postDto.setTags(post.getTags());
 		postDto.setPosted_on(post.getCreatedOn());
+		postDto.setPosted_on(post.getCreatedOn().toString());
 		postDto.setCategory(post.getCategory());
 
 		// This needs a better logic like multimap.
@@ -157,14 +158,6 @@ public class Blog implements BlogInterface {
 
 	@Override
 	public int createPost(NewPost newPost) {
-//		Post post = new Post();
-//		post.setPostId(dao.getNextPostId());
-//		post.setPostedBy(dao.readUser(newPost.getUserId()));
-//		post.setTitle(newPost.getTitle());
-//		post.setMessage(newPost.getMessage());
-//		post.setTags(newPost.getTags());
-//		post.setCategory(newPost.getCategory());
-//		post.setCreatedOn(new java.sql.Date(new java.util.Date().getTime()));
 		return dao.postCreate(newPost);
 	}
 	
@@ -177,5 +170,17 @@ public class Blog implements BlogInterface {
 		return getPostDto(posts, comments);
 	}
 	
+	@Override
+	public int createPostPersist(NewPost newPost) {
+		Post post = new Post();
+		post.setPostId(dao.getNextPostId());
+		post.setPostedBy(dao.readUser(newPost.getUserId()));
+		post.setTitle(newPost.getTitle());
+		post.setMessage(newPost.getMessage());
+		post.setTags(newPost.getTags());
+		post.setCategory(newPost.getCategory());
+		//post.setCreatedOn(new java.sql.Date(new java.util.Date().getTime()));
+		return dao.postCreate(post);
+	}
 
 }

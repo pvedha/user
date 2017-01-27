@@ -19,9 +19,18 @@ public class OracleDAOImpl implements DAO {
 	@Override
 	public int postCreate(Post post) {
 		EntityManager em = factory.createEntityManager();
+		System.out.println("Beginning post persistance " + post.getPostId() + post.getPostedBy().getUserid());
 		em.getTransaction().begin();
+		System.out.println("Post Id for submitting " + post.getPostId());
+		System.out.println("User id is " + post.getPostedBy().getUserid());
+		BlogUser user = em.find(BlogUser.class, post.getPostedBy().getUserid());
+		System.out.println("Received user id " + user.getUserid());
+		em.merge(user);
+		post.setPostedBy(user);
 		em.persist(post);
+		System.out.println("did persist");
 		em.getTransaction().commit();
+		System.out.println("committed");
 		em.close();
 		return post.getPostId();
 	}
@@ -39,9 +48,7 @@ public class OracleDAOImpl implements DAO {
 	@Override
 	public BlogUser readUser(String userid) {
 		EntityManager em = factory.createEntityManager();
-		BlogUser user = em.find(BlogUser.class, userid); // This is throwing
-															// NVarchar abstract
-															// error
+		BlogUser user = em.find(BlogUser.class, userid); 
 		em.close();
 		return user;
 	}
@@ -172,24 +179,15 @@ public class OracleDAOImpl implements DAO {
 	@Override
 	public int postCreate(NewPost newPost) {
 		EntityManager em = factory.createEntityManager();
-		String query = "insert into post values((select max(post_id)+1 from post),'"
-				+ newPost.getTitle() + "','" + newPost.getMessage() + "','" 
-				+ newPost.getUserId() + "',sysdate, '" + newPost.getTags() + "','"
-				+ newPost.getCategory() + "')";
 		em.getTransaction().begin();
-		System.out.println("The query formed is " + query);
-		String query2 = "insert into post values (6,'6','6','pvedha',sysdate,'t','c')";
-		int result = em.createNativeQuery(query).executeUpdate();
-		System.out.println("Execution completed");
-//		
-//		int resultx = em.createNativeQuery("insert into post values((select max(post_id)+1 from post),"
-//				+ ":title,:message,:userid,sysdate,:tags,:category)")
-//				.setParameter("title", newPost.getTitle())
-//				.setParameter("message", newPost.getMessage())
-//				.setParameter("userid", newPost.getTitle())
-//				.setParameter("tags", newPost.getTitle())
-//				.setParameter("category", newPost.getTitle())
-//				.executeUpdate();
+		int result = em.createNativeQuery("insert into post values((select max(post_id)+1 from post),"
+				+ ":title,:message,:userid,sysdate,:tags,:category)")
+				.setParameter("title", newPost.getTitle())
+				.setParameter("message", newPost.getMessage())
+				.setParameter("userid", newPost.getUserId())
+				.setParameter("tags", newPost.getTags())
+				.setParameter("category", newPost.getCategory())
+				.executeUpdate();
 		em.getTransaction().commit();
 		em.close();
 		return result;

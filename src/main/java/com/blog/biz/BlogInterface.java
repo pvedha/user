@@ -31,5 +31,6 @@ public interface BlogInterface {
 	int createUser(BlogUser user) throws InvalidUserException, DuplicateUserException;
 	AuthenticationDto validateLogin(String userId, String password);
 	ArrayList<PostDto> searchPost(String keys) throws InvalidSearchKeyException;
+	int createPostPersist(NewPost newPost);
 	
 }
