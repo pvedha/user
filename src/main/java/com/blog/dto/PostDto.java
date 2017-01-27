@@ -15,8 +15,9 @@ public class PostDto {
 	private int postId;
 	private String title;
 	private String message;	
-	private String postedBy;
-	private String posted_on;
+	private String userId;
+	private String userName;
+	private String postedOn;
 	private String tags;
 	private String category;
 	private ArrayList<CommentDto> comments = new ArrayList<>();
@@ -48,19 +49,19 @@ public class PostDto {
 	}
 
 	public String getPostedBy() {
-		return postedBy;
+		return userId;
 	}
 
 	public void setPostedBy(String postedBy) {
-		this.postedBy = postedBy;
+		this.userId = postedBy;
 	}
 
-	public String getPosted_on() {
-		return posted_on;
+	public String getPostedOn() {
+		return postedOn;
 	}
 
-	public void setPosted_on(String posted_on) {
-		this.posted_on = posted_on;
+	public void setPostedOn(String postedOn) {
+		this.postedOn = postedOn;
 	}
 
 	public String getTags() {
@@ -85,6 +86,18 @@ public class PostDto {
 
 	public void setComments(ArrayList<CommentDto> comments) {
 		this.comments = comments;
+	}
+	public String getUserId() {
+		return userId;
+	}
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 
 	

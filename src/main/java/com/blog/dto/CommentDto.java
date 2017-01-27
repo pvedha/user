@@ -9,7 +9,7 @@ public class CommentDto {
 	private int postId;
 	private String message;
 	private String userId;
-	private Timestamp postedOn;
+	private String postedOn;
 	
 	
 	public CommentDto() {
@@ -57,11 +57,11 @@ public class CommentDto {
 	}
 
 
-	public Timestamp getPostedOn() {
+	public String getPostedOn() {
 		return postedOn;
 	}
 
-	public void setPostedOn(Timestamp postedOn) {
+	public void setPostedOn(String postedOn) {
 		this.postedOn = postedOn;
 	}
 	

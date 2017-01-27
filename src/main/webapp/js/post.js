@@ -62,7 +62,7 @@ function readAllPosts(){
                 accept : 'application/json',
                 global: false,
                 success : function(response) {
-                    //$("#viewForm").hide();
+                    //$("#viewForm").hide();                    
                     displayPosts(response);
                     
                 },
@@ -126,26 +126,70 @@ function searchAllPosts(searchString){
 
 
 function displayPosts(response){
+    readPostResponse = response;
     console.log("Reading posts done.");
     $("#post-contents").html(""); 
     var htmlContent = "";
     for(i=0;i<response.length;i++){
         var post = response[i];
-        htmlContent += "<p class='post-title'> " + post.title + "</p>";
+        htmlContent += "<a href='#' onClick=viewPost(" + response[i].postId + ")><p class='post-title'> " + post.title + "</p></a>";
         htmlContent += "<p class='post-message'> ";
         if(post.message.length > 200){
-            htmlContent += post.message.substring(0,200) + ".....<a href='#'> read more </a>"; 
+            htmlContent += post.message.substring(0,200) + ".....<a href='#' onClick=viewPost(" + response[i].postId + ")> read more </a>"; 
         } else {
             htmlContent += post.message; 
         }
 
-        htmlContent += "</p><p class='post-detail'>By : <b>" + post.postedBy + "</b> ,<span>   </span> On : " 
-            + post.posted_on +", " + post.comments.length + " Comments</p>";
+        htmlContent += "</p><p class='post-detail'>By : <b>" + post.userName + "</b> ,<span>   </span> On : " 
+            + post.postedOn +", " + post.comments.length + " Comments</p>";
         htmlContent += "<hr style='height:0.5px; margin: 10px 0 10px 0' color=white >"
     }
     $("#post-contents").append(htmlContent);
     $("#post-info").html("");
 }
+
+function viewPost(postId) {
+        
+    if(readPostResponse.length === 0){
+        console.log("Couldnt display the selected post");
+        $("#view-post-info").html("Couldnt display the selected post");
+        $("#view-post-info").css({ 'color': 'green', 'font-size': '100%' });        
+        return;
+    }    
+    
+    currentPostId = postId;
+    for(i=0;i<readPostResponse.length;i++){
+        console.log("postId is" + postId + " responseItemPostId is " + readPostResponse[i].postId);
+        if(postId === readPostResponse[i].postId){
+            currentPost = readPostResponse[i];
+            console.log("CurrentPost retrieved as " + currentPost);
+            break;
+        }
+    }
+ console.log("CurrentPost processing as " + currentPost);
+    $("#view-post-title").html(currentPost.title);
+    $("#view-post-message").html(currentPost.message);
+    $("#view-post-by").html(currentPost.userName);
+    $("#view-post-time").html(currentPost.postedOn);
+    $("#view-post-tags").html(currentPost.tags);
+    $("#view-post-category").html(currentPost.category);
+
+    currentPostComments = currentPost.comments;
+    var htmlContent = "";
+    for(i=0;i<currentPostComments.length;i++){
+        var comment = currentPostComments[i];
+        htmlContent += "<hr style='height:0.5px; margin: 10px 0 10px 0' color=white ><p class='post-message'>" + comment.message + "</p>";         
+
+
+        htmlContent += "<p class='post-detail'>By : <b>" + comment.userId + "</b> ,<span>   </span> On : " 
+            + comment.postedOn + "</p>";
+        //htmlContent += "<hr style='height:0.5px; margin: 10px 0 10px 0' color=white >"
+    }        
+    $("#view-post-comments-div").html(htmlContent);
+    showViewPostView();
+    
+}
+
 
 function showNewPost(){
     $("#post-div").hide()//.fadeOut(1000);
@@ -159,7 +203,18 @@ function showNewPost(){
 function showPostsView(){
     $("#new-post-div").fadeOut(2000);//.fadeOut(5000);
     $("#new-post-div").hide();//.fadeIn(5000);
+    $("#view-post-div").hide();
     $("#post-div").fadeIn(2000);
+}
+
+function showViewPostView(){
+    $("#new-post-div").fadeOut(2000);//.fadeOut(5000);
+    $("#new-post-div").hide();//.fadeIn(5000);
+    $("#post-div").fadeOut(2000);
+    $("#post-div").hide();
+    $("#view-post-div").fadeIn(2000);
+    
+    
 }
 
 function retrieveCategory () {

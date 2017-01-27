@@ -57,7 +57,7 @@
 			<div id="shortlinks-div" class="left-div">
 				<h2>Quick Links</h2>
 				<br>
-				<a href='#' class='quicklink-links' href='#' onClick=readAllPosts()>Load All Posts</a><hr>
+				<a class='quicklink-links' href='#' onClick=readAllPosts()>Load All Posts</a><hr>
                 
 				<p class="quicklink-title">Categories</p>
 				<div id="category-links"></div><hr>
@@ -69,6 +69,31 @@
 				<h2>Latest Posts</h2>
 				<h4 id="post-info"></h4>
 				<div id="post-contents"></div>
+			</div>
+            <div id="view-post-div" class="center-div">
+				<h2>View Post</h2>
+                <h4 id="view-post-info"></h4>
+                <p id="view-post-title" class="view-post-title">Title comes here</p>
+				<p id="view-post-message" class="post-message">a big messages come herea big messages come herea big messages come herea big messages come herea big messages come herea big messages come herea big messages come herea big messages come herea big messages come herea big messages come herea big messages come herea big messages come herea big messages come here</p>
+                <div class="view-post-detail-div">
+                    <p id="view-post-by" class="view-post-detail">Posted by : <b>User Name</b> </p>
+                    <p id="view-post-time" class="view-post-detail">Posted On : <b>time comes here</b></p>
+                    <p id="view-post-tags" class="view-post-detail">Tags : <b>tags comes here</b></p>
+                    <p id="view-post-category" class="view-post-detail">Category : <b>category comes here</b></p>
+                </div>
+                <hr>
+                <p class="quicklink-title"> Comments </p>
+                <div id="view-post-comments-div"></div>         
+                
+                
+                <hr>
+                <form id="post-comment-form" class="signin-form">
+                    <textarea id="comment-textarea" placeholder="Enter your comment"></textarea>
+                    <button id="post-comment-button" class="btn1">Post Comment</button>
+                    </form>
+                    
+                
+                <div id="view-post-comments"></div>
 			</div>
 			<div id="new-post-div" class="center-div">
 				<h2>Add a new Post</h2>

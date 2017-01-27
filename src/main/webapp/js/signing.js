@@ -2,7 +2,12 @@ var userIdsResponse = "";
 var userIdsResponseReceived = false;
 var validUserId = true;
 var currentUserId = "";
-var baseURL = "http://localhost:8080/blog/blog";
+var url= "http://localhost:8080/blog"
+var baseURL = url + "/blog";
+var readPostResponse;
+var currentPostId = 0;
+var currentPost;
+
 $(document)
 		.ready(
 				function() {
@@ -73,12 +78,6 @@ function addUser() {
                     $("#signup-title")
                             .html("Sorry invalid details, please try again. " + textStatus + " : " + errorThrown);		
                 },
-//                                                    error : function(response) {
-//                                                        alert("failed");
-//														$("#signup-title")
-//																.html(
-//																		"Invalid details, Please try again" + response);													
-//													},
                 data : JSON.stringify(data),                                                    
             });
 };
@@ -123,6 +122,7 @@ function login() {
                     //$("#viewForm").hide();
                     console.log("Valid user");
                     $("#user-div").html("<br>User : " + response.name + "<p><i>" + response.about);
+                    $("#user-div").append("<a href='" + url + "'>Sign out</a>");
                     currentUserId = response.userId;
                     console.log("user id assigned" + currentUserId + "complete response "  + response);
                     $("#loginPage").hide();

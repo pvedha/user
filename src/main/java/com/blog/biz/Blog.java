@@ -56,8 +56,9 @@ public class Blog implements BlogInterface {
 		postDto.setTitle(post.getTitle());
 		postDto.setMessage(post.getMessage());
 		postDto.setPostedBy(post.getPostedBy().getUserid());
+		postDto.setUserName(post.getPostedBy().getName());
 		postDto.setTags(post.getTags());		
-		postDto.setPosted_on(new SimpleDateFormat("dd-MMM-yyyy, HH:mm:ss").format(post.getCreatedOn()));
+		postDto.setPostedOn(new SimpleDateFormat("dd-MMM-yyyy, HH:mm:ss").format(post.getCreatedOn()));
 		postDto.setCategory(post.getCategory());
 
 		// This needs a better logic like multimap.
@@ -69,7 +70,7 @@ public class Blog implements BlogInterface {
 				commentDto.setCommentId(comment.getCommentId());
 				commentDto.setPostId(comment.getPostId());
 				commentDto.setMessage(comment.getMessage());
-				commentDto.setPostedOn(comment.getPostedOn());
+				commentDto.setPostedOn(new SimpleDateFormat("dd-MMM-yyyy, HH:mm:ss").format(comment.getPostedOn()));
 				commentDto.setUserId(comment.getPostedBy().getUserid());
 
 				postComments.add(commentDto);
