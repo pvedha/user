@@ -4,7 +4,7 @@ function newPost(){
     
     var userId = currentUserId;
     console.log("Current User" + currentUserId);
-    userId = "bloguser";
+//    userId = "bloguser";
     var title = $("#new-post-title").val();
     var message = $("#new-post-message").val();
     var tags = $("#new-post-tags").val();

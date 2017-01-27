@@ -123,8 +123,8 @@ function login() {
                     //$("#viewForm").hide();
                     console.log("Valid user");
                     $("#user-div").html("<br>User : " + response.name + "<p><i>" + response.about);
-                    currentUserId = response.userid;
-                    console.log("user id assigned" + currentUserId);
+                    currentUserId = response.userId;
+                    console.log("user id assigned" + currentUserId + "complete response "  + response);
                     $("#loginPage").hide();
                     $("#mainPage").show().fadeIn(50000);
                     $("#mainPage").fadeIn(5000);

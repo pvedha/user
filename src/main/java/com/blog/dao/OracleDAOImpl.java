@@ -8,6 +8,8 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.xml.stream.events.Comment;
 
+import org.hibernate.exception.SQLGrammarException;
+
 import com.blog.api.BlogUser;
 import com.blog.api.Category;
 import com.blog.api.Comments;
@@ -152,8 +154,6 @@ public class OracleDAOImpl implements DAO {
 	@Override
 	public BlogUser validateLogin(String userId, String password) {
 
-		tryThis();
-
 		EntityManager em = factory.createEntityManager();
 		String validateQuery = "select * from bloguser where " + " userid = '" + userId + "' and password = '"
 				+ password + "'";
@@ -223,11 +223,24 @@ public class OracleDAOImpl implements DAO {
 	@Override
 	public ArrayList<Post> searchByCategory(String category) {
 		EntityManager em = factory.createEntityManager();
-		System.out.println("Search by category " + category);
-		ArrayList<Post> posts = (ArrayList<Post>) em
-				.createNativeQuery("select * from post where category = :cat", Post.class).setParameter("cat", category)
-				.getResultList();
-		return posts;
+		System.out.println("Search by category 1 " + category);
+		try {
+			ArrayList<Post> posts = (ArrayList<Post>) em
+					.createNativeQuery("select * from post where category = :cat", Post.class)
+					.setParameter("cat", category).getResultList();
+			return posts;
+		} catch (SQLGrammarException sqlE) {
+			System.out.println("Caught SQL Grammer exception");
+			return new ArrayList<Post>();
+		} catch (javax.persistence.PersistenceException sqlP) {
+			System.out.println("Caught SQL Grammer exception");
+			return new ArrayList<Post>();
+		}
+
+		catch (Exception e) {
+			System.out.println("Exception for empty list ");
+			return new ArrayList<Post>();
+		}
 	}
 
 }

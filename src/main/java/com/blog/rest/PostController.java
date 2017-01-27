@@ -58,7 +58,12 @@ public class PostController {
 	@Path("/category/{category}")
 	public Response searchByCategory(@PathParam("category") String category) throws InvalidSearchKeyException {
 		Blog blog = new Blog();
-		ArrayList<PostDto> posts = blog.searchByCategory(category);
+		ArrayList<PostDto> posts = new ArrayList<>();
+		try{
+			posts = blog.searchByCategory(category);
+		} catch (Exception e){
+			System.out.println("Exception caught in search by category " + e.getMessage());			
+		}	
 		return Response.ok().entity(posts).build();
 	}
 	

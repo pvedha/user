@@ -7,3 +7,13 @@ But removing static and couple of compilations later adding static again fixed i
 
 Squirrel showing entries as <other> for nvarchar2 contents. 
  
+ 
+ em.query results in SQLGrammarException if no rows match. Ex:
+ ArrayList<Post> posts = (ArrayList<Post>) em
+					.createNativeQuery("select * from post where category = :cat", Post.class)
+					.setParameter("cat", category).getResultList();
+					
+No solution yet?
+
+Persisting and committing Post object that contains BlogUser object (ManytoOne) results in inserting BlogUser object
+No solution yet?
