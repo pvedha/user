@@ -7,6 +7,7 @@ import com.blog.api.Comments;
 import com.blog.api.DuplicateUserException;
 import com.blog.api.InvalidCommentException;
 import com.blog.api.InvalidPostException;
+import com.blog.api.InvalidSearchKeyException;
 import com.blog.api.InvalidUserException;
 import com.blog.api.Post;
 import com.blog.dto.AuthenticationDto;
@@ -29,5 +30,6 @@ public interface BlogInterface {
 	ArrayList<String> readUserIds();
 	int createUser(BlogUser user) throws InvalidUserException, DuplicateUserException;
 	AuthenticationDto validateLogin(String userId, String password);
+	ArrayList<PostDto> searchPost(String keys) throws InvalidSearchKeyException;
 	
 }

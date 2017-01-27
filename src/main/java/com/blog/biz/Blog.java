@@ -1,13 +1,13 @@
 package com.blog.biz;
 
 import java.util.ArrayList;
-import java.util.Date;
-
+import java.util.Arrays;
 import com.blog.api.BlogUser;
 import com.blog.api.Comments;
 import com.blog.api.DuplicateUserException;
 import com.blog.api.InvalidCommentException;
 import com.blog.api.InvalidPostException;
+import com.blog.api.InvalidSearchKeyException;
 import com.blog.api.InvalidUserException;
 import com.blog.api.Post;
 import com.blog.dao.DAO;
@@ -166,6 +166,15 @@ public class Blog implements BlogInterface {
 //		post.setCategory(newPost.getCategory());
 //		post.setCreatedOn(new java.sql.Date(new java.util.Date().getTime()));
 		return dao.postCreate(newPost);
+	}
+	
+	public ArrayList<PostDto> searchPost(String keys) throws InvalidSearchKeyException {
+		if (keys == null || keys.isEmpty()) 
+			throw new InvalidSearchKeyException();
+		ArrayList<String> keyList = new ArrayList(Arrays.asList(keys.split("\\s")));
+		ArrayList<Post> posts = dao.searchPost(keyList);
+		ArrayList<Comments> comments = dao.readComments(getPostIds(posts));
+		return getPostDto(posts, comments);
 	}
 	
 

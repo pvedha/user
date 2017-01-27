@@ -13,6 +13,7 @@ import javax.ws.rs.core.Response;
 
 import com.blog.api.BlogUser;
 import com.blog.api.DuplicateUserException;
+import com.blog.api.InvalidSearchKeyException;
 import com.blog.api.InvalidUserException;
 import com.blog.api.Post;
 import com.blog.biz.Blog;
@@ -41,6 +42,15 @@ public class PostController {
 	public Response read(@PathParam("no") int number) {
 		Blog blog = new Blog();
 		return Response.ok().entity(blog.readPost(number)).build();
+	}
+	
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/search")
+	public Response search(String keys) throws InvalidSearchKeyException {
+		Blog blog = new Blog();
+		ArrayList<PostDto> posts = blog.searchPost(keys);
+		return Response.ok().entity(posts).build();
 	}
 	
 	@GET

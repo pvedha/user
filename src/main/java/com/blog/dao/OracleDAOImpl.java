@@ -195,4 +195,19 @@ public class OracleDAOImpl implements DAO {
 		return result;
 	}
 
+	@SuppressWarnings({ "unchecked", "null" })
+	@Override
+	public ArrayList<Post> searchPost(ArrayList<String> keys) {
+		EntityManager em = factory.createEntityManager();
+		ArrayList<Post> posts = null;
+		for (String key : keys) {
+			ArrayList<Post> temp = (ArrayList<Post>) em
+				.createNativeQuery("select * from post where title like :key or message like :key'", Post.class)
+				.setParameter("key", "%"+key+"%").getResultList();
+			if (!temp.isEmpty()) posts.addAll(temp);
+		}
+		em.close();
+		return posts;		
+	}
+
 }

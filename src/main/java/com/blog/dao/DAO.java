@@ -23,4 +23,5 @@ public interface DAO {
 	ArrayList<Comments> readComments(ArrayList<Integer> postIds);
 	int getNextPostId();
 	int postCreate(NewPost newPost);
+	ArrayList<Post> searchPost(ArrayList<String> keys);
 }
