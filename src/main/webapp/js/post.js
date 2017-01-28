@@ -192,29 +192,25 @@ function viewPost(postId) {
 
 
 function showNewPost(){
-    $("#post-div").hide()//.fadeOut(1000);
-    $("#new-post-div").fadeIn(2000);
+    $("#post-div").hide();
+    $("#view-post-div").hide();
     $("#new-post-title").val("");
     $("#new-post-message").val("");
     $("#new-post-tags").val("");
     $("#new-post-info").html("");    
+    $("#new-post-div").slideDown(1000);
 }
 
 function showPostsView(){
-    $("#new-post-div").fadeOut(2000);//.fadeOut(5000);
-    $("#new-post-div").hide();//.fadeIn(5000);
+    $("#new-post-div").hide();//.fadeOut(5000);
     $("#view-post-div").hide();
     $("#post-div").fadeIn(2000);
 }
 
 function showViewPostView(){
-    $("#new-post-div").fadeOut(2000);//.fadeOut(5000);
-    $("#new-post-div").hide();//.fadeIn(5000);
-    $("#post-div").fadeOut(2000);
+    $("#new-post-div").hide();
     $("#post-div").hide();
-    $("#view-post-div").fadeIn(2000);
-    
-    
+    $("#view-post-div").fadeIn(2000);    
 }
 
 function retrieveCategory () {

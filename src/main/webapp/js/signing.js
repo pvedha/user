@@ -2,8 +2,8 @@ var userIdsResponse = "";
 var userIdsResponseReceived = false;
 var validUserId = true;
 var currentUserId = "";
-var url= "http://localhost:8080/blog"
-var baseURL = url + "/blog";
+var url= window.location.href;
+var baseURL = url + "blog"; //project base
 var readPostResponse;
 var currentPostId = 0;
 var currentPost;
@@ -19,9 +19,6 @@ $(document)
                     
                     $('#trythis2-button')
 							.click(function(){                               
-                               //alert(userIdsResponseReceived + userIdsResponse);
-//                                console.log(userIdsResponse[2]);
-//                                console.log(userIdsResponse.length);
                                 readAllPosts();
                             }
 				    );
@@ -172,3 +169,16 @@ function toggleSignform(){
         $("#signup-form").toggle();
         $("#signin-form").toggle();
     } 
+
+
+function skipLogin(){
+    $("#user-div").html("<br><p class='User : debugger <p><i> A quick way to debug");
+                    $("#user-div").append("<a href='" + url + "'>Sign out</a>");
+                    currentUserId = "u";
+                    console.log("user id assigned" + currentUserId);
+                    $("#loginPage").hide();
+                    $("#mainPage").show().fadeIn(50000);
+                    $("#mainPage").fadeIn(5000);
+                    readAllPosts();
+                    retrieveCategory();
+}
