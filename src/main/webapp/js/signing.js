@@ -12,17 +12,18 @@ $(document)
 		.ready(
 				function() {
                     
-                    console.log("1" + window.location.host);
-                    console.log("2" + window.location.href);
-                    console.log("3" + window.location.pathname);
-                    console.log("4" + window.location.protocol);
-
-                    
                     $("#search-text").focusin(function(){
                         $("#search-text").animate({width: "350px"});
                     });
                     $("#search-text").focusout(function(){
                         $("#search-text").animate({width: "150px"});
+                        $("#search-text").val("");
+                    });
+                    $("#search-text").keypress(function(event){	
+                        var keycode = (event.keyCode ? event.keyCode : event.which);
+                        if(keycode == '13'){
+                            alert('Call the search function from here');	
+                        }
                     });
                     
                     $('#trythis-button')
