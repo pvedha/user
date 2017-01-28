@@ -204,7 +204,7 @@ public class OracleDAOImpl implements DAO {
 				query = query + " or ";
 			}			
 		}
-		System.out.println(query);
+		
 		ArrayList<Post> posts = (ArrayList<Post>) em
 				.createNativeQuery(query, Post.class)
 				.getResultList();
