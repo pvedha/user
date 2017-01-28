@@ -1,14 +1,6 @@
 package com.blog.dto;
 
-import java.sql.Date;
 import java.util.ArrayList;
-
-import javax.persistence.CascadeType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-
-import com.blog.api.BlogUser;
-import com.blog.api.Comments;
 
 public class PostDto {
 

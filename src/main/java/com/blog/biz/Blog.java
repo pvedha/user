@@ -3,6 +3,7 @@ package com.blog.biz;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+
 import com.blog.api.BlogUser;
 import com.blog.api.Comments;
 import com.blog.api.DuplicateUserException;
@@ -107,7 +108,6 @@ public class Blog implements BlogInterface {
 		if (dao.readUser(user.getUserid()) != null) {
 			throw new DuplicateUserException();
 		}
-		;
 		return dao.userCreate(user);
 	}
 
@@ -188,11 +188,22 @@ public class Blog implements BlogInterface {
 	public ArrayList<String> readCategory() {		
 		return dao.readCategory();
 	}
-
+	
+	@Override
 	public ArrayList<PostDto> searchByCategory(String category) {
 		ArrayList<Post> posts = dao.searchByCategory(category);
 		ArrayList<Comments> comments = dao.readComments(getPostIds(posts));
 		return getPostDto(posts, comments);
 	}	
 
+	@Override
+	public boolean addFavourite(String userId, int postId){
+		return dao.addFavourite(userId, postId);
+	}
+	
+	@Override
+	public boolean removeFavourite(String userId, int postId){
+		return dao.removeFavourite(userId, postId);
+	}
+	
 }

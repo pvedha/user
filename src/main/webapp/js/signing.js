@@ -133,7 +133,7 @@ function login() {
                 success : function(response) {
                     //$("#viewForm").hide();
                     console.log("Valid user");
-                    $("#user-div").html("<br>User : " + response.name + "<p><i>" + response.about);
+                    $("#user-div").html("<br>User : <b>" + response.name + "</b><p><i>" + response.about);
                     $("#user-div").append("<a href='" + url + "'>Sign out</a>");
                     currentUserId = response.userId;
                     console.log("user id assigned" + currentUserId + "complete response "  + response);
@@ -187,13 +187,13 @@ function toggleSignform(){
 
 
 function skipLogin(){
-    $("#user-div").html("<br><p class='User : debugger <p><i> A quick way to debug");
-                    $("#user-div").append("<a href='" + url + "'>Sign out</a>");
-                    currentUserId = "u";
-                    console.log("user id assigned" + currentUserId);
-                    $("#loginPage").hide();
-                    $("#mainPage").show().fadeIn(50000);
-                    $("#mainPage").fadeIn(5000);
-                    readAllPosts();
-                    retrieveCategory();
+    $("#user-div").html("<br>User : debugger<p><i> A quick way to debug");
+    $("#user-div").append("<a href='" + url + "'>Sign out</a>");
+    currentUserId = "u";
+    console.log("user id assigned" + currentUserId);
+    $("#loginPage").hide();
+    $("#mainPage").show().fadeIn(50000);
+    $("#mainPage").fadeIn(5000);
+    readAllPosts();
+    retrieveCategory();
 }

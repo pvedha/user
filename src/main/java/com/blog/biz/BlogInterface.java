@@ -20,6 +20,13 @@ public interface BlogInterface {
 	PostDto readPost(int number);
 	int createPost(Post post);
 	int createPost(NewPost newPost);
+	ArrayList<PostDto> searchByCategory(String category);
+	boolean addFavourite(String userId, int postId);
+	boolean removeFavourite(String userId, int postId);
+	ArrayList<PostDto> searchPost(String keys) throws InvalidSearchKeyException;
+	int createPostPersist(NewPost newPost);
+	ArrayList<String> readCategory();
+
 	
 	//comment
 	int addComment(Comments comment) throws InvalidCommentException;	
@@ -30,8 +37,5 @@ public interface BlogInterface {
 	ArrayList<String> readUserIds();
 	int createUser(BlogUser user) throws InvalidUserException, DuplicateUserException;
 	AuthenticationDto validateLogin(String userId, String password);
-	ArrayList<PostDto> searchPost(String keys) throws InvalidSearchKeyException;
-	int createPostPersist(NewPost newPost);
-	ArrayList<String> readCategory();
 	
 }

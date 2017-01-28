@@ -9,7 +9,6 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import com.blog.biz.Blog;
-import com.blog.dto.PostDto;
 
 @Path("/")
 public class GenericController {
