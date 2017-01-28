@@ -12,6 +12,10 @@ public class FavouriteKey implements Serializable{
 	public FavouriteKey() {
 		// TODO Auto-generated constructor stub
 	}
+	public FavouriteKey(String userId, int postId) {
+		this.userId = userId;
+		this.postId = postId;
+	}
 	public String getUserId() {
 		return userId;
 	}
@@ -25,5 +29,16 @@ public class FavouriteKey implements Serializable{
 		this.postId = postId;
 	}
 	
+	@Override
+	public boolean equals(Object obj) {
+		// TODO Auto-generated method stub
+		return super.equals(obj);
+	}
+
+	@Override
+	public int hashCode() {
+		// TODO Auto-generated method stub
+		return super.hashCode();
+	}
 	
 }

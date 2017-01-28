@@ -12,8 +12,11 @@ import com.blog.api.BlogUser;
 import com.blog.api.Category;
 import com.blog.api.Comments;
 import com.blog.api.Favourite;
+import com.blog.api.FavouriteKey;
 import com.blog.api.Post;
 import com.blog.dto.NewPost;
+import com.blog.trials.FavouriteEmbeddable;
+import com.blog.trials.Favourite_Option;
 
 @SuppressWarnings("unchecked")
 public class OracleDAOImpl implements DAO {
@@ -244,7 +247,7 @@ public class OracleDAOImpl implements DAO {
 	public boolean addFavourite(String userId, int postId){
 		EntityManager em = factory.createEntityManager();
 		em.getTransaction().begin();		
-		Favourite favourite = new Favourite(userId, postId);
+		Favourite favourite = new Favourite(userId, postId);		
 		em.persist(favourite);
 		em.getTransaction().commit();
 		em.close();
@@ -254,12 +257,21 @@ public class OracleDAOImpl implements DAO {
 	@Override
 	public boolean removeFavourite(String userId, int postId){
 		EntityManager em = factory.createEntityManager();
-		em.getTransaction().begin();		
-		Favourite favourite = new Favourite(userId, postId);
-		em.remove(favourite);
+		em.getTransaction().begin();				
+		Favourite favourite = em.find(Favourite.class, new FavouriteKey(userId,postId));	
+		em.remove(favourite);	
 		em.getTransaction().commit();
 		em.close();
 		return true;
+	}
+	
+	@Override
+	public ArrayList<Integer> readFavourites(String userId){
+		EntityManager em = factory.createEntityManager();
+		String query = "select postid from favourite where USERID = :userId";
+		ArrayList<Integer> titles = (ArrayList<Integer>) em.createNativeQuery(query).setParameter("userId", userId).getResultList();
+		em.close();
+		return titles;
 	}
 	
 }

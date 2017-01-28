@@ -37,5 +37,6 @@ public interface DAO {
 	ArrayList<String> readCategory();
 	boolean addFavourite(String userId, int postId);
 	boolean removeFavourite(String userId, int postId);
+	ArrayList<Integer> readFavourites(String userId);
 	
 }

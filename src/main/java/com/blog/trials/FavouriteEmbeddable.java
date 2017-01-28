@@ -1,4 +1,4 @@
-package com.blog.api;
+package com.blog.trials;
 
 import java.io.Serializable;
 

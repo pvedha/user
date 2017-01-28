@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -31,5 +32,14 @@ public class GenericController {
 		Blog blog = new Blog();
 		ArrayList<String> categories = blog.readCategory();
 		return Response.ok().entity(categories).build();
+	}
+	
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/favourite/{userId}")
+	public Response readCategory(@PathParam("userId") String userId) {
+		Blog blog = new Blog();
+		ArrayList<Integer> favourites = blog.readFavourites(userId);
+		return Response.ok().entity(favourites).build();
 	}
 }

@@ -125,7 +125,7 @@ function searchAllPosts(searchString) {
 		global : false,
 		success : function(response) {
 			showPostsView();
-			displayPosts(response);
+			displayPosts(response);       
 
 		},
 		error : function(XMLHttpRequest, textStatus, errorThrown) {
@@ -163,6 +163,7 @@ function displayPosts(response) {
 	}
 	$("#post-contents").append(htmlContent);
 	$("#post-info").html("");
+    retrieveFavourites();
 }
 
 function viewPost(postId) {
@@ -177,7 +178,7 @@ function viewPost(postId) {
 		return;
 	}
 
-	currentPostId = postId;
+	//currentPostId = postId;
 	for (i = 0; i < readPostResponse.length; i++) {
 		console.log("postId is" + postId + " responseItemPostId is "
 				+ readPostResponse[i].postId);
@@ -186,16 +187,51 @@ function viewPost(postId) {
 			console.log("CurrentPost retrieved as " + currentPost);
 			break;
 		}
-	}
-	console.log("CurrentPost processing as " + currentPost);
-	$("#view-post-title").html(currentPost.title);
+	}   
+	
+	loadSelectedPost(currentPost);
+}
+
+
+
+//function viewPostByTitle(postTitle) {
+//
+//    console.log("View post by title " + postTitle);
+//	if (readPostResponse.length === 0) {
+//		console.log("Couldnt display the selected post");
+//		$("#view-post-info").html("Couldnt display the selected post");
+//		$("#view-post-info").css({
+//			'color' : 'green',
+//			'font-size' : '100%'
+//		});
+//		return;
+//	}
+//	
+//    console.log("end view post by title " + postTitle);
+//    
+//	for (i = 0; i < readPostResponse.length; i++) {
+//		if (postTitle === readPostResponse[i].title) {
+//			currentPost = readPostResponse[i];
+//			break;
+//		}
+//	}   
+//	
+//	loadSelectedPost(currentPost);
+//    console.log("end view post by title " + postTitle);
+//}
+
+
+
+function loadSelectedPost(currentPost){    
+    currentPostId = currentPost.postId;
+    $("#view-post-title").html(currentPost.title);
 	$("#view-post-message").html(currentPost.message);
 	$("#view-post-by").html("Posted By : <b>" + currentPost.userName + "</b>");
 	$("#view-post-time").html("Posted On : " + currentPost.postedOn);
 	$("#view-post-tags").html("Tags : " + currentPost.tags);
 	$("#view-post-category").html("Category : " + currentPost.category);
 
-    $("#add-favourite-div").html("<a href='#' onClick=addFavourite(" + postId + ")><p class='quicklink-title'>Add to favorites</p></a>");
+    $("#add-favourite-div").html("<a href='#' onClick=addFavourite(" + currentPostId + ")><p class='quicklink-title'>Add to favorites</p></a>");
     
 	currentPostComments = currentPost.comments;
 	var htmlContent = "";
@@ -211,9 +247,7 @@ function viewPost(postId) {
 	}
 	$("#view-post-comments-div").html(htmlContent);
 	showViewPostView();
-
 }
-
 
 function addFavourite(postId){
     
@@ -306,4 +340,61 @@ function retrieveCategory() {
             $("#category-links").html("Error Loading categories");
         }
     })
+}
+
+function retrieveFavourites() {
+	console.log("Retrieving Favourite Posts for " + currentUserId);
+	$("#favourite-links").html("");
+	$.ajax({
+        url : baseURL + '/favourite/' + currentUserId,
+        type : 'get',
+        accept : 'application/json',
+        global : false,
+        success : function(response) {
+            var postCategory = document
+                    .getElementById("new-post-category");
+
+            var favouriteLinks = "";
+            
+            
+            if (readPostResponse.length === 0) {               
+                return;
+            }
+            
+            for (i = 0; i < response.length; i++) {   
+//                var linkText = getLinkTextFor(response[i]);
+//                if(linkText.length > 50){
+//                    linkText = linkText.trim(40) + "...";
+//                }
+                //The above fails miserably after 4th iteration????
+                
+                var linkText = "";
+                for (j = 0; j < readPostResponse.length; j++) {		
+                    if (response[i] === readPostResponse[j].postId) {			
+                        linkText = readPostResponse[j].title;
+                        break;
+                    }
+                }
+                
+                console.log("Response ID : " + response[i] + "LinkText : " + linkText);
+                
+                favouriteLinks += "<a class='quicklink-links' href='#' onClick=viewPost("
+                        + response[i] + ")>" + linkText + "</a><br>"; //May be trim needed. ??
+            }
+            $("#favourite-links").append(favouriteLinks);
+            console.log("added items");
+        },
+        error : function(XMLHttpRequest, textStatus, errorThrown) {
+            console.log("Error Loading favourites");
+            $("#favourite-links").html("No favourite posts");
+        }
+    })
+}
+
+function getLinkTextFor(postId){
+    for (i = 0; i < readPostResponse.length; i++) {		
+		if (postId === readPostResponse[i].postId) {			
+			return readPostResponse[i].title;
+		}
+	}
 }

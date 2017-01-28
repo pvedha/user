@@ -94,7 +94,7 @@ public class PostController {
 	
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	@Path("/addFavourite/{userId}/{postId}")
+	@Path("/removeFavourite/{userId}/{postId}")
 	public Response removeFavourite(@PathParam("userId") String userId, @PathParam("postId") int postId) {
 		Blog blog = new Blog();
 		boolean response = blog.removeFavourite(userId, postId);

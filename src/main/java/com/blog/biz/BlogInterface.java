@@ -20,13 +20,15 @@ public interface BlogInterface {
 	PostDto readPost(int number);
 	int createPost(Post post);
 	int createPost(NewPost newPost);
-	ArrayList<PostDto> searchByCategory(String category);
-	boolean addFavourite(String userId, int postId);
-	boolean removeFavourite(String userId, int postId);
+	ArrayList<PostDto> searchByCategory(String category);	
 	ArrayList<PostDto> searchPost(String keys) throws InvalidSearchKeyException;
 	int createPostPersist(NewPost newPost);
+	
+	//post dependent
 	ArrayList<String> readCategory();
-
+	ArrayList<Integer> readFavourites(String userId);
+	boolean addFavourite(String userId, int postId);
+	boolean removeFavourite(String userId, int postId);
 	
 	//comment
 	int addComment(Comments comment) throws InvalidCommentException;	

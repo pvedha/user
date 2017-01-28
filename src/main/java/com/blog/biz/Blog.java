@@ -206,4 +206,8 @@ public class Blog implements BlogInterface {
 		return dao.removeFavourite(userId, postId);
 	}
 	
+	@Override
+	public ArrayList<Integer> readFavourites(String userId){
+		return dao.readFavourites(userId);
+	}
 }

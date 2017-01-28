@@ -2,26 +2,41 @@ package com.blog.api;
 
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.IdClass;
 
 @Entity
+@IdClass(FavouriteKey.class)
 public class Favourite {
-	@EmbeddedId
-	private FavouriteEmbeddable favItem;
+	@Id
+	private String userId;
+	@Id
+	private int postId;
 	
 	public Favourite() {
 	}
 
-	public Favourite(String userId, int postId){
-		favItem.setUserId(userId);
-		favItem.setPostId(postId);
-	}
-	
-	public FavouriteEmbeddable getFavItem() {
-		return favItem;
+	public Favourite(String userId, int postId) {
+		this.userId = userId;
+		this.postId = postId;
 	}
 
-	public void setFavItem(FavouriteEmbeddable favItem) {
-		this.favItem = favItem;
-	}	
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+
+	public int getPostId() {
+		return postId;
+	}
+
+	public void setPostId(int postId) {
+		this.postId = postId;
+	}
+
+	
 
 }
