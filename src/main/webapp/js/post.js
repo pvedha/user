@@ -28,7 +28,7 @@ function newPost(){
     };
     $.ajax({
                 
-                url : 'http://localhost:8080/blog/blog/post/newPost',
+                url : baseURL + '/post/newPost',
                 type : 'post',
                 contentType : 'application/json',
                 global: false,
@@ -57,7 +57,7 @@ function readAllPosts(){
     $("#post-info").css({ 'color': 'green', 'font-size': '100%' });
     $.ajax({
                 
-                url : 'http://localhost:8080/blog/blog/post/all',
+                url : baseURL + '/post/all',
                 type : 'get',
                 accept : 'application/json',
                 global: false,
@@ -106,7 +106,7 @@ function searchAllPosts(searchString){
     $("#post-info").css({ 'color': 'green', 'font-size': '100%' });
     $.ajax({
                 
-                url : 'http://localhost:8080/blog/blog/post/all/' + searchString,
+                url : baseURL + '/post/all/' + searchString,
                 type : 'get',
                 accept : 'application/json',
                 global: false,
@@ -238,8 +238,7 @@ function retrieveCategory () {
                 },
                 error : function(XMLHttpRequest, textStatus, errorThrown) {
                     console.log("Error Loading categories");
-                    $("##category-links").html("Error Loading categories");
-                    
+                    $("#category-links").html("Error Loading categories");                    
                 }
             })        
 }

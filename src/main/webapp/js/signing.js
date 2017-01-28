@@ -2,8 +2,8 @@ var userIdsResponse = "";
 var userIdsResponseReceived = false;
 var validUserId = true;
 var currentUserId = "";
-var url= window.location.href;
-var baseURL = url + "blog"; //project base
+var url = 'http://' +  window.location.host;
+var baseURL = url + "/blog/blog"; 
 var readPostResponse;
 var currentPostId = 0;
 var currentPost;
@@ -11,7 +11,21 @@ var currentPost;
 $(document)
 		.ready(
 				function() {
-					$('#trythis-button')
+                    
+                    console.log("1" + window.location.host);
+                    console.log("2" + window.location.href);
+                    console.log("3" + window.location.pathname);
+                    console.log("4" + window.location.protocol);
+
+                    
+                    $("#search-text").focusin(function(){
+                        $("#search-text").animate({width: "350px"});
+                    });
+                    $("#search-text").focusout(function(){
+                        $("#search-text").animate({width: "150px"});
+                    });
+                    
+                    $('#trythis-button')
 							.click(function(){
                                        retrieveCategory();                       
                             }
@@ -63,7 +77,7 @@ function addUser() {
     };
     $
             .ajax({
-                url : 'http://localhost:8080/blog/blog/user/addUser',
+                url : baseURL + '/user/addUser',
                 type : 'post',
                 contentType : 'application/json',
                 success : function(response) {
@@ -82,7 +96,7 @@ function addUser() {
 function getUserIds() {
     console.log("receiving user ids");
     $.ajax({
-                url : 'http://localhost:8080/blog/blog/user/ids',
+                url : baseURL + '/user/ids',
                 type : 'get',
                 accept : 'application/json',
         global: false,
@@ -111,7 +125,7 @@ function login() {
     var password = $("#loginPassword").val();
     $.ajax({
                 
-                url : 'http://localhost:8080/blog/blog/user/' + userId + '/' + password,
+                url : baseURL + '/user/' + userId + '/' + password,
                 type : 'get',
                 accept : 'application/json',
                 global: false,
