@@ -11,6 +11,7 @@ import com.blog.api.InvalidSearchKeyException;
 import com.blog.api.InvalidUserException;
 import com.blog.api.Post;
 import com.blog.dto.AuthenticationDto;
+import com.blog.dto.NewComment;
 import com.blog.dto.NewPost;
 import com.blog.dto.PostDto;
 
@@ -22,7 +23,7 @@ public interface BlogInterface {
 	int createPost(NewPost newPost);
 	
 	//comment
-	int addComment(Comments comment) throws InvalidCommentException;	
+	int addComment(NewComment comment) throws InvalidCommentException;	
 	public ArrayList<Comments> readCommentsOfPost(int postId) throws InvalidPostException;
 	
 	//user

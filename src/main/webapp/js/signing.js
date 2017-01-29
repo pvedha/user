@@ -57,6 +57,14 @@ $(document)
                         function() {
                         newPost();
                     });
+                    $('#search-button').click( 
+                            function() {
+                            searchAllPosts();
+                        });
+                    $('#post-comment-button').click( 
+                            function() {
+                            addComment();
+                    });
 				});
 
 function addUser() {

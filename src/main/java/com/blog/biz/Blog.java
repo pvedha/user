@@ -15,6 +15,7 @@ import com.blog.dao.DAO;
 import com.blog.dao.OracleDAOImpl;
 import com.blog.dto.AuthenticationDto;
 import com.blog.dto.CommentDto;
+import com.blog.dto.NewComment;
 import com.blog.dto.NewPost;
 import com.blog.dto.PostDto;
 
@@ -112,12 +113,12 @@ public class Blog implements BlogInterface {
 	}
 
 	@Override
-	public int addComment(Comments comment) throws InvalidCommentException {
-		if (comment == null || comment.getPostedBy() == null || comment.getMessage() == null
+	public int addComment(NewComment comment) throws InvalidCommentException {
+		if (comment == null || comment.getPostId() == 0 || comment.getMessage() == null
 				|| this.readPost(comment.getPostId()) == null) {
 			throw new InvalidCommentException();
 		}
-		return dao.commentCreate(comment);
+		return dao.commentAdd(comment);
 	}
 
 	public ArrayList<Comments> readCommentsOfPost(int postId) throws InvalidPostException {

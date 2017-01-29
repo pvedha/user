@@ -14,6 +14,7 @@ import com.blog.api.BlogUser;
 import com.blog.api.Category;
 import com.blog.api.Comments;
 import com.blog.api.Post;
+import com.blog.dto.NewComment;
 import com.blog.dto.NewPost;
 
 @SuppressWarnings("unchecked")
@@ -187,6 +188,21 @@ public class OracleDAOImpl implements DAO {
 				.setParameter("title", newPost.getTitle()).setParameter("message", newPost.getMessage())
 				.setParameter("userid", newPost.getUserId()).setParameter("tags", newPost.getTags())
 				.setParameter("category", newPost.getCategory()).executeUpdate();
+		em.getTransaction().commit();
+		em.close();
+		return result;
+	}
+	@Override
+	public int commentAdd(NewComment newComment) {
+		EntityManager em = factory.createEntityManager();
+		em.getTransaction().begin();
+		int result = em
+				.createNativeQuery("insert into comments values((select max(comment_id)+1 from comments),"
+						+ ":postid, :message,:userid,sysdate)")
+				.setParameter("postid", newComment.getPostId())
+				.setParameter("message", newComment.getMessage())
+				.setParameter("userid", newComment.getUserId())
+				.executeUpdate();
 		em.getTransaction().commit();
 		em.close();
 		return result;
