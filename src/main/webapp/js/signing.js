@@ -7,6 +7,8 @@ var baseURL = url + "/blog/blog";
 var readPostResponse;
 var currentPostId = 0;
 var currentPost;
+var currentUserFavouriteList;
+var userHasFavourites = false;
 
 $(document)
 		.ready(
@@ -126,29 +128,32 @@ function login() {
     var password = $("#loginPassword").val();
     $.ajax({
                 
-                url : baseURL + '/user/' + userId + '/' + password,
-                type : 'get',
-                accept : 'application/json',
-                global: false,
-                success : function(response) {
-                    //$("#viewForm").hide();
-                    console.log("Valid user");
-                    $("#user-div").html("<br>User : <b>" + response.name + "</b><p><i>" + response.about);
-                    $("#user-div").append("<a href='" + url + "'>Sign out</a>");
-                    currentUserId = response.userId;
-                    console.log("user id assigned" + currentUserId + "complete response "  + response);
-                    $("#loginPage").hide();
-                    $("#mainPage").show().fadeIn(50000);
-                    $("#mainPage").fadeIn(5000);
-                    readAllPosts();
-                    retrieveCategory();
-                },
-                error : function(XMLHttpRequest, textStatus, errorThrown) {
-                    console.log("Invalid user credentials");
-                    $("#loginMessage").html("Invalid crendentials, please try again");
-                    //$("#login-message").css({ 'color': 'green', 'font-size': '100%' });
-                }
-            })
+        url : baseURL + '/user/' + userId + '/' + password,
+        type : 'get',
+        accept : 'application/json',
+        global: false,
+        success : function(response) {
+            //$("#viewForm").hide();
+            console.log("Valid user");
+            //<img id='current-user-icon' src='img/48px-User_icon_2.svg.png'/> 
+            //$("#current-user-icon").css("filter", "none");
+            $("#current-user-icon").html("<img src='img/48px-User_icon_2.svg.png'/>");
+            $("#user-div").html("<b>" + response.name + "</b><p><i>" + response.about);
+            $("#user-div").append("<a href='" + url + "'>Sign out</a>");
+            currentUserId = response.userId;
+            console.log("user id assigned" + currentUserId + "complete response "  + response);
+            $("#loginPage").hide();
+            $("#mainPage").show().fadeIn(50000);
+            $("#mainPage").fadeIn(5000);
+            readAllPosts();
+            retrieveCategory();
+        },
+        error : function(XMLHttpRequest, textStatus, errorThrown) {
+            console.log("Invalid user credentials");
+            $("#loginMessage").html("Invalid crendentials, please try again");
+            //$("#login-message").css({ 'color': 'green', 'font-size': '100%' });
+        }
+    })
 };
 
 
