@@ -231,8 +231,22 @@ function loadSelectedPost(currentPost){
 	$("#view-post-tags").html("Tags : " + currentPost.tags);
 	$("#view-post-category").html("Category : " + currentPost.category);
 
-    $("#add-favourite-div").html("<a href='#' onClick=addFavourite(" + currentPostId + ")><p class='quicklink-title'>Add to favorites</p></a>");
+    var favPost = false;
+    if (currentUserFavouriteList.length != 0) {               
+         for(i=0;i<currentUserFavouriteList.length;i++){
+             if(currentPostId === currentUserFavouriteList[i]){
+                 favPost = true;
+             }
+         }       
+    }
     
+    if(favPost){
+        setRemoveFavourite(currentPostId);
+    } else {
+        setAddFavourite(currentPostId);
+    }
+    
+        
 	currentPostComments = currentPost.comments;
 	var htmlContent = "";
 	for (i = 0; i < currentPostComments.length; i++) {
@@ -258,8 +272,9 @@ function addFavourite(postId){
 		global : false,
 		success : function(response) {
 			console.log("Added to favoutires");
-			$("#add-favourite-div").html("<p class='quicklink-title'>Favourite Post </p><a href='#' onClick=removeFavourite(" + postId + ")> Remove </a>")
-		},
+            setRemoveFavourite(postId);
+			
+		}, 
 		error : function(XMLHttpRequest, textStatus, errorThrown) {
 			console.log("Error adding to favourites");
 			$("#add-favourite-div").html(
@@ -278,15 +293,24 @@ function removeFavourite(postId){
 		global : false,
 		success : function(response) {
 			console.log("Removed from favoutires");
-			$("#add-favourite-div").html("<a href='#' onClick=addFavourite(" + postId + ")><p class='quicklink-title'>Add to favorites</p></a>");
+			setAddFavourite(postId);
 		},
 		error : function(XMLHttpRequest, textStatus, errorThrown) {
 			console.log("Error adding to favourites");
 			$("#add-favourite-div").html(
-					"<p class='quicklink-title'>Error : </p><a href='#' onClick=addFavourite(" + postId + ")> Try again </a>");
+					"<p class='quicklink-title'>Error : </p><a href='#' onClick=removeFavourite(" + postId + ")> Try again </a>");
 		},
 //		data : JSON.stringify(data)
 	})
+}
+
+function setAddFavourite(postId){
+    $("#add-favourite-div").html("<a href='#' onClick=addFavourite(" + postId + ")><p class='quicklink-title'> " 
+                                 + "<img src='img/22xFavourite.png' class='img-grayed'> Add Favourite Post  </a>");
+}
+
+function setRemoveFavourite(postId){
+    $("#add-favourite-div").html("<p class='quicklink-title'> <img src='img/22xFavourite.png'> Favourite Post <a href='#' onClick=removeFavourite(" + postId + ")> Remove </a>");
 }
 
 function showNewPost() {
@@ -351,15 +375,15 @@ function retrieveFavourites() {
         accept : 'application/json',
         global : false,
         success : function(response) {
-            var postCategory = document
-                    .getElementById("new-post-category");
-
+      
             var favouriteLinks = "";
             
+                        
             
             if (readPostResponse.length === 0) {               
                 return;
             }
+            currentUserFavouriteList = response;
             
             for (i = 0; i < response.length; i++) {   
 //                var linkText = getLinkTextFor(response[i]);
@@ -375,8 +399,6 @@ function retrieveFavourites() {
                         break;
                     }
                 }
-                
-                console.log("Response ID : " + response[i] + "LinkText : " + linkText);
                 
                 favouriteLinks += "<a class='quicklink-links' href='#' onClick=viewPost("
                         + response[i] + ")>" + linkText + "</a><br>"; //May be trim needed. ??
