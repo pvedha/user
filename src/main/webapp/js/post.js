@@ -263,7 +263,7 @@ function loadSelectedPost(currentPost){
 function addFavourite(postId){
     
     $.ajax({
-		url : baseURL + '/post/addFavourite/' + currentUserId + '/' + postId,
+		url : baseURL + '/favourite/add' + currentUserId + '/' + postId,
 		type : 'post',
 		contentType : 'application/json',
 		global : false,
@@ -284,7 +284,7 @@ function addFavourite(postId){
 function removeFavourite(postId){
     
     $.ajax({
-		url : baseURL + '/post/removeFavourite/' + currentUserId + '/' + postId,
+		url : baseURL + '/favourite/remove' + currentUserId + '/' + postId,
 		type : 'post',
 		contentType : 'application/json',
 		global : false,

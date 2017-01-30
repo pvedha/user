@@ -2,7 +2,9 @@ package com.blog.rest;
 
 import java.util.ArrayList;
 
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -42,4 +44,23 @@ public class GenericController {
 		ArrayList<Integer> favourites = blog.readFavourites(userId);
 		return Response.ok().entity(favourites).build();
 	}
+	
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Path("/favourite/add/{userId}/{postId}")
+	public Response addFavourite(@PathParam("userId") String userId, @PathParam("postId") int postId) {
+		Blog blog = new Blog();
+		boolean result = blog.addFavourite(userId, postId);
+		return Response.ok().entity(result + "").build();
+	}
+	
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Path("/favourite/remove/{userId}/{postId}")
+	public Response removeFavourite(@PathParam("userId") String userId, @PathParam("postId") int postId) {
+		Blog blog = new Blog();
+		boolean result = blog.removeFavourite(userId, postId);
+		return Response.ok().entity(result + "").build();
+	}
+	
 }
