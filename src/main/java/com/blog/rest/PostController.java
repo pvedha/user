@@ -109,4 +109,13 @@ public class PostController {
 		int number = blog.addChat(chat);
 		return Response.ok().entity(number + "").build();
 	}
+	
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/getChats")
+	public Response getChats() {
+		Blog blog = new Blog();
+		ArrayList<ChatsDto> posts = blog.readRecentChats();
+		return Response.ok().entity(posts).build();
+	}
 }

@@ -136,6 +136,42 @@ function newChat(){
            
 }
 
+function readChats() {
+
+	$.ajax({
+		url : baseURL + '/post/getChats',
+		type : 'get',
+		accept : 'application/json',
+		global : false,
+		success : function(response) {
+			// $("#viewForm").hide();
+			displayChats(response);
+			window.setTimeout(update, 10000);
+		},
+		error : function(XMLHttpRequest, textStatus, errorThrown) {
+			console.log("Error Loading the posts read");
+			$("#post-info").html("Error Loading the posts, please try again");
+			// $("#login-message").css({ 'color': 'green', 'font-size': '100%'
+			// });
+		}
+	})
+	
+}
+function displayChats(response) {
+	//readChatResponse = response;
+	console.log("Reading chats done.");
+	$("#show-chat-div").html("");
+	var htmlContent = "";
+	for (i = 0; i < response.length; i++) {
+		var chat = response[i];
+		htmlContent += "<h2> " + chat.postedBy + "</h2>: ";
+		htmlContent += "<h2> "+ chat.chatmsg + "</h2>";		
+	}
+	$("#show-chat-div").append(htmlContent);	
+}
+
+
+
 function readAllPosts() {
 	showPostsView();
 	$("#post-info").html("Please wait, loading posts...");
@@ -198,7 +234,7 @@ function searchByCategory(category) {
 function searchAllPosts() {
 
 	var searchString = $("#search-text").val();
-	if(search.trim().length === 0){
+	if(searchString.trim().length === 0){
         console.log("search string cannot be empty");
         return;
     }
@@ -215,9 +251,8 @@ function searchAllPosts() {
                     displayPosts(response);
                     
                 },
-                error : function(XMLHttpRequest, textStatus, errorThrown) {
-                    console.log("Error Loading the posts search");
-                    $("#post-info").html("Error Loading the posts, please try again");
+                error : function(XMLHttpRequest, textStatus, errorThrown) {           
+                    $("#post-info").html("No results found");
                     showPostsView();
                     //$("#login-message").css({ 'color': 'green', 'font-size': '100%' });
                 }

@@ -158,6 +158,7 @@ function login() {
             $("#mainPage").fadeIn(5000);
             readAllPosts();
             retrieveCategory();
+            readChats();
         },
         error : function(XMLHttpRequest, textStatus, errorThrown) {
             console.log("Invalid user credentials");
