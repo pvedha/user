@@ -18,13 +18,12 @@ $(document)
                         $("#search-text").animate({width: "350px"});
                     });
                     $("#search-text").focusout(function(){
-                        $("#search-text").animate({width: "150px"});
-                        $("#search-text").val("");
+                        $("#search-text").animate({width: "150px"});                      
                     });
                     $("#search-text").keypress(function(event){	
                         var keycode = (event.keyCode ? event.keyCode : event.which);
                         if(keycode == '13'){
-                            alert('Call the search function from here');	
+                        	searchAllPosts();	
                         }
                     });
                     

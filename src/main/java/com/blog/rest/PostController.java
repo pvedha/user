@@ -93,7 +93,7 @@ public class PostController {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("/addComment")
-	public Response newPost(NewComment comment) throws InvalidCommentException {
+	public Response addComment(NewComment comment) throws InvalidCommentException {
 		Blog blog = new Blog();
 		int number = blog.addComment(comment);
 		return Response.ok().entity(number + "").build();

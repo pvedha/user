@@ -49,6 +49,51 @@ function newPost() {
 	})
 }
 
+function addComment(){
+	var userId = currentUserId;
+    console.log("Current User" + currentUserId);
+    var message = $("#comment-textarea").val();
+    var postId = currentPostId;
+    if(message.trim().length === 0){
+        $("#new-comment-info").html("Comment cannot be empty");
+        console.log("Title / message cannot be empty");
+        return;
+    }
+    $("#new-post-info").html("Please wait, submitting post...");
+    //$("#new-post-info").css({ 'color': 'green', 'font-size': '100%' });
+    console.log(userId + postId + message);
+    var data = {    
+        postId : postId,
+        message : message,
+        userId : userId,
+    };
+    $.ajax({              
+                url : baseURL + '/post/addComment',
+                type : 'post',
+                contentType : 'application/json',
+                global: false,
+                success : function(response) {
+                    //$("#viewForm").hide();
+                    //displayPosts(response);
+                    console.log("Posting done");
+                    $("#new-comment-info").html("Successfully Posted.");
+                    $.when( readAllPosts() ).then(function() {
+                    	viewPost(postId);
+                    });                                    
+                },
+                error : function(XMLHttpRequest, textStatus, errorThrown) {
+                    console.log("Error submitting the post");
+                    $("#new-comment-info").html("Error submitting the post, please try again");
+                    showViewPostView();
+                    //$("#login-message").css({ 'color': 'green', 'font-size': '100%' });
+                },
+                data : JSON.stringify(data)
+            })
+//    userId = "bloguser";
+            
+           
+}
+
 function readAllPosts() {
 	showPostsView();
 	$("#post-info").html("Please wait, loading posts...");
@@ -108,34 +153,29 @@ function searchByCategory(category) {
     })
 }
 
-function searchAllPosts(searchString) {
+function searchAllPosts() {
 
-	$("#post-info").html(
-			"Please wait, loading posts for search string '" + searchString
-					+ "'");
-	$("#post-info").css({
-		'color' : 'green',
-		'font-size' : '100%'
-	});
-	$.ajax({
-
-		url : baseURL + '/post/all/' + searchString,
-		type : 'get',
-		accept : 'application/json',
-		global : false,
-		success : function(response) {
-			showPostsView();
-			displayPosts(response);       
-
-		},
-		error : function(XMLHttpRequest, textStatus, errorThrown) {
-			console.log("Error Loading the posts search");
-			$("#post-info").html("Error Loading the posts, please try again");
-			showPostsView();
-			// $("#login-message").css({ 'color': 'green', 'font-size': '100%'
-			// });
-		}
-	})
+	var searchString = $("#search-text").val();
+    $("#post-info").html("Please wait, loading posts for search string '" + searchString + "'");
+    $("#post-info").css({ 'color': 'green', 'font-size': '100%' });
+    $.ajax({
+                
+                url : baseURL + '/post/search/' + searchString,
+                type : 'get',
+                accept : 'application/json',
+                global: false,
+                success : function(response) {
+                    showPostsView();
+                    displayPosts(response);
+                    
+                },
+                error : function(XMLHttpRequest, textStatus, errorThrown) {
+                    console.log("Error Loading the posts search");
+                    $("#post-info").html("Error Loading the posts, please try again");
+                    showPostsView();
+                    //$("#login-message").css({ 'color': 'green', 'font-size': '100%' });
+                }
+            })
 }
 
 function displayPosts(response) {
