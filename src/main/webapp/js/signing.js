@@ -7,22 +7,25 @@ var baseURL = url + "/blog/blog";
 var readPostResponse;
 var currentPostId = 0;
 var currentPost;
+var currentUserFavouriteList;
+var userHasFavourites = false;
 
 $(document)
 		.ready(
 				function() {
-                    
-                    console.log("1" + window.location.host);
-                    console.log("2" + window.location.href);
-                    console.log("3" + window.location.pathname);
-                    console.log("4" + window.location.protocol);
-
                     
                     $("#search-text").focusin(function(){
                         $("#search-text").animate({width: "350px"});
                     });
                     $("#search-text").focusout(function(){
                         $("#search-text").animate({width: "150px"});
+                        $("#search-text").val("");
+                    });
+                    $("#search-text").keypress(function(event){	
+                        var keycode = (event.keyCode ? event.keyCode : event.which);
+                        if(keycode == '13'){
+                            alert('Call the search function from here');	
+                        }
                     });
                     
                     $('#trythis-button')
@@ -133,29 +136,32 @@ function login() {
     var password = $("#loginPassword").val();
     $.ajax({
                 
-                url : baseURL + '/user/' + userId + '/' + password,
-                type : 'get',
-                accept : 'application/json',
-                global: false,
-                success : function(response) {
-                    //$("#viewForm").hide();
-                    console.log("Valid user");
-                    $("#user-div").html("<br>User : " + response.name + "<p><i>" + response.about);
-                    $("#user-div").append("<a href='" + url + "'>Sign out</a>");
-                    currentUserId = response.userId;
-                    console.log("user id assigned" + currentUserId + "complete response "  + response);
-                    $("#loginPage").hide();
-                    $("#mainPage").show().fadeIn(50000);
-                    $("#mainPage").fadeIn(5000);
-                    readAllPosts();
-                    retrieveCategory();
-                },
-                error : function(XMLHttpRequest, textStatus, errorThrown) {
-                    console.log("Invalid user credentials");
-                    $("#loginMessage").html("Invalid crendentials, please try again");
-                    //$("#login-message").css({ 'color': 'green', 'font-size': '100%' });
-                }
-            })
+        url : baseURL + '/user/' + userId + '/' + password,
+        type : 'get',
+        accept : 'application/json',
+        global: false,
+        success : function(response) {
+            //$("#viewForm").hide();
+            console.log("Valid user");
+            //<img id='current-user-icon' src='img/48px-User_icon_2.svg.png'/> 
+            //$("#current-user-icon").css("filter", "none");
+            $("#current-user-icon").html("<img src='img/48px-User_icon_2.svg.png'/>");
+            $("#user-div").html("<b>" + response.name + "</b><p><i>" + response.about);
+            $("#user-div").append("<a href='" + url + "'>Sign out</a>");
+            currentUserId = response.userId;
+            console.log("user id assigned" + currentUserId + "complete response "  + response);
+            $("#loginPage").hide();
+            $("#mainPage").show().fadeIn(50000);
+            $("#mainPage").fadeIn(5000);
+            readAllPosts();
+            retrieveCategory();
+        },
+        error : function(XMLHttpRequest, textStatus, errorThrown) {
+            console.log("Invalid user credentials");
+            $("#loginMessage").html("Invalid crendentials, please try again");
+            //$("#login-message").css({ 'color': 'green', 'font-size': '100%' });
+        }
+    })
 };
 
 
@@ -194,13 +200,13 @@ function toggleSignform(){
 
 
 function skipLogin(){
-    $("#user-div").html("<br><p class='User : debugger <p><i> A quick way to debug");
-                    $("#user-div").append("<a href='" + url + "'>Sign out</a>");
-                    currentUserId = "u";
-                    console.log("user id assigned" + currentUserId);
-                    $("#loginPage").hide();
-                    $("#mainPage").show().fadeIn(50000);
-                    $("#mainPage").fadeIn(5000);
-                    readAllPosts();
-                    retrieveCategory();
+    $("#user-div").html("<br>User : debugger<p><i> A quick way to debug");
+    $("#user-div").append("<a href='" + url + "'>Sign out</a>");
+    currentUserId = "u";
+    console.log("user id assigned" + currentUserId);
+    $("#loginPage").hide();
+    $("#mainPage").show().fadeIn(50000);
+    $("#mainPage").fadeIn(5000);
+    readAllPosts();
+    retrieveCategory();
 }

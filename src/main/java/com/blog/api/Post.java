@@ -1,23 +1,13 @@
 package com.blog.api;
 
-import java.sql.Date;
 import java.sql.Timestamp;
 
 import javax.persistence.CascadeType;
-import javax.persistence.Embedded;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.xml.bind.annotation.XmlRootElement;
-
-import org.hibernate.annotations.ForeignKey;
-import org.hibernate.annotations.Nationalized;
 
 @Entity
 public class Post {

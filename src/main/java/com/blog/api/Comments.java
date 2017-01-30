@@ -1,6 +1,5 @@
 package com.blog.api;
 
-import java.sql.Date;
 import java.sql.Timestamp;
 
 import javax.persistence.CascadeType;
@@ -68,7 +67,6 @@ public class Comments {
 	}
 
 	public Comments() {
-		// TODO Auto-generated constructor stub
 		
 	}
 

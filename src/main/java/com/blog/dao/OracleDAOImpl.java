@@ -1,21 +1,23 @@
 package com.blog.dao;
 
-import java.awt.List;
 import java.util.ArrayList;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import javax.xml.stream.events.Comment;
 
 import org.hibernate.exception.SQLGrammarException;
 
 import com.blog.api.BlogUser;
 import com.blog.api.Category;
 import com.blog.api.Comments;
+import com.blog.api.Favourite;
+import com.blog.api.FavouriteKey;
 import com.blog.api.Post;
 import com.blog.dto.NewComment;
 import com.blog.dto.NewPost;
+import com.blog.trials.FavouriteEmbeddable;
+import com.blog.trials.Favourite_Option;
 
 @SuppressWarnings("unchecked")
 public class OracleDAOImpl implements DAO {
@@ -256,12 +258,41 @@ public class OracleDAOImpl implements DAO {
 		} catch (javax.persistence.PersistenceException sqlP) {
 			System.out.println("Caught SQL Grammer exception");
 			return new ArrayList<Post>();
-		}
-
-		catch (Exception e) {
+		} catch (Exception e) {
 			System.out.println("Exception for empty list ");
 			return new ArrayList<Post>();
 		}
 	}
 
+	@Override
+	public boolean addFavourite(String userId, int postId){
+		EntityManager em = factory.createEntityManager();
+		em.getTransaction().begin();		
+		Favourite favourite = new Favourite(userId, postId);		
+		em.persist(favourite);
+		em.getTransaction().commit();
+		em.close();
+		return true;
+	}
+	
+	@Override
+	public boolean removeFavourite(String userId, int postId){
+		EntityManager em = factory.createEntityManager();
+		em.getTransaction().begin();				
+		Favourite favourite = em.find(Favourite.class, new FavouriteKey(userId,postId));	
+		em.remove(favourite);	
+		em.getTransaction().commit();
+		em.close();
+		return true;
+	}
+	
+	@Override
+	public ArrayList<Integer> readFavourites(String userId){
+		EntityManager em = factory.createEntityManager();
+		String query = "select postid from favourite where USERID = :userId";
+		ArrayList<Integer> titles = (ArrayList<Integer>) em.createNativeQuery(query).setParameter("userId", userId).getResultList();
+		em.close();
+		return titles;
+	}
+	
 }

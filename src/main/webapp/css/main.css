@@ -4,8 +4,9 @@ body {
 }
 
 .h1-title {
-    text-align: center;    
+    text-align: left;    
     color: blue;  
+   	margin-left: 10%;
 }
 
 h2 {
@@ -62,7 +63,7 @@ h2 {
     color: brown;
     font-size: 0.85em;
     text-align: left;
-    margin: 0 0 0 0;
+    margin: 0 0 0 5px;
 }
 
 .post-hr {
@@ -87,8 +88,24 @@ h2 {
     float: right;
     width: 30%;
     display: inline-block;
+/*    vertical-align: middle;*/
+/*    align-content: center;*/
     height: inherit;
 }
+
+.user-detail-div {
+    float: left;
+/*    width: 30%;*/
+/*    display: inline-block;*/
+    vertical-align: middle
+    height: inherit;
+}
+
+.img-grayed{
+    filter: grayscale(100%);
+    float: left
+}
+
 .inline-div{
     display: inline-block;
 }
@@ -216,6 +233,7 @@ h2 {
     color: #1a07fc;
     border: none;
     border-bottom: 2px solid #212121;
+    border-radius: 5px;
     letter-spacing: 1px;
     text-align: center;    
 }
@@ -231,6 +249,12 @@ h2 {
 .signin-form input[type="password"] {
      background: none;
     display: block;
+}
+
+.signin-form select {
+    background: none;
+    width: auto;
+/*    display: block;*/
 }
 
 .signin-form textarea {
