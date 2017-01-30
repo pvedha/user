@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.blog.api.BlogUser;
 import com.blog.api.Comments;
 import com.blog.api.Post;
+import com.blog.dto.NewComment;
 import com.blog.dto.NewPost;
 
 public interface DAO {
@@ -35,6 +36,7 @@ public interface DAO {
 		
 	//generic
 	ArrayList<String> readCategory();
+	int commentAdd(NewComment newPost);
 	boolean addFavourite(String userId, int postId);
 	boolean removeFavourite(String userId, int postId);
 	ArrayList<Integer> readFavourites(String userId);

@@ -14,6 +14,7 @@ import com.blog.api.Comments;
 import com.blog.api.Favourite;
 import com.blog.api.FavouriteKey;
 import com.blog.api.Post;
+import com.blog.dto.NewComment;
 import com.blog.dto.NewPost;
 import com.blog.trials.FavouriteEmbeddable;
 import com.blog.trials.Favourite_Option;
@@ -193,19 +194,39 @@ public class OracleDAOImpl implements DAO {
 		em.close();
 		return result;
 	}
+	@Override
+	public int commentAdd(NewComment newComment) {
+		EntityManager em = factory.createEntityManager();
+		em.getTransaction().begin();
+		int result = em
+				.createNativeQuery("insert into comments values((select max(comment_id)+1 from comments),"
+						+ ":postid, :message,:userid,sysdate)")
+				.setParameter("postid", newComment.getPostId())
+				.setParameter("message", newComment.getMessage())
+				.setParameter("userid", newComment.getUserId())
+				.executeUpdate();
+		em.getTransaction().commit();
+		em.close();
+		return result;
+	}
 
 	@SuppressWarnings("null")
 	@Override
 	public ArrayList<Post> searchPost(ArrayList<String> keys) {
 		EntityManager em = factory.createEntityManager();
-		ArrayList<Post> posts = null;
+		String query = "select * from post where ";
+		
 		for (String key : keys) {
-			ArrayList<Post> temp = (ArrayList<Post>) em
-					.createNativeQuery("select * from post where title like :key or message like :key'", Post.class)
-					.setParameter("key", "%" + key + "%").getResultList();
-			if (!temp.isEmpty())
-				posts.addAll(temp);
+			query = query + "title like \'%" + key + "%\' or message like \'%" + key + "%\'";
+			if (keys.indexOf(key) < keys.size()-1) {
+				query = query + " or ";
+			}			
 		}
+		
+		ArrayList<Post> posts = (ArrayList<Post>) em
+				.createNativeQuery(query, Post.class)
+				.getResultList();
+		
 		em.close();
 		return posts;
 	}

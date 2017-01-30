@@ -11,9 +11,16 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import com.blog.api.BlogUser;
+import com.blog.api.Comments;
+import com.blog.api.DuplicateUserException;
+
+import com.blog.api.InvalidCommentException;
 import com.blog.api.InvalidSearchKeyException;
+import com.blog.api.InvalidUserException;
 import com.blog.api.Post;
 import com.blog.biz.Blog;
+import com.blog.dto.NewComment;
 import com.blog.dto.NewPost;
 import com.blog.dto.PostDto;
 
@@ -85,19 +92,10 @@ public class PostController {
 	
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	@Path("/addFavourite/{userId}/{postId}")
-	public Response addFavourite(@PathParam("userId") String userId, @PathParam("postId") int postId) {
+	@Path("/addComment")
+	public Response newPost(NewComment comment) throws InvalidCommentException {
 		Blog blog = new Blog();
-		boolean response = blog.addFavourite(userId, postId);
-		return Response.ok().entity(response + "").build();
-	}
-	
-	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Path("/removeFavourite/{userId}/{postId}")
-	public Response removeFavourite(@PathParam("userId") String userId, @PathParam("postId") int postId) {
-		Blog blog = new Blog();
-		boolean response = blog.removeFavourite(userId, postId);
-		return Response.ok().entity(response + "").build();
+		int number = blog.addComment(comment);
+		return Response.ok().entity(number + "").build();
 	}
 }
