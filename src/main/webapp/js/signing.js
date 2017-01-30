@@ -60,6 +60,14 @@ $(document)
                         function() {
                         newPost();
                     });
+                    $('#search-button').click( 
+                            function() {
+                            searchAllPosts();
+                        });
+                    $('#post-comment-button').click( 
+                            function() {
+                            addComment();
+                    });
 				});
 
 function addUser() {
@@ -137,9 +145,9 @@ function login() {
             console.log("Valid user");
             //<img id='current-user-icon' src='img/48px-User_icon_2.svg.png'/> 
             //$("#current-user-icon").css("filter", "none");
-            $("#current-user-icon").html("<img src='img/48px-User_icon_2.svg.png'/>");
-            $("#user-div").html("<b>" + response.name + "</b><p><i>" + response.about);
-            $("#user-div").append("<a href='" + url + "'>Sign out</a>");
+            $("#current-user-icon").html("<img src='img/48px-User_icon_2.svg.png' class='img-normal'/>");
+            $("#user-detail-div").html("<b>" + response.name + "</b><p><i>" + response.about);
+            $("#user-detail-div").append("<a href='" + url + "'>Sign out</a>");
             currentUserId = response.userId;
             console.log("user id assigned" + currentUserId + "complete response "  + response);
             $("#loginPage").hide();

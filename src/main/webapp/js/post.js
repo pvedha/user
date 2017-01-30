@@ -180,11 +180,8 @@ function viewPost(postId) {
 
 	//currentPostId = postId;
 	for (i = 0; i < readPostResponse.length; i++) {
-		console.log("postId is" + postId + " responseItemPostId is "
-				+ readPostResponse[i].postId);
 		if (postId === readPostResponse[i].postId) {
 			currentPost = readPostResponse[i];
-			console.log("CurrentPost retrieved as " + currentPost);
 			break;
 		}
 	}   
@@ -305,8 +302,8 @@ function removeFavourite(postId){
 }
 
 function setAddFavourite(postId){
-    $("#add-favourite-div").html("<a href='#' onClick=addFavourite(" + postId + ")><p class='quicklink-title'> " 
-                                 + "<img src='img/22xFavourite.png' class='img-grayed'> Add Favourite Post  </a>");
+    $("#add-favourite-div").html("<p class='quicklink-title'> <img src='img/22xFavourite.png' class='img-grayed'> "
+                                 + "<a href='#' onClick=addFavourite(" + postId + ")> Add Favourite Post </a>");
 }
 
 function setRemoveFavourite(postId){
@@ -337,7 +334,7 @@ function showViewPostView() {
 
 function retrieveCategory() {
 	console.log("Retrieving categories");
-	$("#category-links").html("");
+	
 	$.ajax({
         url : baseURL + '/category',
         type : 'get',
@@ -346,7 +343,7 @@ function retrieveCategory() {
         success : function(response) {
             var postCategory = document
                     .getElementById("new-post-category");
-
+            $("#category-links").html("");
             var categoryLinks = "";
             for (i = 0; i < response.length; i++) {
                 var option = document.createElement("option");
