@@ -59,6 +59,10 @@ $(document)
                         function() {
                         newPost();
                     });
+                    $('#newChat-submit-button').click( 
+                            function() {
+                            newChat();
+                        });
                     $('#search-button').click( 
                             function() {
                             searchAllPosts();

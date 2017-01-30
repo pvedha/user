@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import com.blog.api.BlogUser;
+import com.blog.api.Chats;
 import com.blog.api.Comments;
 import com.blog.api.DuplicateUserException;
 import com.blog.api.InvalidCommentException;
@@ -15,7 +16,9 @@ import com.blog.api.Post;
 import com.blog.dao.DAO;
 import com.blog.dao.OracleDAOImpl;
 import com.blog.dto.AuthenticationDto;
+import com.blog.dto.ChatsDto;
 import com.blog.dto.CommentDto;
+import com.blog.dto.NewChat;
 import com.blog.dto.NewComment;
 import com.blog.dto.NewPost;
 import com.blog.dto.PostDto;
@@ -210,5 +213,34 @@ public class Blog implements BlogInterface {
 	@Override
 	public ArrayList<Integer> readFavourites(String userId){
 		return dao.readFavourites(userId);
+	}
+	
+	public ArrayList<ChatsDto> readRecentChats() {
+		ArrayList<Chats> chats = dao.getTopChats();
+		return getChatsDtos(chats);		 		
+	}
+
+	private ArrayList<ChatsDto> getChatsDtos(ArrayList<Chats> chats) {
+		ArrayList<ChatsDto> chatDtos = new ArrayList<>();
+		for (Chats chat : chats) {
+			ChatsDto chatDto = getChatDto(chat);
+			chatDtos.add(chatDto);
+		}
+		return chatDtos;
+	}
+	
+	public ChatsDto getChatDto(Chats chat) {
+		ChatsDto chatDto = new ChatsDto();	
+		chatDto.setChatmsg(chat.getMessage());
+		chatDto.setPostedBy(chat.getUserid());		
+		chatDto.setPostedon(new SimpleDateFormat("dd-MMM-yyyy, HH:mm:ss").format(chat.getPosted_on()));
+		return chatDto;
+	}
+	
+	public int addChat(NewChat chat) throws InvalidCommentException {
+		if (chat == null ||  chat.getMessage() == null) {
+			throw new InvalidCommentException();
+		}
+		return dao.chatAdd(chat);
 	}
 }

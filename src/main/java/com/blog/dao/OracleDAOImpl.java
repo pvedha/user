@@ -10,10 +10,13 @@ import org.hibernate.exception.SQLGrammarException;
 
 import com.blog.api.BlogUser;
 import com.blog.api.Category;
+import com.blog.api.Chats;
 import com.blog.api.Comments;
 import com.blog.api.Favourite;
 import com.blog.api.FavouriteKey;
 import com.blog.api.Post;
+import com.blog.dto.ChatsDto;
+import com.blog.dto.NewChat;
 import com.blog.dto.NewComment;
 import com.blog.dto.NewPost;
 import com.blog.trials.FavouriteEmbeddable;
@@ -294,5 +297,31 @@ public class OracleDAOImpl implements DAO {
 		em.close();
 		return titles;
 	}
+	
+	
+	@Override
+	public ArrayList<Chats> getTopChats() {
+		EntityManager em = factory.createEntityManager();
+		ArrayList<Chats> chats = (ArrayList<Chats>) em.createNativeQuery("select * from Chats", Chats.class)
+				.getResultList();
+		em.close();
+		return chats;
+	}
+	
+	@Override
+	public int chatAdd(NewChat newChat) {
+		EntityManager em = factory.createEntityManager();
+		em.getTransaction().begin();
+		int result = em
+				.createNativeQuery("insert into chats values((select max(chat_id)+1 from chats),"
+						+ ":userid, :message, sysdate)")
+				.setParameter("userid", newChat.getUserId())
+				.setParameter("message", newChat.getMessage())
+				.executeUpdate();
+		em.getTransaction().commit();
+		em.close();
+		return result;
+	}
+
 	
 }

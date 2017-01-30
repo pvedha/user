@@ -94,6 +94,48 @@ function addComment(){
            
 }
 
+function newChat(){
+	var userId = currentUserId;
+    console.log("Current User" + currentUserId);
+    var message = $("#new-chat-message").val();
+    
+    if(message.trim().length === 0){
+        $("#new-comment-info").html("chat cannot be empty");
+        console.log("chat msg cannot be empty");
+        return;
+    }
+    //$("#new-post-info").html("Please wait, submitting chat...");
+    //$("#new-post-info").css({ 'color': 'green', 'font-size': '100%' });
+    console.log(userId + message);
+    var data = {    	
+        message : message,
+        userId : userId,
+    };
+    $.ajax({              
+                url : baseURL + '/post/newChat',
+                type : 'post',
+                contentType : 'application/json',
+                global: false,
+                success : function(response) {
+                    //$("#viewForm").hide();
+                    //displayPosts(response);
+                    console.log("Posting done");
+                    $("#new-chat-info").html("Successfully Posted.");
+                    //showChatView();                
+                },
+                error : function(XMLHttpRequest, textStatus, errorThrown) {
+                    console.log("Error submitting the post");
+                    $("#new-chat-info").html("Error submitting the post, please try again");
+                    //showChatView();
+                    //$("#login-message").css({ 'color': 'green', 'font-size': '100%' });
+                },
+                data : JSON.stringify(data)
+            })
+//    userId = "bloguser";
+            
+           
+}
+
 function readAllPosts() {
 	showPostsView();
 	$("#post-info").html("Please wait, loading posts...");
@@ -156,6 +198,10 @@ function searchByCategory(category) {
 function searchAllPosts() {
 
 	var searchString = $("#search-text").val();
+	if(search.trim().length === 0){
+        console.log("search string cannot be empty");
+        return;
+    }
     $("#post-info").html("Please wait, loading posts for search string '" + searchString + "'");
     $("#post-info").css({ 'color': 'green', 'font-size': '100%' });
     $.ajax({

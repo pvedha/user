@@ -3,8 +3,11 @@ package com.blog.dao;
 import java.util.ArrayList;
 
 import com.blog.api.BlogUser;
+import com.blog.api.Chats;
 import com.blog.api.Comments;
 import com.blog.api.Post;
+import com.blog.dto.ChatsDto;
+import com.blog.dto.NewChat;
 import com.blog.dto.NewComment;
 import com.blog.dto.NewPost;
 
@@ -40,5 +43,7 @@ public interface DAO {
 	boolean addFavourite(String userId, int postId);
 	boolean removeFavourite(String userId, int postId);
 	ArrayList<Integer> readFavourites(String userId);
+	int chatAdd(NewChat chat);
+	ArrayList<Chats> getTopChats();
 	
 }

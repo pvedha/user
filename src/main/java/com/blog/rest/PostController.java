@@ -20,6 +20,8 @@ import com.blog.api.InvalidSearchKeyException;
 import com.blog.api.InvalidUserException;
 import com.blog.api.Post;
 import com.blog.biz.Blog;
+import com.blog.dto.ChatsDto;
+import com.blog.dto.NewChat;
 import com.blog.dto.NewComment;
 import com.blog.dto.NewPost;
 import com.blog.dto.PostDto;
@@ -96,6 +98,15 @@ public class PostController {
 	public Response addComment(NewComment comment) throws InvalidCommentException {
 		Blog blog = new Blog();
 		int number = blog.addComment(comment);
+		return Response.ok().entity(number + "").build();
+	}
+	
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Path("/newChat")
+	public Response newChat(NewChat chat) throws InvalidCommentException {
+		Blog blog = new Blog();
+		int number = blog.addChat(chat);
 		return Response.ok().entity(number + "").build();
 	}
 }
