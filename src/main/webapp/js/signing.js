@@ -2,8 +2,10 @@ var userIdsResponse = "";
 var userIdsResponseReceived = false;
 var validUserId = true;
 var currentUserId = "";
+var currentUserDetails;
 var url = 'http://' +  window.location.host;
-var baseURL = url + "/blog/blog"; 
+var baseURL = url + "/blog/blog"; //http://hostname:8080/blog/blog
+var appURL = url + "/blog/" //http://hostname:8080/blog
 var readPostResponse;
 var currentPostId = 0;
 var currentPost;
@@ -14,19 +16,22 @@ $(document)
 		.ready(
 				function() {
                     
-                    $("#search-text").focusin(function(){
-                        $("#search-text").animate({width: "350px"});
-                    });
-                    $("#search-text").focusout(function(){
-                        $("#search-text").animate({width: "150px"});                      
-                    });
+//                    $("#search-text").focusin(function(){
+//                        $("#search-text").animate({width: "350px"});
+//                    });
+//                    $("#search-text").focusout(function(){
+//                        $("#search-text").animate({width: "150px"});                      
+//                    });
                     $("#search-text").keypress(function(event){	
                         var keycode = (event.keyCode ? event.keyCode : event.which);
                         if(keycode == '13'){
                         	searchAllPosts();	
                         }
                     });
-                    
+                    $("#user-profile-form").keypress(function(event){	
+                        $("#user-profile-update").removeClass("disabled-button");
+                        $("#user-profile-update").addClass("btn1");       //will this keep adding the same class?                  
+                    });
                     $('#trythis-button')
 							.click(function(){
                                        retrieveCategory();                       
@@ -110,24 +115,23 @@ function addUser() {
 function getUserIds() {
     console.log("receiving user ids");
     $.ajax({
-                url : baseURL + '/user/ids',
-                type : 'get',
-                accept : 'application/json',
+        url : baseURL + '/user/ids',
+        type : 'get',
+        accept : 'application/json',
         global: false,
-    //async:false,
-                success : function(response) {
-                    //$("#viewForm").hide();
-                    $("#result-div")
-                            .html(
-                                    response);
-                    userIdsResponse = response;
-                    userIdsResponseReceived = true;
-                    console.log("Rsp 1" + response);
-                    $("#result-div")
-                            .show();
-                    return response;
-                }
-            })
+        success : function(response) {
+            //$("#viewForm").hide();
+            $("#result-div")
+                    .html(
+                            response);
+            userIdsResponse = response;
+            userIdsResponseReceived = true;
+            console.log("Rsp 1" + response);
+            $("#result-div")
+                    .show();
+            return response;
+        }
+    })
 };
 
 
@@ -150,14 +154,19 @@ function login() {
             //$("#current-user-icon").css("filter", "none");
             $("#current-user-icon").html("<img src='img/48px-User_icon_2.svg.png' class='img-normal'/>");
             $("#user-detail-div").html("<b>" + response.name + "</b><p><i>" + response.about);
-            $("#user-detail-div").append("<a href='" + url + "'>Sign out</a>");
+            $("#user-detail-div").append("<a href='" + appURL + "'>Sign out</a> | ");
+            $("#user-detail-div").append("<a href='#' onClick='viewProfile()'>Edit Profile</a>");
             currentUserId = response.userId;
+            currentUserDetails = response;
             console.log("user id assigned" + currentUserId + "complete response "  + response);
             $("#loginPage").hide();
             $("#mainPage").show().fadeIn(50000);
             $("#mainPage").fadeIn(5000);
             readAllPosts();
             retrieveCategory();
+            window.setInterval(function(){
+                readChats();
+            }, 3000);
             readChats();
         },
         error : function(XMLHttpRequest, textStatus, errorThrown) {
@@ -168,7 +177,49 @@ function login() {
     })
 };
 
+function updateProfile(){
+    $("#user-profile-info").html("updating your profile...");		
+    var userId = currentUserId;
+    var userName =currentUserDetails.name;
+    var emailId = "";
+    var password = "";
+    var newPassword = $("#view-profile-newPassword").val();
+    var about = $("#view-profile-about").val();
+    var data = {
+        userId : userId,
+        userName : userName,
+        emailId : emailId,
+        password : password,
+        newPassword : newPassword,
+        about : about
+    };
+    $.ajax({
+        url : baseURL + '/user/update',
+        type : 'post',
+        contentType : 'application/json',
+        success : function(response) {
+            $("#user-profile-info").html("Profile updated successfully");		            
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown) {                                                         
+            $("#user-profile-info")
+                    .html("Error validating details, please try again. " + textStatus + " : " + errorThrown);		
+        },
+        data : JSON.stringify(data),                                                    
+    });
+    
+}
 
+
+
+function viewProfile(){
+    $("#post-div").hide();
+	$("#view-post-div").hide();
+	$("#new-post-div").hide();  
+    $("#user-profile-fixed").html("User ID : <b>" + currentUserId + "</b><br>Name : <b>" + currentUserDetails.name);
+    $("#view-profile-about").val(currentUserDetails.about);
+    $("#user-profile-div").fadeIn(1000);   
+    
+}
 
 function sleep(milliseconds) {
   var start = new Date().getTime();

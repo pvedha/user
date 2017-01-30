@@ -14,6 +14,7 @@ import com.blog.dto.AuthenticationDto;
 import com.blog.dto.NewComment;
 import com.blog.dto.NewPost;
 import com.blog.dto.PostDto;
+import com.blog.dto.UserDto;
 
 public interface BlogInterface {
 	//post
@@ -40,5 +41,7 @@ public interface BlogInterface {
 	ArrayList<String> readUserIds();
 	int createUser(BlogUser user) throws InvalidUserException, DuplicateUserException;
 	AuthenticationDto validateLogin(String userId, String password);
+	UserDto getUser(String userId);
+	boolean updateUser(UserDto user);
 	
 }

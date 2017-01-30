@@ -10,6 +10,7 @@ import com.blog.dto.ChatsDto;
 import com.blog.dto.NewChat;
 import com.blog.dto.NewComment;
 import com.blog.dto.NewPost;
+import com.blog.dto.UserDto;
 
 public interface DAO {
 
@@ -31,10 +32,11 @@ public interface DAO {
 	
 	//user
 	int userCreate(BlogUser user);	
-	BlogUser readUser(String userid);	
 	ArrayList<BlogUser> readAllUsers();
 	ArrayList<String> readUserIds();
 	BlogUser validateLogin(String userId, String password);
+	BlogUser getUser(String userId);
+	boolean updateUser(UserDto user);
 	
 		
 	//generic
@@ -45,5 +47,6 @@ public interface DAO {
 	ArrayList<Integer> readFavourites(String userId);
 	int chatAdd(NewChat chat);
 	ArrayList<Chats> getTopChats();
+	
 	
 }

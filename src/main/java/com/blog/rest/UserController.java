@@ -17,6 +17,7 @@ import com.blog.api.DuplicateUserException;
 import com.blog.api.InvalidUserException;
 import com.blog.biz.Blog;
 import com.blog.dto.AuthenticationDto;
+import com.blog.dto.UserDto;
 
 @Path("/user")
 public class UserController {
@@ -42,6 +43,24 @@ public class UserController {
 		Blog blog = new Blog();
 		ArrayList<String> userNames = blog.readUserIds();
 		return Response.ok().entity(userNames).build();
+	}
+	
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/view/{userId}")
+	public Response getUser(@PathParam("userId") String userId) {
+		Blog blog = new Blog();
+		UserDto user = blog.getUser(userId);
+		return Response.ok().entity(user).build();
+	}
+	
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Path("/update")
+	public Response updateUser(UserDto user) {
+		Blog blog = new Blog();
+		boolean result = blog.updateUser(user);
+		return Response.ok().entity(result+"").build();
 	}
 
 	@GET

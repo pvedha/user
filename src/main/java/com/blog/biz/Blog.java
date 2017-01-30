@@ -22,6 +22,7 @@ import com.blog.dto.NewChat;
 import com.blog.dto.NewComment;
 import com.blog.dto.NewPost;
 import com.blog.dto.PostDto;
+import com.blog.dto.UserDto;
 
 public class Blog implements BlogInterface {
 	private DAO dao;
@@ -109,12 +110,27 @@ public class Blog implements BlogInterface {
 			throw new InvalidUserException();
 		}
 
-		if (dao.readUser(user.getUserid()) != null) {
+		if (dao.getUser(user.getUserid()) != null) {
 			throw new DuplicateUserException();
 		}
 		return dao.userCreate(user);
 	}
 
+	
+	@Override
+	public UserDto getUser(String userId){	
+		BlogUser blogUser = dao.getUser(userId);
+		UserDto user = new UserDto();
+		user.setAbout(blogUser.getAbout());
+		user.setUserName(blogUser.getName());
+		return user;
+	}
+	
+	@Override
+	public boolean updateUser(UserDto user){
+		return dao.updateUser(user);
+	}
+	
 	@Override
 	public int addComment(NewComment comment) throws InvalidCommentException {
 		if (comment == null || comment.getPostId() == 0 || comment.getMessage() == null
@@ -175,11 +191,11 @@ public class Blog implements BlogInterface {
 		return getPostDto(posts, comments);
 	}
 	
-	@Override
+	@Override //not working, trying to insert bloguser first
 	public int createPostPersist(NewPost newPost) {
 		Post post = new Post();
 		post.setPostId(dao.getNextPostId());
-		post.setPostedBy(dao.readUser(newPost.getUserId()));
+		post.setPostedBy(dao.getUser(newPost.getUserId()));
 		post.setTitle(newPost.getTitle());
 		post.setMessage(newPost.getMessage());
 		post.setTags(newPost.getTags());

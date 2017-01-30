@@ -96,17 +96,14 @@ function addComment(){
 
 function newChat(){
 	var userId = currentUserId;
-    console.log("Current User" + currentUserId);
+    //console.log("Current User" + currentUserId);
     var message = $("#new-chat-message").val();
     
     if(message.trim().length === 0){
-        $("#new-comment-info").html("chat cannot be empty");
+//        $("#new-comment-info").html("chat cannot be empty");
         console.log("chat msg cannot be empty");
         return;
     }
-    //$("#new-post-info").html("Please wait, submitting chat...");
-    //$("#new-post-info").css({ 'color': 'green', 'font-size': '100%' });
-    console.log(userId + message);
     var data = {    	
         message : message,
         userId : userId,
@@ -120,12 +117,13 @@ function newChat(){
                     //$("#viewForm").hide();
                     //displayPosts(response);
                     console.log("Posting done");
-                    $("#new-chat-info").html("Successfully Posted.");
+//                    $("#new-chat-info").html("Successfully Posted.");
+                     $("#new-chat-message").val("");
                     //showChatView();                
                 },
                 error : function(XMLHttpRequest, textStatus, errorThrown) {
                     console.log("Error submitting the post");
-                    $("#new-chat-info").html("Error submitting the post, please try again");
+//                    $("#new-chat-info").html("Error submitting the post, please try again");
                     //showChatView();
                     //$("#login-message").css({ 'color': 'green', 'font-size': '100%' });
                 },
@@ -146,7 +144,7 @@ function readChats() {
 		success : function(response) {
 			// $("#viewForm").hide();
 			displayChats(response);
-			window.setTimeout(update, 10000);
+			//window.setTimeout(update, 10000);
 		},
 		error : function(XMLHttpRequest, textStatus, errorThrown) {
 			console.log("Error Loading the posts read");
@@ -158,8 +156,6 @@ function readChats() {
 	
 }
 function displayChats(response) {
-	//readChatResponse = response;
-	console.log("Reading chats done.");
 	$("#show-chat-div").html("");
 	var htmlContent = "";
 	for (i = 0; i < response.length; i++) {
@@ -384,7 +380,7 @@ function loadSelectedPost(currentPost){
 function addFavourite(postId){
     
     $.ajax({
-		url : baseURL + '/favourite/add' + currentUserId + '/' + postId,
+		url : baseURL + '/favourite/add/' + currentUserId + '/' + postId,
 		type : 'post',
 		contentType : 'application/json',
 		global : false,
@@ -405,7 +401,7 @@ function addFavourite(postId){
 function removeFavourite(postId){
     
     $.ajax({
-		url : baseURL + '/favourite/remove' + currentUserId + '/' + postId,
+		url : baseURL + '/favourite/remove/' + currentUserId + '/' + postId,
 		type : 'post',
 		contentType : 'application/json',
 		global : false,
@@ -434,6 +430,7 @@ function setRemoveFavourite(postId){
 function showNewPost() {
 	$("#post-div").hide();
 	$("#view-post-div").hide();
+    $("#user-profile-div").hide();
 	$("#new-post-title").val("");
 	$("#new-post-message").val("");
 	$("#new-post-tags").val("");
@@ -444,12 +441,14 @@ function showNewPost() {
 function showPostsView() {
 	$("#new-post-div").hide();// .fadeOut(5000);
 	$("#view-post-div").hide();
+    $("#user-profile-div").hide();
 	$("#post-div").fadeIn(2000);
 }
 
 function showViewPostView() {
 	$("#new-post-div").hide();
 	$("#post-div").hide();
+    $("#user-profile-div").hide();
 	$("#view-post-div").fadeIn(2000);
 }
 

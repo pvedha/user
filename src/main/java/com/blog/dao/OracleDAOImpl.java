@@ -19,6 +19,7 @@ import com.blog.dto.ChatsDto;
 import com.blog.dto.NewChat;
 import com.blog.dto.NewComment;
 import com.blog.dto.NewPost;
+import com.blog.dto.UserDto;
 import com.blog.trials.FavouriteEmbeddable;
 import com.blog.trials.Favourite_Option;
 
@@ -54,13 +55,29 @@ public class OracleDAOImpl implements DAO {
 		return post;
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
-	public BlogUser readUser(String userid) {
+	public BlogUser getUser(String userId) {
 		EntityManager em = factory.createEntityManager();
-		BlogUser user = em.find(BlogUser.class, userid);
+		BlogUser user = em.find(BlogUser.class, userId);
 		em.close();
 		return user;
+	}
+	
+	@Override
+	public boolean updateUser(UserDto user) {
+		EntityManager em = factory.createEntityManager();
+		em.getTransaction().begin();
+		BlogUser blogUser = em.find(BlogUser.class, user.getUserId());
+		if(blogUser.getPassword().equals(user.getPassword())){
+			if(!user.getPassword().equals(user.getNewPassword())){
+				blogUser.setPassword(user.getNewPassword());
+			}
+			blogUser.setAbout(user.getAbout());
+			em.persist(blogUser);
+			em.getTransaction().commit();
+		}
+		em.close();
+		return false;
 	}
 
 	@Override // We need either update/add comment
@@ -145,16 +162,6 @@ public class OracleDAOImpl implements DAO {
 				.getResultList();
 		em.close();
 		return userIds;
-	}
-
-	private void tryThis() {
-		EntityManager em = factory.createEntityManager();
-		System.out.println("starting transaction");
-		em.getTransaction().begin();
-		em.createNativeQuery("insert into dummy values (2)").executeUpdate();
-		em.getTransaction().commit();
-		System.out.println("Committed dummy entry");
-		em.close();
 	}
 
 	@Override

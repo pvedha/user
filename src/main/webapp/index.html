@@ -16,9 +16,11 @@
         $("#signup-form").hide();     
         $("#result-div").hide();
         $("#mainPage").hide();
-        //$("#loginPage").hide();
+        //$("#loginPage").hide(); //to hide first
         $("#post-div").hide();
         $("#new-post-div").hide();
+        $("#view-post-div").hide();   
+        $("#user-profile-div").hide();
         
     });    
 
@@ -36,26 +38,24 @@
 		</div>
 	</div>
 	<br>
-	<hr style="height: 3px" color=brown>
 
 	<!--    mainpage-->
 	<div id="mainPage">
 
-		<div id="controlBar">
+		<div id="controlBar" class="controller-bar-div">
 
-			<button type="button" id="newPost-button" class="control-button"
+			<button type="button" id="newPost-button" 
 				onclick="showNewPost()">New Post</button>
-			<button type="button" id="search-button" class="control-button"
+			<button type="button" id="search-button" 
 			onclick="searchAllPosts()">Search
 				Contents</button>
-			<input type="text" id="search-text"
+			<input type="text" id="search-text" class="search-box"
 				placeholder="Enter Search Text..." />
 
 		</div>
-		<hr style="height: 3px; margin: 10px 0 0 0" color=brown>
 		<div class="center-align-div">
 			<div id="shortlinks-div" class="left-div">
-				<h2>Quick Links</h2>
+                <p class="quicklink-title">Quick Links</p>
 				<br>
 				<a class='quicklink-links' href='#' onClick=readAllPosts()>Load All Posts</a><hr>
                 
@@ -68,13 +68,13 @@
 			<div id="post-div" class="center-div">
 				<h2>Latest Posts</h2>
 				<h4 id="post-info"></h4>
-				<div id="post-contents"></div>
+				<div id="post-contents" class="post-contents-div"></div>
 			</div>
             <div id="view-post-div" class="center-div">
 				<h2>View Post</h2>
                 <h4 id="view-post-info"></h4>
-                <p id="view-post-title" class="view-post-title">Title comes here</p>
-				<p id="view-post-message" class="post-message">a big messages come herea big messages come herea big messages come herea big messages come herea big messages come herea big messages come herea big messages come herea big messages come herea big messages come herea big messages come herea big messages come herea big messages come herea big messages come here</p>
+                <p id="view-post-title" class="view-post-title">Title Comes here</p>
+				<p id="view-post-message" class="post-message">The post message comes here</p>
                 <div class="view-post-detail-div">
                     <p id="view-post-by" class="view-post-detail">Posted by : <b>User Name</b> </p>
                     <p id="view-post-time" class="view-post-detail">Posted On : <b>time comes here</b></p>
@@ -121,6 +121,25 @@
 						</select>
 						<button type="button" class="btn1" id="newPost-submit-button">Post
 							it!</button>
+					</form>
+				</div>
+			</div>
+            <div id="user-profile-div" class="center-div">
+				<h2>Your Profile</h2>
+				<h4 id="user-profile-info"></h4>
+				<div id="user-profile-contents">
+					<form class="signin-form" id="user-profile-form">
+                        <div id="user-profile-fixed" title="Non editable fields">User ID : <b>PVedha</b><br>Name : <b>Praveen Vedha</b></div> 
+<!--
+						<input type="text" name="view-profile-userId" class=""
+							id="view-profile-userId" disabled/>
+-->
+                        <input type="text" name="view-profile-newPassword" class=""
+							id="view-profile-newPassword" placeholder="Your new password, leave it blank not to update" />
+                        About Yourself : 
+						<textarea name="view-profile-about" id="view-profile-about" rows="3"
+							placeholder="Few lines about yourself"></textarea>					
+						<button type="button" class="disabled-button" id="user-profile-update" onClick="updateProfile()">Update</button>
 					</form>
 				</div>
 			</div>
@@ -177,12 +196,14 @@
     <hr style="height: 3px; margin: 10px 0 10px 0" color=brown>
     <p align='center'>A Project by Praveen Vedha and Aswin Kuppusami</p>
     <p align='center'>All Rights Reserved © </p>
+<!--
     <div id="debug-div">
 	<button class="btn1" id="trythis-button">TryThis</button>
 	<button class="btn1" id="trythis2-button">TryThis2</button>
     <button class="btn1" id="quick-login-debug" onClick='skipLogin()'>Quick login</button>
 	<div class="center-div" id="result-div" ></div>
     </div>
+-->
 
 </body>
 </html>

@@ -1,5 +1,4 @@
 body {
-    background-color: red;
     background: #e7f4f8;
 }
 
@@ -17,15 +16,17 @@ h2 {
 
 .quicklink-title {
     color: brown;
+/*    background: gray;*/
     font-size: 1em;
     text-align: left;
-    text-indent: 40px;
+/*    text-indent: 40px;*/
 }
 
 .quicklink-links {
     color: darkblue;
     font-size: 1em;
-    text-align: center;
+    text-align: left;
+    text-indent: 10%
     margin: 0 0 0 0;
 }
 
@@ -72,7 +73,11 @@ h2 {
     margin: 10px 0 10px 0;
 }
 
-
+.controller-bar-div{
+    border-bottom: 3px solid brown;
+    border-top: 3px solid brown;
+    padding: 10px 0 10px 0;
+}
 .header-div {
     height: 55px;
 }
@@ -128,52 +133,47 @@ h2 {
 .center-align-div{
     align-content: center;
     align-items: center;
+    max-height: 400px;
 }
 
 .left-div{
     float: left;    
-    background-size: cover;
-/*    padding: 2em 2em;*/
     text-align: center;
     width: 20%;
-    height: auto;
+    max-height: inherit;
+    overflow-y: scroll;
     border-right: 2px solid brown;
-/*    border-left: 2px solid brown;*/
+    overflow-y: scroll;
     border-radius: 5px;
-/*    margin: 0 auto;*/
-/*    box-shadow: 3px 3px 50px 5px blue inset;*/
     display: inline-block;
 }
 
 .center-div{
-    background: #e7f4f8;
-    background-size: cover;
-/*    padding: 2em 2em;*/
     text-align: center;
     width: 60%;
-    height: auto;
-/*    margin: 0 auto;*/
+    height: inherit;
+    max-height: inherit;
+    overflow-y: scroll;
     border-right: 2px solid brown;
     border-left: 2px solid brown;
     border-radius: 5px;
-/*    box-shadow: 3px 3px 50px 5px blue inset;*/
     display: inline-block;
 }
 
 .right-div{
     float: right;
-    background: #e7f4f8;
-/*    background-size: cover;*/
-/*    padding: 2em 2em;*/
     text-align: center;
     width: 20%;
-    height: auto;
-/*    border-right: 2px solid brown;*/
+/*    height: inherit;*/
+    max-height: inherit;
+    overflow-y: scroll;
     border-left: 2px solid brown;
     border-radius: 5px;
-/*    margin: 0 auto;*/
-/*    box-shadow: 3px 3px 50px 5px blue inset;*/
     display: inline-block;
+}
+
+.post-contents-div {
+/*    max-height: 200px;*/
 }
 
 .view-post-detail-div{
@@ -197,12 +197,12 @@ h2 {
 
 .login-div{
     background: #e7f4f8;
-    background-size: cover;
+/*    background-size: cover;*/
     padding: 2em 2em;
     text-align: center;
     width: 50%;
     margin: 0 auto;
-    box-shadow: 3px 3px 50px 5px blue inset;
+/*    box-shadow: 1px 2px 20px 2px red inset;*/
 }
 
 .signin-form {
@@ -296,6 +296,47 @@ h2 {
     -ms-transition: .5s all;
 }
 
+button.disabled-button {
+	color: #FFFFFF;
+    font-size: .9em;
+    padding: 1em 2em;
+    text-align: center;
+    text-decoration: none;
+    background: #9d9d9d;
+    margin-right: 10px;
+    margin-left: 10px;
+    border: #467204;
+    border-radius: 5px;
+    transition: 0.5s all;
+    -webkit-transition: 0.5s all;
+    -moz-transition: 0.5s all;
+    -o-transition: 0.5s all;
+    -ms-transition: 0.5s all;
+}
+
+button.control-button {
+	color: #FFFFFF;
+    font-size: .9em;
+    padding: 1em 2em;
+    text-align: center;
+    text-decoration: none;
+    background: #86c724;
+    margin-right: 10px;
+    margin-left: 10px;
+    border: #467204;
+    border-radius: 5px;
+    transition: 0.5s all;
+    -webkit-transition: 0.5s all;
+    -moz-transition: 0.5s all;
+    -o-transition: 0.5s all;
+    -ms-transition: 0.5s all;
+}
+
+button.control-button:hover{
+	background:#1f71f5;
+	border: #0846a8;
+}
+
 button.btn1 {
 	color: #FFFFFF;
     font-size: .9em;
@@ -341,4 +382,26 @@ button.btn1:hover span {
 button.btn1:hover span:after {
   opacity: 1;
   right: 0;
+}
+
+
+
+.search-box {
+    width: 175px;
+    height: 30px;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    font-size: 10px;
+    background-color: white;
+    background-image: url('../img/search-icon.png');
+    background-position: 0px 1px; 
+    background-repeat: no-repeat;
+    padding: 0px 0px 0px 40px;
+    -webkit-transition: width 0.4s ease-in-out;
+    transition: width 0.4s ease-in-out;
+}
+
+.search-box:focus {
+    width: 100%;
 }
