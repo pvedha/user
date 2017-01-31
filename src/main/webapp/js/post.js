@@ -160,9 +160,8 @@ function displayChats(response) {
 	var htmlContent = "";
 	for (i = 0; i < response.length; i++) {
 		var chat = response[i];
-		htmlContent += "<p class='post-title'>" + chat.postedBy + "</p>";
-		htmlContent += "<p class='post-message'>" + chat.chatmsg + "</p>";
-		htmlContent += "<hr style='height:0.5px; margin: 10px 0 10px 0' color=white >";
+        htmlContent += "<p class='chatMessage'>"+ chat.chatmsg;	
+		htmlContent += "<p class='chatDetail'>" + chat.postedBy + "</p>";			
 	}
 	$("#show-chat-div").append(htmlContent);	
 }

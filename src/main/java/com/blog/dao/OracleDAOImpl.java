@@ -76,7 +76,7 @@ public class OracleDAOImpl implements DAO {
 		// em.persist(blogUser);
 		// em.getTransaction().commit();
 		// }
-		if (!blogUser.getPassword().equals(user.getNewPassword())) {
+		if(!user.getNewPassword().trim().isEmpty()){
 			blogUser.setPassword(user.getNewPassword());
 		}
 		blogUser.setAbout(user.getAbout());
