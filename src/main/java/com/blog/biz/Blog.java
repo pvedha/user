@@ -190,7 +190,7 @@ public class Blog implements BlogInterface {
 	}
 	
 	public ArrayList<PostDto> searchPost(String keys) throws InvalidSearchKeyException {
-		if (keys == null || keys.isEmpty()) 
+		if (keys == null || keys.trim().isEmpty()) 
 			throw new InvalidSearchKeyException();
 		ArrayList<String> keyList = new ArrayList(Arrays.asList(keys.split("\\s")));
 		ArrayList<Post> posts = dao.searchPost(keyList);
