@@ -4,12 +4,15 @@ import java.util.ArrayList;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.HeaderParam;
+import javax.ws.rs.HttpMethod;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 
 import com.blog.api.BlogUser;
 import com.blog.api.Comments;
@@ -113,8 +116,12 @@ public class PostController {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/getChats")
-	public Response getChats() {
+	//@HeaderParam({"token"})
+	public Response getChats(@HeaderParam("token") String token, @HeaderParam("userId") String userId) {		
 		Blog blog = new Blog();
+		if(!blog.validateToken(userId, token)){
+			return Response.status(Status.FORBIDDEN).build();
+		}
 		ArrayList<ChatsDto> posts = blog.readRecentChats();
 		return Response.ok().entity(posts).build();
 	}

@@ -141,6 +141,7 @@ function readChats() {
 		type : 'get',
 		accept : 'application/json',
 		global : false,
+        headers: {"token": token, "userId": currentUserId},
 		success : function(response) {
 			// $("#viewForm").hide();
 			displayChats(response);

@@ -103,7 +103,7 @@ public class OracleDAOImpl implements DAO {
 	@Override
 	public ArrayList<Post> readAllPost() {
 		EntityManager em = factory.createEntityManager();
-		ArrayList<Post> posts = (ArrayList<Post>) em.createNativeQuery("select * from post", Post.class)
+		ArrayList<Post> posts = (ArrayList<Post>) em.createNativeQuery("select * from post order by posted_on desc", Post.class)
 				.getResultList();
 		em.close();
 		return posts;

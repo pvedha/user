@@ -11,7 +11,7 @@ public class AuthenticationDto {
 	private String about;
 	private String token;
 	
-	private String genToken(String userId) {
+	public String genToken(String userId) {
 		
 		MessageDigest m;
 		try {

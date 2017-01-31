@@ -173,8 +173,15 @@ public class Blog implements BlogInterface {
 	
 	public Boolean validateToken(AuthenticationDto requestToken) {
 		AuthenticationDto temp = new AuthenticationDto(requestToken.getUserId(),
-				requestToken.getName(), requestToken.getAbout());
+				requestToken.getName(), requestToken.getAbout());		
 		return temp.getToken().equals(requestToken.getToken());		
+	}
+	
+	public Boolean validateToken(String userId, String token){
+		if(new AuthenticationDto().genToken(userId).equals(token)){
+			return true;
+		}
+		return false;
 	}
 
 	@Override
