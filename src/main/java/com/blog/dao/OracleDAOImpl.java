@@ -62,20 +62,26 @@ public class OracleDAOImpl implements DAO {
 		em.close();
 		return user;
 	}
-	
+
 	@Override
 	public boolean updateUser(UserDto user) {
 		EntityManager em = factory.createEntityManager();
 		em.getTransaction().begin();
 		BlogUser blogUser = em.find(BlogUser.class, user.getUserId());
-		if(blogUser.getPassword().equals(user.getPassword())){
-			if(!user.getPassword().equals(user.getNewPassword())){
-				blogUser.setPassword(user.getNewPassword());
-			}
-			blogUser.setAbout(user.getAbout());
-			em.persist(blogUser);
-			em.getTransaction().commit();
+		// if(blogUser.getPassword().equals(user.getPassword())){
+		// if(!user.getPassword().equals(user.getNewPassword())){
+		// blogUser.setPassword(user.getNewPassword());
+		// }
+		// blogUser.setAbout(user.getAbout());
+		// em.persist(blogUser);
+		// em.getTransaction().commit();
+		// }
+		if (!blogUser.getPassword().equals(user.getNewPassword())) {
+			blogUser.setPassword(user.getNewPassword());
 		}
+		blogUser.setAbout(user.getAbout());
+		em.persist(blogUser);
+		em.getTransaction().commit();
 		em.close();
 		return false;
 	}
@@ -204,6 +210,7 @@ public class OracleDAOImpl implements DAO {
 		em.close();
 		return result;
 	}
+
 	@Override
 	public int commentAdd(NewComment newComment) {
 		EntityManager em = factory.createEntityManager();
@@ -211,10 +218,8 @@ public class OracleDAOImpl implements DAO {
 		int result = em
 				.createNativeQuery("insert into comments values((select max(comment_id)+1 from comments),"
 						+ ":postid, :message,:userid,sysdate)")
-				.setParameter("postid", newComment.getPostId())
-				.setParameter("message", newComment.getMessage())
-				.setParameter("userid", newComment.getUserId())
-				.executeUpdate();
+				.setParameter("postid", newComment.getPostId()).setParameter("message", newComment.getMessage())
+				.setParameter("userid", newComment.getUserId()).executeUpdate();
 		em.getTransaction().commit();
 		em.close();
 		return result;
@@ -225,18 +230,16 @@ public class OracleDAOImpl implements DAO {
 	public ArrayList<Post> searchPost(ArrayList<String> keys) {
 		EntityManager em = factory.createEntityManager();
 		String query = "select * from post where ";
-		
+
 		for (String key : keys) {
 			query = query + "title like \'%" + key + "%\' or message like \'%" + key + "%\'";
-			if (keys.indexOf(key) < keys.size()-1) {
+			if (keys.indexOf(key) < keys.size() - 1) {
 				query = query + " or ";
-			}			
+			}
 		}
-		
-		ArrayList<Post> posts = (ArrayList<Post>) em
-				.createNativeQuery(query, Post.class)
-				.getResultList();
-		
+
+		ArrayList<Post> posts = (ArrayList<Post>) em.createNativeQuery(query, Post.class).getResultList();
+
 		em.close();
 		return posts;
 	}
@@ -275,37 +278,37 @@ public class OracleDAOImpl implements DAO {
 	}
 
 	@Override
-	public boolean addFavourite(String userId, int postId){
+	public boolean addFavourite(String userId, int postId) {
 		EntityManager em = factory.createEntityManager();
-		em.getTransaction().begin();		
-		Favourite favourite = new Favourite(userId, postId);		
+		em.getTransaction().begin();
+		Favourite favourite = new Favourite(userId, postId);
 		em.persist(favourite);
 		em.getTransaction().commit();
 		em.close();
 		return true;
 	}
-	
+
 	@Override
-	public boolean removeFavourite(String userId, int postId){
+	public boolean removeFavourite(String userId, int postId) {
 		EntityManager em = factory.createEntityManager();
-		em.getTransaction().begin();				
-		Favourite favourite = em.find(Favourite.class, new FavouriteKey(userId,postId));	
-		em.remove(favourite);	
+		em.getTransaction().begin();
+		Favourite favourite = em.find(Favourite.class, new FavouriteKey(userId, postId));
+		em.remove(favourite);
 		em.getTransaction().commit();
 		em.close();
 		return true;
 	}
-	
+
 	@Override
-	public ArrayList<Integer> readFavourites(String userId){
+	public ArrayList<Integer> readFavourites(String userId) {
 		EntityManager em = factory.createEntityManager();
 		String query = "select postid from favourite where USERID = :userId";
-		ArrayList<Integer> titles = (ArrayList<Integer>) em.createNativeQuery(query).setParameter("userId", userId).getResultList();
+		ArrayList<Integer> titles = (ArrayList<Integer>) em.createNativeQuery(query).setParameter("userId", userId)
+				.getResultList();
 		em.close();
 		return titles;
 	}
-	
-	
+
 	@Override
 	public ArrayList<Chats> getTopChats() {
 		EntityManager em = factory.createEntityManager();
@@ -314,21 +317,19 @@ public class OracleDAOImpl implements DAO {
 		em.close();
 		return chats;
 	}
-	
+
 	@Override
 	public int chatAdd(NewChat newChat) {
 		EntityManager em = factory.createEntityManager();
 		em.getTransaction().begin();
 		int result = em
-				.createNativeQuery("insert into chats values((select max(chat_id)+1 from chats),"
-						+ ":userid, :message, sysdate)")
-				.setParameter("userid", newChat.getUserId())
-				.setParameter("message", newChat.getMessage())
+				.createNativeQuery(
+						"insert into chats values((select max(chat_id)+1 from chats)," + ":userid, :message, sysdate)")
+				.setParameter("userid", newChat.getUserId()).setParameter("message", newChat.getMessage())
 				.executeUpdate();
 		em.getTransaction().commit();
 		em.close();
 		return result;
 	}
 
-	
 }

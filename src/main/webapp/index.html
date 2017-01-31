@@ -28,6 +28,7 @@
 
 </head>
 <body>
+        
 	<div class="header-div">
 		<div id="title-div" class="title-left-div">
 			<h1 class="h1-title">CMAD Blog Site</h1>
@@ -43,15 +44,18 @@
 	<div id="mainPage">
 
 		<div id="controlBar" class="controller-bar-div">
-
-			<button type="button" id="newPost-button" 
-				onclick="showNewPost()">New Post</button>
-			<button type="button" id="search-button" 
-			onclick="searchAllPosts()">Search
-				Contents</button>
-			<input type="text" id="search-text" class="search-box"
-				placeholder="Enter Search Text..." />
-
+            <table width="100%"><tr>
+                <td width="70%"><button type="button" id="newPost-button" class="control-button"
+				    onclick="showNewPost()">New Post</button>
+			         <button type="button" id="search-button" class="control-button"
+			             onclick="searchAllPosts()">Search Contents</button>
+			         <input type="text" id="search-text" class="search-box"
+				        placeholder="Enter Search Text..." />
+                </td>
+                <td width="30%" ><button type="button" id="UpdateProfile-button" class="control-button"
+				onclick="viewProfile()">Edit Profile</button>
+                <button type="button" id="signout-button" class="control-button"
+				onclick="signOut()">Sign out</button></td></tr></table>
 		</div>
 		<div class="center-align-div">
 			<div id="shortlinks-div" class="left-div">
@@ -61,7 +65,7 @@
                 
 				<p class="quicklink-title">Categories</p>
 				<div id="category-links"></div><hr>
-				<p class="quicklink-title"><img src="img/22xFavourite.png">  Favourite Posts</p>
+				<p class="quicklink-title"><img src="img/22xFavourite.png"> Favourite Posts</p>
 				<div id="favourite-links"></div>
 
 			</div>
@@ -144,6 +148,7 @@
 				</div>
 			</div>
 			<div id="chat-div" class="right-div">
+                 <h2 id="chat-info">Quick Chat</h2>
 				<div id="show-chat-div"></div>
 				<textarea name="new-chat-message" id="new-chat-message" rows="3"
 							placeholder="Your chat message..."></textarea>

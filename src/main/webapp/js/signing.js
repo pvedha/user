@@ -154,8 +154,6 @@ function login() {
             //$("#current-user-icon").css("filter", "none");
             $("#current-user-icon").html("<img src='img/48px-User_icon_2.svg.png' class='img-normal'/>");
             $("#user-detail-div").html("<b>" + response.name + "</b><p><i>" + response.about);
-            $("#user-detail-div").append("<a href='" + appURL + "'>Sign out</a> | ");
-            $("#user-detail-div").append("<a href='#' onClick='viewProfile()'>Edit Profile</a>");
             currentUserId = response.userId;
             currentUserDetails = response;
             console.log("user id assigned" + currentUserId + "complete response "  + response);
@@ -183,7 +181,7 @@ function updateProfile(){
     var userName =currentUserDetails.name;
     var emailId = "";
     var password = "";
-    var newPassword = $("#view-profile-newPassword").val();
+    var newPassword = $("#view-profile-newPassword").val().trim();
     var about = $("#view-profile-about").val();
     var data = {
         userId : userId,

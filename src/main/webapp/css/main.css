@@ -1,5 +1,5 @@
 body {
-    background: #e7f4f8;
+/*    background: #e7f4f8;*/
 }
 
 .h1-title {
@@ -19,15 +19,16 @@ h2 {
 /*    background: gray;*/
     font-size: 1em;
     text-align: left;
-/*    text-indent: 40px;*/
+    text-indent: 10px;
+    margin: 0 0 5px 0; 
 }
 
 .quicklink-links {
     color: darkblue;
     font-size: 1em;
     text-align: left;
-    text-indent: 10%
-    margin: 0 0 0 0;
+    text-indent: 40px;
+    margin: 0 0 0 40px;
 }
 
 .post-title {
@@ -65,6 +66,20 @@ h2 {
     font-size: 0.85em;
     text-align: left;
     margin: 0 0 0 5px;
+}
+
+.chatMessage {
+/*     color: brown; */
+    font-size: 0.85em;
+    text-align: left;
+    margin: 20px 0 0 5px;
+}
+
+.chatDetail{
+    color: brown;
+    font-size: 0.85em;
+    text-align: right;
+    margin: 0 0 0 0;
 }
 
 .post-hr {
@@ -138,7 +153,7 @@ h2 {
 
 .left-div{
     float: left;    
-    text-align: center;
+    text-align: left;
     width: 20%;
     max-height: inherit;
     overflow-y: scroll;
@@ -316,8 +331,8 @@ button.disabled-button {
 
 button.control-button {
 	color: #FFFFFF;
-    font-size: .9em;
-    padding: 1em 2em;
+/*     font-size: .9em; */
+    padding: 0.3em 1em;
     text-align: center;
     text-decoration: none;
     background: #86c724;
@@ -392,9 +407,9 @@ button.btn1:hover span:after {
     box-sizing: border-box;
     border: 2px solid #ccc;
     border-radius: 4px;
-    font-size: 10px;
+    font-size: 12px;
     background-color: white;
-    background-image: url('../img/search-icon.png');
+    background-image: url('../img/search-icon-24x.png');
     background-position: 0px 1px; 
     background-repeat: no-repeat;
     padding: 0px 0px 0px 40px;
@@ -403,5 +418,5 @@ button.btn1:hover span:after {
 }
 
 .search-box:focus {
-    width: 100%;
+    width: 250px;
 }
