@@ -312,7 +312,9 @@ public class OracleDAOImpl implements DAO {
 	@Override
 	public ArrayList<Chats> getTopChats() {
 		EntityManager em = factory.createEntityManager();
-		ArrayList<Chats> chats = (ArrayList<Chats>) em.createNativeQuery("select * from Chats", Chats.class)
+		ArrayList<Chats> chats = (ArrayList<Chats>) em.createNativeQuery("select * from "
+				+ "(select * from Chats order by POSTED_ON desc FETCH FIRST 20 ROWS ONLY) "
+				+ "order by posted_on", Chats.class)
 				.getResultList();
 		em.close();
 		return chats;

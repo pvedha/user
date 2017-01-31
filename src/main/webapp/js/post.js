@@ -161,7 +161,8 @@ function displayChats(response) {
 	for (i = 0; i < response.length; i++) {
 		var chat = response[i];
         htmlContent += "<p class='chatMessage'>"+ chat.chatmsg;	
-		htmlContent += "<p class='chatDetail'>" + chat.postedBy + "</p>";			
+		htmlContent += "<p class='chatDetail'>" + chat.postedBy;		
+		htmlContent +=  " : " + chat.postedon + "</p>";					
 	}
 	$("#show-chat-div").append(htmlContent);	
 }

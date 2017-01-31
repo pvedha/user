@@ -173,6 +173,7 @@ h2 {
     border-left: 2px solid brown;
     border-radius: 5px;
     display: inline-block;
+    resize: vertical;
 }
 
 .right-div{
