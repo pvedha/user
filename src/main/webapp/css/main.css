@@ -1,6 +1,7 @@
 body {
 /*    background: #e7f4f8;*/
     font-family: "new century schoolbook";
+    font-size: 1.5em;
 }
 
 .h1-title {
@@ -170,7 +171,7 @@ h2 {
     text-align: center;
     width: 60%;
     height: inherit;
-/*    min-height: 400px;   */
+    min-height: 400px;   
     max-height: inherit;
     overflow-y: scroll;
     border-right: 2px solid brown;
@@ -341,7 +342,7 @@ button.control-button {
     text-align: center;
     text-decoration: none;
     background: #86c724;
-    margin-right: 10px;
+    margin-right: 0px;
     margin-left: 10px;
     border: #467204;
     border-radius: 5px;
