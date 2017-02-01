@@ -232,12 +232,14 @@ public class OracleDAOImpl implements DAO {
 		String query = "select * from post where ";
 
 		for (String key : keys) {
-			query = query + "title like \'%" + key + "%\' or message like \'%" + key + "%\'";
+			query = query + "title like \'%" + key + "%\' or message like \'%" + key 
+					+ "%\' or tags like \'%" + key + "%\'";
 			if (keys.indexOf(key) < keys.size() - 1) {
 				query = query + " or ";
 			}
 		}
-
+		
+		System.out.println("The query is " + query);
 		ArrayList<Post> posts = (ArrayList<Post>) em.createNativeQuery(query, Post.class).getResultList();
 
 		em.close();

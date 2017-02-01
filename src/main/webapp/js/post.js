@@ -247,6 +247,8 @@ function searchAllPosts() {
                 success : function(response) {
                     showPostsView();
                     displayPosts(response);
+                    $("#post-info").html("Posts for search string '" + searchString + "'");
+                    $("#post-info").css({ 'color': 'green', 'font-size': '100%' });
                     
                 },
                 error : function(XMLHttpRequest, textStatus, errorThrown) {           
