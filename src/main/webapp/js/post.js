@@ -29,7 +29,7 @@ function newPost() {
 	};
 	$.ajax({
 
-		url : baseURL + '/post/newPost',
+		url : baseURL + '/post/makePost',
 		type : 'post',
 		contentType : 'application/json',
 		global : false,
@@ -75,11 +75,14 @@ function addComment(){
                 success : function(response) {
                     //$("#viewForm").hide();
                     //displayPosts(response);
-                    console.log("Posting done");
+                    //console.log("Comment added");
                     $("#new-comment-info").html("Successfully Posted.");
-                    $.when( readAllPosts() ).then(function() {
-                    	viewPost(postId);
-                    });                                    
+                    loadSamePost = true;
+                    readAllPosts();
+                    
+                    //$.when( readAllPosts() ).then(function() {
+                    //	viewPost(postId);
+                    //});                                    
                 },
                 error : function(XMLHttpRequest, textStatus, errorThrown) {
                     console.log("Error submitting the post");
@@ -184,7 +187,13 @@ function readAllPosts() {
 		global : false,
 		success : function(response) {
 			// $("#viewForm").hide();
-			displayPosts(response);
+            readPostResponse = response;
+            if(loadSamePost){
+                viewPost(currentPostId);
+                loadSamePost = false;
+            } else {
+                displayPosts(response);
+            }			
 
 		},
 		error : function(XMLHttpRequest, textStatus, errorThrown) {
@@ -260,7 +269,7 @@ function searchAllPosts() {
 }
 
 function displayPosts(response) {
-	readPostResponse = response;
+	readPostResponse = response; //redundant we did already in load ajax
 	console.log("Reading posts done.");
 	$("#post-contents").html("");
 	var htmlContent = "";

@@ -1,5 +1,6 @@
 package com.blog.biz;
 
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -165,6 +166,22 @@ public class Blog implements BlogInterface {
 		return token;
 	}
 
+	@Override
+	public AuthenticationDto validateSession(String userId, String token) {
+		//BlogUser user = dao.validateLogin(userId, password);
+		if(!validateToken(userId, token)){
+			return null;
+		}
+		System.out.println("proceeding to get the user details");
+		AuthenticationDto response = new AuthenticationDto();		
+		BlogUser user = dao.getUser(userId);
+		response.setToken(token); //we can regenerate with time
+		response.setAbout(user.getAbout());
+		response.setName(user.getName());
+		response.setUserId(user.getUserid());		
+		return response;
+	}
+	
 	private AuthenticationDto makeAuthDto(BlogUser user) {
 		// TODO Auto-generated method stub		
 		return (new AuthenticationDto(user.getUserid(), 
@@ -201,13 +218,13 @@ public class Blog implements BlogInterface {
 	@Override //not working, trying to insert bloguser first
 	public int createPostPersist(NewPost newPost) {
 		Post post = new Post();
-		post.setPostId(dao.getNextPostId());
+		//post.setPostId(dao.getNextPostId());
 		post.setPostedBy(dao.getUser(newPost.getUserId()));
 		post.setTitle(newPost.getTitle());
 		post.setMessage(newPost.getMessage());
 		post.setTags(newPost.getTags());
 		post.setCategory(newPost.getCategory());
-		//post.setCreatedOn(new java.sql.Date(new java.util.Date().getTime()));
+		post.setCreatedOn(new Timestamp(System.currentTimeMillis()));
 		return dao.postCreate(post);
 	}
 

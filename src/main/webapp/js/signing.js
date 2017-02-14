@@ -6,12 +6,13 @@ var currentUserDetails;
 var token = "";
 var url = 'http://' +  window.location.host;
 var baseURL = url + "/blog/blog"; //http://hostname:8080/blog/blog
-var appURL = url + "/blog/" //http://hostname:8080/blog
+var appURL = url + "/blog" //http://hostname:8080/blog
 var readPostResponse;
 var currentPostId = 0;
 var currentPost;
 var currentUserFavouriteList;
 var userHasFavourites = false;
+var loadSamePost = false;
 
 $(document)
 		.ready(
@@ -160,21 +161,7 @@ function login() {
             console.log("Valid user");
             //<img id='current-user-icon' src='img/48px-User_icon_2.svg.png'/> 
             //$("#current-user-icon").css("filter", "none");
-            token = response.token;
-            $("#current-user-icon").html("<img src='img/48px-User_icon_2.svg.png' class='img-normal'/>");
-            $("#user-detail-div").html("<b>" + response.name + "</b><p><i>" + response.about);
-            currentUserId = response.userId;
-            currentUserDetails = response;
-            console.log("user id assigned" + currentUserId + "complete response "  + response);
-            $("#loginPage").hide();
-            $("#mainPage").show().fadeIn(50000);
-            $("#mainPage").fadeIn(5000);
-            readAllPosts();
-            retrieveCategory();
-            window.setInterval(function(){
-                readChats();
-            }, 3000);
-            readChats();
+            loadMainPage(response);
         },
         error : function(XMLHttpRequest, textStatus, errorThrown) {
             console.log("Invalid user credentials");
@@ -183,6 +170,38 @@ function login() {
         }
     })
 };
+
+
+
+
+function validateSession() {
+    var userId = localStorage.getItem("userId");
+    var token = localStorage.getItem("token");
+    $.ajax({
+                
+        url : baseURL + '/user/validate',
+        type : 'get',
+        accept : 'application/json',
+        global: false,
+        headers: {"token": token, "userId": userId},
+        success : function(response) {
+            //$("#viewForm").hide();
+            console.log("user logged in already");
+            //<img id='current-user-icon' src='img/48px-User_icon_2.svg.png'/> 
+            //$("#current-user-icon").css("filter", "none");
+            loadMainPage(response);
+            
+        },
+        error : function(XMLHttpRequest, textStatus, errorThrown) {
+            console.log("Invalid user credentials");
+            //$("#loginMessage").html("Invalid crendentials, please try again");
+            //$("#login-message").css({ 'color': 'green', 'font-size': '100%' });
+            showLoginPage();
+        }
+    })
+};
+
+
 
 function updateProfile(){
     $("#user-profile-info").html("updating your profile...");		
@@ -261,7 +280,43 @@ function toggleSignform(){
     } 
 
 function signOut(){
+    localStorage.setItem("userId", "");
+    localStorage.setItem("token", "");
     window.location.href = appURL;
+}
+
+
+
+
+function loadMainPage(response){
+    token = response.token; //new token?
+    $("#current-user-icon").html("<img src='img/48px-User_icon_2.svg.png' class='img-normal'/>");
+    $("#user-detail-div").html("<b>" + response.name + "</b><p><i>" + response.about);
+    currentUserId = response.userId;
+    currentUserDetails = response;
+    localStorage.setItem("userId",response.userId);
+    localStorage.setItem("token", response.token);
+    console.log("user id assigned" + currentUserId + "complete response "  + response);
+    $("#loginPage").hide();
+    $("#mainPage").show().fadeIn(50000);
+    $("#mainPage").fadeIn(5000);
+    readAllPosts();
+    retrieveCategory();
+    window.setInterval(function(){
+        readChats();
+    }, 3000);
+    readChats();
+}
+
+function showLoginPage(){
+    $("#signup-form").hide();     
+        $("#result-div").hide();
+        $("#mainPage").hide();
+        //$("#loginPage").hide(); //to hide first
+        $("#post-div").hide();
+        $("#new-post-div").hide();
+        $("#view-post-div").hide();   
+        $("#user-profile-div").hide();
 }
 
 function skipLogin(){

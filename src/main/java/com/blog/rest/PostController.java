@@ -80,9 +80,9 @@ public class PostController {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("/makePost")
-	public Response makePost(Post post) {
+	public Response makePost(NewPost post) {
 		Blog blog = new Blog();
-		int number = blog.createPost(post);
+		int number = blog.createPostPersist(post);
 		return Response.ok().entity(number + "").build();
 	}	
 	

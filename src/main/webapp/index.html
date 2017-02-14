@@ -7,20 +7,20 @@
 	media="all" />
 <link rel="stylesheet" href="css/main.css">
 <script src="js/jquery-1.11.1.min.js"></script>
-<script src="js/bootstrap.js"></script>
+<!--<script src="js/bootstrap.js"></script>-->
 <script src="js/signing.js"></script>
 <script src="js/post.js"></script>
 <script type="application/javascript">
 	
     jQuery(document).ready(function($) {
-        $("#signup-form").hide();     
-        $("#result-div").hide();
-        $("#mainPage").hide();
-        //$("#loginPage").hide(); //to hide first
-        $("#post-div").hide();
-        $("#new-post-div").hide();
-        $("#view-post-div").hide();   
-        $("#user-profile-div").hide();
+        
+        console.log("Data from localStorage",localStorage.getItem("userId"));
+        
+        if(localStorage.getItem("userId") !== null && localStorage.getItem("token")){
+            validateSession();
+        } else {
+            showLoginPage();
+        }        
         
     });    
 

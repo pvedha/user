@@ -5,6 +5,8 @@ import java.sql.Timestamp;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -13,7 +15,7 @@ import javax.persistence.ManyToOne;
 public class Post {
 
 	@Id
-	//@GeneratedValue(strategy = GenerationType.AUTO) // Check whether this works
+	@GeneratedValue(strategy = GenerationType.AUTO) // Check whether this works
 											// while posting
 	protected int post_Id;
 	protected String title;

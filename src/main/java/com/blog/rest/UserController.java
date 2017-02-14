@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -44,7 +45,7 @@ public class UserController {
 		ArrayList<String> userNames = blog.readUserIds();
 		return Response.ok().entity(userNames).build();
 	}
-	
+
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/view/{userId}")
@@ -53,14 +54,14 @@ public class UserController {
 		UserDto user = blog.getUser(userId);
 		return Response.ok().entity(user).build();
 	}
-	
+
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("/update")
 	public Response updateUser(UserDto user) {
 		Blog blog = new Blog();
 		boolean result = blog.updateUser(user);
-		return Response.ok().entity(result+"").build();
+		return Response.ok().entity(result + "").build();
 	}
 
 	@GET
@@ -100,4 +101,18 @@ public class UserController {
 		int number = blog.createUser(user);
 		return Response.ok().entity(number + "").build();
 	}
+
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/validate")
+	public Response validateSession(@HeaderParam("userId") String userId, @HeaderParam("token") String token) {
+		Blog blog = new Blog();
+		System.out.println("User ID :" + userId + " Token : " + token);
+		AuthenticationDto response = blog.validateSession(userId, token);
+		if (response == null) {
+			return Response.status(Status.FORBIDDEN).build();
+		}
+		return Response.ok().entity(response).build();
+	}
+
 }

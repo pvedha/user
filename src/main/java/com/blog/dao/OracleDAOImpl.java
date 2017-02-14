@@ -30,17 +30,11 @@ public class OracleDAOImpl implements DAO {
 	@Override
 	public int postCreate(Post post) {
 		EntityManager em = factory.createEntityManager();
-		System.out.println("Beginning post persistance " + post.getPostId() + post.getPostedBy().getUserid());
 		em.getTransaction().begin();
-		System.out.println("Post Id for submitting " + post.getPostId());
-		System.out.println("User id is " + post.getPostedBy().getUserid());
 		BlogUser user = em.find(BlogUser.class, post.getPostedBy().getUserid());
-		System.out.println("Received user id " + user.getUserid());
-		em.merge(user);
+		//em.merge(user);
 		post.setPostedBy(user);
 		em.persist(post);
-		System.out.println("did persist");
-		em.getTransaction().commit();
 		System.out.println("committed");
 		em.close();
 		return post.getPostId();
@@ -68,14 +62,6 @@ public class OracleDAOImpl implements DAO {
 		EntityManager em = factory.createEntityManager();
 		em.getTransaction().begin();
 		BlogUser blogUser = em.find(BlogUser.class, user.getUserId());
-		// if(blogUser.getPassword().equals(user.getPassword())){
-		// if(!user.getPassword().equals(user.getNewPassword())){
-		// blogUser.setPassword(user.getNewPassword());
-		// }
-		// blogUser.setAbout(user.getAbout());
-		// em.persist(blogUser);
-		// em.getTransaction().commit();
-		// }
 		if(!user.getNewPassword().trim().isEmpty()){
 			blogUser.setPassword(user.getNewPassword());
 		}
