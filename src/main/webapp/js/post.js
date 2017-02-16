@@ -81,7 +81,7 @@ function addComment(){
                     $("#new-comment-info").html("Successfully Posted.");
                     loadSamePost = true;
                     readAllPosts();
-                    $("#comment-textarea").val()="";
+                    $("#comment-textarea").val("");
                     //$.when( readAllPosts() ).then(function() {
                     //	viewPost(postId);
                     //});                                    

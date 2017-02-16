@@ -15,12 +15,14 @@
       <link href="css/jumbotron.css" rel="stylesheet">
       <link href="css/blog.css" rel="stylesheet">
        <link href="css/main.css" rel="stylesheet">
+       
       <script src="js/jquery-1.11.1.min.js"></script>
       <script src="js/bootstrap.min.js"></script>
        <script src='js/angular.js'></script>
 				<script src='js/blogAngular.js'></script> 
        <script src="js/signing.js"></script>
 <script src="js/post.js"></script>
+       <script src="js/blogModal.js"></script>
        
        <script type="application/javascript">
 	
@@ -33,7 +35,7 @@
             showLoginPage();
         }                
         loadContents();
-        //angular.element($('#BlogPostController-Div')).scope().addPost("Main","Entry");
+                //angular.element($('#BlogPostController-Div')).scope().addPost("Main","Entry");
         
     });    
 
@@ -52,12 +54,17 @@
                <a class="navbar-brand" href="#">CMAD Blog Site</a>
             </div>
             <div id="navbar" class="navbar-collapse collapse">
+<!--
                <form id="NotLogged" class="navbar-form navbar-right">
                   <input type="text" placeholder="Search ..." class="form-control search-box">
                   <button type="button" class="btn btn-success">Sign Up</button>
                   <button type="button" class="btn btn-success">Sign in</button>
                </form>
+-->
                <form id="LoginForm" class="navbar-form navbar-right">
+                  <div class="form-group">
+                      <input type="text" placeholder="Search ..." class="form-control search-box">
+                   </div>
                   <div class="form-group">
                      <input id="loginId" type="text" placeholder="UserId" class="form-control">
                   </div>
@@ -65,13 +72,14 @@
                      <input id="loginPassword" type="password" placeholder="Password" class="form-control">
                   </div>
                   <button id="login-button" type="button" class="btn btn-success">Sign in</button>
+                  <button id="showSignUp" type="button" class="btn btn-success">Sign Up</button>
                </form>                 
                 <form id="LoggedInForm" class="navbar-form navbar-right">        
                     <input type="text" placeholder="Search ..." class="form-control search-box">
                     
-                   <button type="button" class="btn btn-success">New Post</button>                    
-                  <button type="button" class="btn btn-info"><span class="glyphicon glyphicon-user"></span>User ID</button>
-                  <button type="button" class="btn btn-success">Sign Out</button>
+                   <button type="button" class="btn btn-success" onclick="showNewPost()">New Post</button>                    
+                  <button id="user-button" type="button" class="btn btn-info" onclick="viewProfile()"><span class="glyphicon glyphicon-user" ></span>User ID</button>
+                  <button type="button" class="btn btn-success" onclick="signOut()">Sign Out</button>
                </form>
                 
             </div>
@@ -88,6 +96,7 @@
            </div>
          </div>
          -->
+       <br>
       <div class="container">
          <!-- Example row of columns -->
          <div class="row">
@@ -126,21 +135,6 @@
                         <p class='post-detail'> <span class='glyphicon glyphicon-user'></span>  <b>{{p.userName}}</b> ,
                         <span>   </span> <span class='glyphicon glyphicon-time'></span> : {{p.postedOn}} , 
                         <span class='glyphicon glyphicon-comment'></span> <span class='badge'>{{p.commentsCount}}</span></p>
-<!--		htmlContent += "<hr style='height:0.5px; margin: 10px 0 10px 0' color=white >";-->
-                    
-<!--
-                    
-                    
-                    
-		htmlContent += "</p><p class='post-detail'> <span class='glyphicon glyphicon-user'></span>  <b>" + post.userName
-				+ "</b> ,<span>   </span> <span class='glyphicon glyphicon-time'></span> : " + post.postedOn + ", "
-				+ "<span class='glyphicon glyphicon-comment'></span> <span class='badge'>" + post.comments.length + "</span></p>";
-		htmlContent += "<hr style='height:0.5px; margin: 10px 0 10px 0' color=white >";
-                    
-                    
-                    
-                    
--->
                     </td>
                     
 				</tr>
@@ -181,7 +175,9 @@
              
              
              <div id="new-post-div" class="col-md-8">
-               <h2>Add a new Post</h2>
+               <div class="panel panel-info"><div class="panel-heading">
+                            <h3 class="panel-title center">Add a new post</h3>
+                   </div></div>
 				<h4 id="new-post-info"></h4>
 				<div id="new-post-contents">
 
@@ -207,7 +203,25 @@
 				</div>
             </div>
              
-             
+             <div id="user-profile-div" class="col-md-8">
+				<h2>Your Profile</h2>
+				<h4 id="user-profile-info"></h4>
+				<div id="user-profile-contents">
+					<form class="signin-form" id="user-profile-form">
+                        <div id="user-profile-fixed" title="Non editable fields">User ID : <b>PVedha</b><br>Name : <b>Praveen Vedha</b></div> 
+<!--
+						<input type="text" name="view-profile-userId" class=""
+							id="view-profile-userId" disabled/>
+-->
+                        <input type="text" name="view-profile-newPassword" class=""
+							id="view-profile-newPassword" placeholder="Your new password, leave it blank not to update" />
+                        About Yourself : 
+						<textarea name="view-profile-about" id="view-profile-about" rows="3"
+							placeholder="Few lines about yourself"></textarea>					
+						<button type="button" class="disabled-button" id="user-profile-update" onClick="updateProfile()">Update</button>
+					</form>
+				</div>
+			</div>
              
              
             <div id="chat-div" class="col-md-2 main-content-div">
@@ -234,7 +248,70 @@
          <hr>
           
           
+<!--
+          <div id="new-user-form" class="pop-up ">
+           <h3 id="signup-title">Please fill in your details</h3>
+			<h4 id="validUser" class="red-error"></h4>
+			<form class="signin-form">
+				<input type="text" name="userid" class="" id="userid"
+					placeholder="User ID" required
+					data-validation-required-message="Please specify your User Id!"
+					onKeyUp="validateUser(this.value)" /> <input type="password"
+					name="password" class="" id="password" placeholder="Password"
+					required
+					data-validation-required-message="Please give your password" />
+				            <input type="email" name="email" class="email" id="email" placeholder="Email ID" required data-validation-required-message="Please specify your User Id!"/>
+				<input type="text" name="FullName" class="name" id="username"
+					placeholder="Full Name" required
+					data-validation-required-message="Please give your password" />
+				<textarea name="about" id="about" rows="2"
+					placeholder="A line about yourself"></textarea>				
+				<button type="button" class="btn1" id="signup-button">SignUp</button>
+			</form>
+          
+          </div>
+-->
+          
          
+          
+<!-- The Modal -->
+<div id="myModal" class="modal">
+
+  <!-- Modal content -->
+  <div class="modal-content">
+    <div class="modal-header">
+      <span id="close-signup-form" class="close">&times;</span>
+      <h3>Please fill in your details</h3>
+    </div>
+    <div class="modal-body">
+<!--       <h3 id="signup-title">Please fill in your details</h3>-->
+			<h4 id="validUser" class="red-error"></h4>
+			<form class="signin-form">
+				<input type="text" name="userid" class="" id="userid"
+					placeholder="User ID" required
+					data-validation-required-message="Please specify your User Id!"
+					onKeyUp="validateUser(this.value)" /> <input type="password"
+					name="password" class="" id="password" placeholder="Password"
+					required
+					data-validation-required-message="Please give your password" />
+				<!--            <input type="email" name="email" class="email" id="email" placeholder="Email ID" required data-validation-required-message="Please specify your User Id!"/>-->
+				<input type="text" name="FullName" class="name" id="username"
+					placeholder="Full Name" required
+					data-validation-required-message="Please give your password" />
+				<textarea name="about" id="about" rows="2"
+					placeholder="A line about yourself"></textarea>				
+				<button type="button" class="btn1" id="signup-button">SignUp</button>
+			</form>
+    </div>    
+  </div>
+
+</div>
+          
+          
+          
+          
+          
+          
          <footer>
             <p>A project by Praveen Vedha and Aswin Kuppusami, &copy; 2017 Cisco.</p>
          </footer>

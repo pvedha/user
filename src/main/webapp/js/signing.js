@@ -58,14 +58,8 @@ $(document)
                     $('#login-button').click( 
                         function() {
                         login();                        
-                    });
-                    
-                    $('#showSignUp').click( 
-                        function() {
-                        getUserIds();
-                        toggleSignform();
-                    });
-                    
+                    });                    
+                                     
                     $('#signup-button').click( 
                         function() {
                         addUser();
@@ -97,7 +91,7 @@ function addUser() {
         alert("User Id taken. Please try another");
         return;
     }
-    $("#signup-title").html("Creating User...");		
+    $("#validUser").html("Creating User...");		
     var userid = $("#userid").val();
     var name = $("#username").val();
     var password = $("#password").val();
@@ -114,12 +108,14 @@ function addUser() {
                 type : 'post',
                 contentType : 'application/json',
                 success : function(response) {
-                    $("#signup-title")
+                    $("#validUser")
                             .html("Thanks for signing. Please login.");		
                     toggleSignform();
+                    document.getElementById('myModal').style.display = "none";
+                    authenticate(userid,password);
                 },
                 error: function(XMLHttpRequest, textStatus, errorThrown) {                                                         
-                    $("#signup-title")
+                    $("#validUser")
                             .html("Sorry invalid details, please try again. " + textStatus + " : " + errorThrown);		
                 },
                 data : JSON.stringify(data),                                                    
@@ -152,10 +148,14 @@ function getUserIds() {
 function login() {
     $("#loginMessage").html("Please wait, validating credentials...");
     $("#loginMessagee").css({ 'color': 'green', 'font-size': '100%' });
-    var userId = $("#loginId").val();
-    var password = $("#loginPassword").val();
-    $.ajax({
-                
+//    var userId = $("#loginId").val();
+//    var password = $("#loginPassword").val();
+    authenticate($("#loginId").val(), $("#loginPassword").val());
+};
+
+
+function authenticate(userId, password){
+    $.ajax({                
         url : baseURL + '/user/' + userId + '/' + password,
         type : 'get',
         accept : 'application/json',
@@ -173,10 +173,7 @@ function login() {
             //$("#login-message").css({ 'color': 'green', 'font-size': '100%' });
         }
     })
-};
-
-
-
+}
 
 function validateSession() {
     var userId = localStorage.getItem("userId");
@@ -301,6 +298,7 @@ function loadMainPage(response){
     $("#user-detail-div").html("<b>" + response.name + "</b><p><i>" + response.about);
     currentUserId = response.userId;
     currentUserDetails = response;
+    $("#user-button").html("<span class='glyphicon glyphicon-user' > </span>" + response.name);
     localStorage.setItem("userId",response.userId);
     localStorage.setItem("token", response.token);
     console.log("user id assigned" + currentUserId + "complete response "  + response);
@@ -309,6 +307,11 @@ function loadMainPage(response){
     $("#LoggedInForm").show();
     $("#mainPage").show().fadeIn(50000); //to be removed in new version
     $("#mainPage").fadeIn(5000); // to be removed in new version.   
+    $("#newChat-submit-button").prop("disabled",false);
+    $("#new-chat-message").prop("disabled",false);
+    $("#post-comment-button").prop("disabled",false);
+    $("#comment-textarea").prop("disabled",false);
+    
     
 }
 
@@ -332,16 +335,19 @@ function showLoginPage(){
         $("#new-post-div").hide();
         $("#view-post-div").hide();   
         $("#user-profile-div").hide();
-        $("#LoginForm").hide();
+        $("#LoginForm").show();
         $("#LoggedInForm").hide();
-        $("#NotLogged").show();
-        
+             
 }
 
 function hideAllForms(){
     $("#LoginForm").hide();
     $("#LoggedInForm").hide();
     $("#NotLogged").hide();
+    $("#newChat-submit-button").prop("disabled",true);
+    $("#new-chat-message").prop("disabled",true);
+    $("#post-comment-button").prop("disabled",true);
+    $("#comment-textarea").prop("disabled",true);
 }
 
 function skipLogin(){
