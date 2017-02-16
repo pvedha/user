@@ -321,7 +321,7 @@ function loadContents(){
     retrieveCategory();
     readAllPosts();
     window.setInterval(function(){
-       // readChats();
+       readChats();
     }, 3000);
     //readChats();
 }

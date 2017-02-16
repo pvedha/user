@@ -53,8 +53,9 @@ $scope.addPosts = function(response){
         var postMessage = "";
 		if (post.message.length > 200) {
 			postMessage = post.message.substring(0, 200)
-					+ ".....<a href='#' onClick=viewPost(" + response[i].postId
-					+ ")> read more </a>";
+					+ "....."; //<a href='#' onClick=viewPost(" + response[i].postId
+					//+ ")> read more </a>";
+            //Check to make this contents as html
 		} else {
 			postMessage = post.message;
 		}       

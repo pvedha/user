@@ -35,8 +35,6 @@
             showLoginPage();
         }                
         loadContents();
-                //angular.element($('#BlogPostController-Div')).scope().addPost("Main","Entry");
-        
     });    
 
        </script>
@@ -189,13 +187,7 @@
 						<input type="text" name="new-post-tags" class=""
 							id="new-post-tags" placeholder="Add related tags" /> Select
 						Category : <select name="Category" id="new-post-category"
-							placeholder="Select Category">
-							<!--
-              <option value="entertainment">Entertainment</option>
-              <option value="news">News</option>
-              <option value="technical">Technical</option>
-              <option value="generic">Generic</option>
--->
+							placeholder="Select Category">							
 						</select>
 						<button type="button" class="btn1" id="newPost-submit-button">Post
 							it!</button>
@@ -204,7 +196,9 @@
             </div>
              
              <div id="user-profile-div" class="col-md-8">
-				<h2>Your Profile</h2>
+				<div class="panel panel-info"><div class="panel-heading">
+                            <h3 class="panel-title center">Your Profile</h3>
+                   </div></div>
 				<h4 id="user-profile-info"></h4>
 				<div id="user-profile-contents">
 					<form class="signin-form" id="user-profile-form">
@@ -234,55 +228,23 @@
 				<textarea name="new-chat-message" id="new-chat-message" rows="3"
 							placeholder="Your chat message..." class="form-control"></textarea>
                 				<button type="button" class="btn btn-success" id="newChat-submit-button">send</button>
-            </div>
-             
-           
-            <!--
-               <div class="col-md-4">
-                 <h2>Heading</h2>
-                 <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-                 <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-               </div>
-               -->
+             </div>
          </div>
          <hr>
           
-          
-<!--
-          <div id="new-user-form" class="pop-up ">
-           <h3 id="signup-title">Please fill in your details</h3>
-			<h4 id="validUser" class="red-error"></h4>
-			<form class="signin-form">
-				<input type="text" name="userid" class="" id="userid"
-					placeholder="User ID" required
-					data-validation-required-message="Please specify your User Id!"
-					onKeyUp="validateUser(this.value)" /> <input type="password"
-					name="password" class="" id="password" placeholder="Password"
-					required
-					data-validation-required-message="Please give your password" />
-				            <input type="email" name="email" class="email" id="email" placeholder="Email ID" required data-validation-required-message="Please specify your User Id!"/>
-				<input type="text" name="FullName" class="name" id="username"
-					placeholder="Full Name" required
-					data-validation-required-message="Please give your password" />
-				<textarea name="about" id="about" rows="2"
-					placeholder="A line about yourself"></textarea>				
-				<button type="button" class="btn1" id="signup-button">SignUp</button>
-			</form>
-          
-          </div>
--->
-          
-         
-          
+                    
 <!-- The Modal -->
 <div id="myModal" class="modal">
 
   <!-- Modal content -->
   <div class="modal-content">
-    <div class="modal-header">
-      <span id="close-signup-form" class="close">&times;</span>
-      <h3>Please fill in your details</h3>
-    </div>
+    
+    <div class="panel panel-info">
+                        <div class="panel-heading">
+                            <span id="close-signup-form" class="close">&times;</span>
+                            <h3 class="panel-title">Blog Chat</h3>
+                        </div>
+                   </div>
     <div class="modal-body">
 <!--       <h3 id="signup-title">Please fill in your details</h3>-->
 			<h4 id="validUser" class="red-error"></h4>
