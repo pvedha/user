@@ -112,7 +112,7 @@ function newChat(){
         userId : userId,
     };
     $.ajax({              
-                url : baseURL + '/post/newChat',
+                url : baseURL + '/newChat',
                 type : 'post',
                 contentType : 'application/json',
                 global: false,
@@ -140,7 +140,7 @@ function newChat(){
 function readChats() {
 
 	$.ajax({
-		url : baseURL + '/post/getChats',
+		url : baseURL + '/getChats',
 		type : 'get',
 		accept : 'application/json',
 		global : false,
@@ -151,8 +151,8 @@ function readChats() {
 			//window.setTimeout(update, 10000);
 		},
 		error : function(XMLHttpRequest, textStatus, errorThrown) {
-			console.log("Error Loading the posts read");
-			$("#post-info").html("Error Loading the posts, please try again");
+			console.log("Error reading the chats");
+			//$("#post-info").html("Error Loading the posts, please try again");
 			// $("#login-message").css({ 'color': 'green', 'font-size': '100%'
 			// });
 		}
@@ -269,7 +269,7 @@ function searchAllPosts() {
 }
 
 function displayPosts(response) {
-	readPostResponse = response; //redundant we did already in load ajax
+	//readPostResponse = response; //redundant we did already in load ajax
 	console.log("Reading posts done.");
 	$("#post-contents").html("");
 	var htmlContent = "";
@@ -286,9 +286,9 @@ function displayPosts(response) {
 			htmlContent += post.message;
 		}
 
-		htmlContent += "</p><p class='post-detail'>By : <b>" + post.userName
-				+ "</b> ,<span>   </span> On : " + post.postedOn + ", "
-				+ post.comments.length + " Comments</p>";
+		htmlContent += "</p><p class='post-detail'> <span class='glyphicon glyphicon-user'></span>  <b>" + post.userName
+				+ "</b> ,<span>   </span> <span class='glyphicon glyphicon-time'></span> : " + post.postedOn + ", "
+				+ "<span class='glyphicon glyphicon-comment'></span> <span class='badge'>" + post.comments.length + "</span></p>";
 		htmlContent += "<hr style='height:0.5px; margin: 10px 0 10px 0' color=white >"
 	}
 	$("#post-contents").append(htmlContent);
@@ -506,8 +506,7 @@ function retrieveFavourites() {
         global : false,
         success : function(response) {
       
-            var favouriteLinks = "";
-            
+            var favouriteLinks = "";  
                         
             
             if (readPostResponse.length === 0) {               
@@ -542,6 +541,7 @@ function retrieveFavourites() {
         }
     })
 }
+
 
 function getLinkTextFor(postId){
     for (i = 0; i < readPostResponse.length; i++) {		

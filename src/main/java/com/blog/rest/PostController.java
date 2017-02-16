@@ -104,25 +104,20 @@ public class PostController {
 		return Response.ok().entity(number + "").build();
 	}
 	
-	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Path("/newChat")
-	public Response newChat(NewChat chat) throws InvalidCommentException {
-		Blog blog = new Blog();
-		int number = blog.addChat(chat);
-		return Response.ok().entity(number + "").build();
-	}
 	
-	@GET
-	@Produces(MediaType.APPLICATION_JSON)
-	@Path("/getChats")
-	//@HeaderParam({"token"})
-	public Response getChats(@HeaderParam("token") String token, @HeaderParam("userId") String userId) {		
-		Blog blog = new Blog();
-		if(!blog.validateToken(userId, token)){
-			return Response.status(Status.FORBIDDEN).build();
-		}
-		ArrayList<ChatsDto> posts = blog.readRecentChats();
-		return Response.ok().entity(posts).build();
-	}
+	
+//	@GET
+//	@Produces(MediaType.APPLICATION_JSON)
+//	@Path("/getChats")
+//	//@HeaderParam({"token"})
+//	public Response getChats(@HeaderParam("token") String token, @HeaderParam("userId") String userId) {		
+//		Blog blog = new Blog();
+//		if(!blog.validateToken(userId, token)){
+//			return Response.status(Status.FORBIDDEN).build();
+//		}
+//		ArrayList<ChatsDto> posts = blog.readRecentChats();
+//		return Response.ok().entity(posts).build();
+//	}
+	
+	
 }

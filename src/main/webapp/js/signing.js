@@ -197,6 +197,9 @@ function validateSession() {
             //$("#loginMessage").html("Invalid crendentials, please try again");
             //$("#login-message").css({ 'color': 'green', 'font-size': '100%' });
             showLoginPage();
+            $("#Logged").hide();
+            $("#LoggedInForm").hide();
+            $("#NotLogged").show();
         }
     })
 };
@@ -297,19 +300,27 @@ function loadMainPage(response){
     localStorage.setItem("userId",response.userId);
     localStorage.setItem("token", response.token);
     console.log("user id assigned" + currentUserId + "complete response "  + response);
-    $("#loginPage").hide();
-    $("#mainPage").show().fadeIn(50000);
-    $("#mainPage").fadeIn(5000);
-    readAllPosts();
+    $("#LoginForm").hide();
+    $("#NotLogged").hide();
+    $("#LoggedInForm").show();
+    $("#mainPage").show().fadeIn(50000); //to be removed in new version
+    $("#mainPage").fadeIn(5000); // to be removed in new version.   
+    
+}
+
+
+function loadContents(){
+    retrieveFavourites();
     retrieveCategory();
+    readAllPosts();
     window.setInterval(function(){
         readChats();
     }, 3000);
-    readChats();
+    //readChats();
 }
 
 function showLoginPage(){
-    $("#signup-form").hide();     
+        $("#signup-form").hide();     
         $("#result-div").hide();
         $("#mainPage").hide();
         //$("#loginPage").hide(); //to hide first
@@ -317,6 +328,10 @@ function showLoginPage(){
         $("#new-post-div").hide();
         $("#view-post-div").hide();   
         $("#user-profile-div").hide();
+        $("#LoginForm").hide();
+        $("#LoggedInForm").hide();
+        $("#NotLogged").show();
+        
 }
 
 function skipLogin(){

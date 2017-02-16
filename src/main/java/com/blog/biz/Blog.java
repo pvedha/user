@@ -225,6 +225,7 @@ public class Blog implements BlogInterface {
 		post.setTags(newPost.getTags());
 		post.setCategory(newPost.getCategory());
 		post.setCreatedOn(new Timestamp(System.currentTimeMillis()));
+		System.out.println("CreatePostPersist");
 		return dao.postCreate(post);
 	}
 

@@ -1,0 +1,53 @@
+
+body {
+/*    background: #e7f4f8;*/
+    font-family: "new century schoolbook";
+    font-size: 1.5em;
+}
+
+.main-content-div{
+/*    float: left;    */
+/*    text-align: left;*/
+/*    width: 20%;*/
+    min-height: 400px;
+    max-height: 500px;
+    overflow-y: auto;
+/*    border-right: 2px solid brown;*/
+/*    overflow-y: scroll;*/
+/*    border-radius: 5px;*/
+/*    display: inline-block;*/
+}
+
+.sub-content-div{
+/*    float: left;    */
+/*    text-align: left;*/
+/*    width: 20%;*/
+    min-height: 200px;
+    max-height: 300px;
+    overflow-y: auto;
+    
+/*    border-right: 2px solid brown;*/
+/*    overflow-y: scroll;*/
+/*    border-radius: 5px;*/
+/*    display: inline-block;*/
+}
+
+.search-box {
+    width: 175px;
+    height: 30px;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+/*    font-size: 12px;*/
+    background-color: white;
+    background-image: url('../img/search-icon-24x.png');
+    background-position: 0px 1px; 
+    background-repeat: no-repeat;
+    padding: 0px 0px 0px 40px;
+    -webkit-transition: width 0.4s ease-in-out;
+    transition: width 0.4s ease-in-out;
+}
+
+.search-box:focus {
+    width: 250px;
+}

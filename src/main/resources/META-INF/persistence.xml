@@ -11,8 +11,13 @@
 		<class>com.blog.api.Category</class>
 		<class>com.blog.api.Favourite</class>
 		<properties>
+<!-- 			<property name="javax.persistence.jdbc.driver" value="oracle.jdbc.OracleDriver" /> -->
+<!-- 			<property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@10.78.213.217:1521:cmad" /> -->
+<!-- 			<property name="javax.persistence.jdbc.user" value="cmad"/> -->
+<!--             <property name="javax.persistence.jdbc.password" value="cmad"/> -->
+<!-- 			<property name="hibernate.hbm2ddl.auto" value="validate" /> -->
 			<property name="javax.persistence.jdbc.driver" value="oracle.jdbc.OracleDriver" />
-			<property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@10.78.213.217:1521:cmad" />
+			<property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@localhost:1521:pvedha" />
 			<property name="javax.persistence.jdbc.user" value="cmad"/>
             <property name="javax.persistence.jdbc.password" value="cmad"/>
 			<property name="hibernate.hbm2ddl.auto" value="validate" />

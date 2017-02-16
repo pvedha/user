@@ -29,15 +29,15 @@ h2 {
     color: darkblue;
     font-size: 1em;
     text-align: left;
-    text-indent: 40px;
-    margin: 0 0 0 40px;
+/*    text-indent: 40px;*/
+/*    margin: 0 0 0 40px;*/
 }
 
 .post-title {
     color: darkblue;
     font-size: 1em;
     text-align: left;
-    text-indent: 50px;
+/*    text-indent: 50px;*/
     margin: 0 0 0 0;
 }
 
@@ -46,7 +46,7 @@ h2 {
     font-size: 0.85em;
     text-align: justify;
     text-justify: inter-word;
-    text-indent: 50px;
+/*    text-indent: 50px;*/
     margin: 0 40px 0 50px;
 }
 

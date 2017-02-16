@@ -6,6 +6,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
+import org.apache.derby.tools.sysinfo;
 import org.hibernate.exception.SQLGrammarException;
 
 import com.blog.api.BlogUser;
@@ -27,14 +28,45 @@ import com.blog.trials.Favourite_Option;
 public class OracleDAOImpl implements DAO {
 	static EntityManagerFactory factory = Persistence.createEntityManagerFactory("blog");
 
+	
+	public OracleDAOImpl() {
+		//init();
+	}
+	
+	private void init(){
+		EntityManager em = factory.createEntityManager();
+		em.getTransaction().begin();
+		String userQuery = "insert into bloguser values ('p','p','Praveen Vedha','p')";
+		String categoryQuery = "insert all "
+				+ "into category values('Entertainment') "
+				+ "into category values('History')	"
+				+ "into category values('Politics')	"
+				+ "into category values('Finance')	"
+				+ "into category values('General') "
+				+ "select 1 from dual";
+		String postQuery = "insert into post values (1,'General', 'My message goes here', sysdate, 'General, Blog', 'First post title', 'p')";
+		String commentQuery = "insert into comments values (1, 'first comment', 1, sysdate, 'p')";
+		String chatQuery = "insert into chats values (1, 'One flew over something', sysdate, 'p')";
+		em.createNativeQuery(userQuery).executeUpdate();
+		em.createNativeQuery(postQuery).executeUpdate();
+		em.createNativeQuery(categoryQuery).executeUpdate();
+		em.createNativeQuery(commentQuery).executeUpdate();
+		em.createNativeQuery(chatQuery).executeUpdate();
+		em.getTransaction().commit();
+		em.close();
+		System.out.println("Init success");
+	}
+	
 	@Override
 	public int postCreate(Post post) {
+		System.out.println("Creating post in DAO");
 		EntityManager em = factory.createEntityManager();
 		em.getTransaction().begin();
 		BlogUser user = em.find(BlogUser.class, post.getPostedBy().getUserid());
 		//em.merge(user);
 		post.setPostedBy(user);
 		em.persist(post);
+		em.getTransaction().commit();
 		System.out.println("committed");
 		em.close();
 		return post.getPostId();
@@ -300,9 +332,13 @@ public class OracleDAOImpl implements DAO {
 	@Override
 	public ArrayList<Chats> getTopChats() {
 		EntityManager em = factory.createEntityManager();
-		ArrayList<Chats> chats = (ArrayList<Chats>) em.createNativeQuery("select * from "
-				+ "(select * from Chats order by POSTED_ON desc FETCH FIRST 20 ROWS ONLY) "
-				+ "order by posted_on", Chats.class)
+//		ArrayList<Chats> chats = (ArrayList<Chats>) em.createNativeQuery("select * from "
+//				+ "(select * from Chats order by POSTED_ON desc FETCH FIRST 20 ROWS ONLY) "
+//				+ "order by posted_on", Chats.class)
+//				.getResultList();
+		String topChatsQuery = "select * from "
+				+ "(select * from Chats order by POSTED_ON desc) where rownum < 20 order by posted_on";
+		ArrayList<Chats> chats = (ArrayList<Chats>) em.createNativeQuery(topChatsQuery, Chats.class)
 				.getResultList();
 		em.close();
 		return chats;
@@ -314,7 +350,7 @@ public class OracleDAOImpl implements DAO {
 		em.getTransaction().begin();
 		int result = em
 				.createNativeQuery(
-						"insert into chats values((select max(chat_id)+1 from chats)," + ":userid, :message, sysdate)")
+						"insert into chats values((select max(chat_id)+1 from chats)," + ":message, sysdate, :userid )")
 				.setParameter("userid", newChat.getUserId()).setParameter("message", newChat.getMessage())
 				.executeUpdate();
 		em.getTransaction().commit();

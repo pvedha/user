@@ -1,81 +1,119 @@
 <!DOCTYPE html>
-<html>
-<head>
-<meta charset="ISO-8859-1">
-<title>MyBlogSite</title>
-<link href="css/bootstrap.css" rel="stylesheet" type="text/css"
-	media="all" />
-<link rel="stylesheet" href="css/main.css">
-<script src="js/jquery-1.11.1.min.js"></script>
-<!--<script src="js/bootstrap.js"></script>-->
-<script src="js/signing.js"></script>
+<html lang="en">
+   <head>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+      <meta name="description" content="">
+      <meta name="author" content="">
+      <!--    <link rel="icon" href="../../favicon.ico">-->
+      <title>My Very Own Blog Site</title>
+      <!-- Bootstrap core CSS -->
+      <link href="css/bootstrap.min.css" rel="stylesheet">
+      <!-- Custom styles for this template -->
+      <link href="css/jumbotron.css" rel="stylesheet">
+      <link href="css/blog.css" rel="stylesheet">
+       <link href="css/main.css" rel="stylesheet">
+      <script src="js/jquery-1.11.1.min.js"></script>
+      <script src="js/bootstrap.min.js"></script>
+       <script src="js/signing.js"></script>
 <script src="js/post.js"></script>
-<script type="application/javascript">
+       <script type="application/javascript">
 	
-    jQuery(document).ready(function($) {
-        
+    jQuery(document).ready(function($) {        
         console.log("Data from localStorage",localStorage.getItem("userId"));
         
         if(localStorage.getItem("userId") !== null && localStorage.getItem("token")){
             validateSession();
         } else {
             showLoginPage();
-        }        
+        }                
+        loadContents();
         
     });    
 
-</script>
-
-</head>
-<body>
-        
-	<div class="header-div">
-		<div id="title-div" class="title-left-div">
-			<h1 class="h1-title">CMAD Blog </h1>
-		</div>
-		<div id="user-div" class="user-right-div">
-            <div id="current-user-icon"><img class="img-grayed" src="img/48px-User_icon_2.svg.png"/></div>
-            <div id="user-detail-div" class="user-detail-div">Login</div>
-		</div>
-	</div>
-	<br>
-
-	<!--    mainpage-->
-	<div id="mainPage">
-
-		<div id="controlBar" class="controller-bar-div">
-            <table width="100%"><tr>
-                <td width="70%"><button type="button" id="newPost-button" class="control-button"
-				    onclick="showNewPost()">New Post</button>
-			         <button type="button" id="search-button" class="control-button"
-			             onclick="searchAllPosts()">Search Contents</button>
-			         <input type="text" id="search-text" class="search-box"
-				        placeholder="Enter Search Text..." />
-                </td>
-                <td width="30%" align="right" ><button type="button" id="UpdateProfile-button" class="control-button"
-				onclick="viewProfile()">Edit Profile</button>
-                <button type="button" id="signout-button" class="control-button"
-				onclick="signOut()">Sign out</button></td></tr></table>
-		</div>
-		<div class="center-align-div">
-			<div id="shortlinks-div" class="left-div">
-                <p class="quicklink-title">Quick Links</p>
-				<br>
-				<a class='quicklink-links' href='#' onClick=readAllPosts()>Load All Posts</a><hr>
+       </script>
+   </head>
+   <body>       
+      <nav class="navbar navbar-inverse navbar-fixed-top">
+         <div class="container">
+            <div class="navbar-header">
+               <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+               <span class="sr-only">Toggle navigation</span>
+               <span class="icon-bar"></span>
+               <span class="icon-bar"></span>
+               <span class="icon-bar"></span>
+               </button>
+               <a class="navbar-brand" href="#">CMAD Blog Site</a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+               <form id="NotLogged" class="navbar-form navbar-right">
+                  <input type="text" placeholder="Search ..." class="form-control search-box">
+                  <button type="button" class="btn btn-success">Sign Up</button>
+                  <button type="button" class="btn btn-success">Sign in</button>
+               </form>
+               <form id="LoginForm" class="navbar-form navbar-right">
+                  <div class="form-group">
+                     <input id="loginId" type="text" placeholder="UserId" class="form-control">
+                  </div>
+                  <div class="form-group">
+                     <input id="loginPassword" type="password" placeholder="Password" class="form-control">
+                  </div>
+                  <button id="login-button" type="button" class="btn btn-success">Sign in</button>
+               </form>                 
+                <form id="LoggedInForm" class="navbar-form navbar-right">        
+                    <input type="text" placeholder="Search ..." class="form-control search-box">
+                    
+                   <button type="button" class="btn btn-success">New Post</button>                    
+                  <button type="button" class="btn btn-info"><span class="glyphicon glyphicon-user"></span>User ID</button>
+                  <button type="button" class="btn btn-success">Sign Out</button>
+               </form>
                 
-				<p class="quicklink-title">Categories</p>
-				<div id="category-links"></div><hr>
-				<p class="quicklink-title"><img src="img/22xFavourite.png"> Favourite Posts</p>
-				<div id="favourite-links"></div>
-
-			</div>
-			<div id="post-div" class="center-div">
-				<h2>Latest Posts</h2>
+            </div>
+            <!--/.navbar-collapse -->
+         </div>
+      </nav>
+      <!-- Main jumbotron for a primary marketing message or call to action -->
+      <!--
+         <div class="jumbotron">
+           <div class="container">
+             <h1>Hello, world!</h1>
+             <p>This is a template for a simple marketing or informational website. It includes a large callout called a jumbotron and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
+             <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more &raquo;</a></p>
+           </div>
+         </div>
+         -->
+      <div class="container">
+         <!-- Example row of columns -->
+         <div class="row">
+            <div class="col-md-2 main-content-div">
+               <div>
+                   <div class="panel panel-info">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Quick Links</h3>                            
+                        </div>
+                   </div>
+                   <a class='quicklink-links' href='#' onClick=readAllPosts()>Load All Posts</a>
+                  <h4>By Category</h4>
+                  <div id="category-links"></div>                  
+               </div>
+               <div>
+                  <h4>Favourite Posts</h4>
+                  <div id="favourite-links"></div>                   
+               </div>
+            </div>
+             <div id="post-div" class="col-md-8 main-content-div">   
+            <div class="panel panel-info">
+                        <div class="panel-heading">
+                            <h3 class="panel-title center">Latest Posts</h3>
+                        </div>
+                   </div>
 				<h4 id="post-info"></h4>
-				<div id="post-contents" class="post-contents-div"></div>
-			</div>
-            <div id="view-post-div" class="center-div">
-				<h2>View Post</h2>
+				<div id="post-contents" class="post-contents-div"></div> 
+             </div>
+            <div id="view-post-div" class="col-md-8">               
+               <h2>View Post</h2>
                 <h4 id="view-post-info"></h4>
                 <p id="view-post-title" class="view-post-title">Title Comes here</p>
 				<p id="view-post-message" class="post-message">The post message comes here</p>
@@ -101,9 +139,12 @@
                     
                 
                 <div id="view-post-comments"></div>
-			</div>
-			<div id="new-post-div" class="center-div">
-				<h2>Add a new Post</h2>
+            </div>
+             
+             
+             
+             <div id="new-post-div" class="col-md-8">
+               <h2>Add a new Post</h2>
 				<h4 id="new-post-info"></h4>
 				<div id="new-post-contents">
 
@@ -127,90 +168,46 @@
 							it!</button>
 					</form>
 				</div>
-			</div>
-            <div id="user-profile-div" class="center-div">
-				<h2>Your Profile</h2>
-				<h4 id="user-profile-info"></h4>
-				<div id="user-profile-contents">
-					<form class="signin-form" id="user-profile-form">
-                        <div id="user-profile-fixed" title="Non editable fields">User ID : <b>PVedha</b><br>Name : <b>Praveen Vedha</b></div> 
-<!--
-						<input type="text" name="view-profile-userId" class=""
-							id="view-profile-userId" disabled/>
--->
-                        <input type="text" name="view-profile-newPassword" class=""
-							id="view-profile-newPassword" placeholder="Your new password, leave it blank not to update" />
-                        About Yourself : 
-						<textarea name="view-profile-about" id="view-profile-about" rows="3"
-							placeholder="Few lines about yourself"></textarea>					
-						<button type="button" class="disabled-button" id="user-profile-update" onClick="updateProfile()">Update</button>
-					</form>
-				</div>
-			</div>
-			<div id="chat-div" class="right-div">
-                 <h2 id="chat-info">Quick Chat</h2>
-				<div id="show-chat-div"></div>
+            </div>
+             
+             
+             
+             
+            <div id="chat-div" class="col-md-2 main-content-div">
+                  <div class="panel panel-info">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Blog Chat</h3>
+                        </div>
+                   </div>
+                  <div id="show-chat-div" class="sub-content-div"></div>                
 				<textarea name="new-chat-message" id="new-chat-message" rows="3"
-							placeholder="Your chat message..."></textarea>
-				<button type="button" class="btn1" id="newChat-submit-button">send</button>
-			</div>
-		</div>
-
-	</div>
-	<!--    End of mainpage-->
-
-<!--	<hr>-->
-
-	<div id="loginPage">
-		<div class="login-div" id="signin-form">
-			<h3>Please login / Signup</h3>
-			<h4 id="loginMessage" class="green-fine"></h4>
-			<form class="signin-form">
-				<input type="text" name="userid" class="" id="loginId"
-					placeholder="User ID" required
-					data-validation-required-message="Please specify your User Id!" />
-				<input type="password" name="password" class="" id="loginPassword"
-					placeholder="Password" required
-					data-validation-required-message="Please give your password" />
-				<button class="btn1" type="button" id="showSignUp">Sign Up</button>
-				<button class="btn1" type="button" id="login-button">Login</button>
-			</form>
-		</div>
-		<div class="login-div" id="signup-form">
-			<h3 id="signup-title">Please fill in your details</h3>
-			<h4 id="validUser" class="red-error"></h4>
-			<form class="signin-form">
-				<input type="text" name="userid" class="" id="userid"
-					placeholder="User ID" required
-					data-validation-required-message="Please specify your User Id!"
-					onKeyUp="validateUser(this.value)" /> <input type="password"
-					name="password" class="" id="password" placeholder="Password"
-					required
-					data-validation-required-message="Please give your password" />
-				<!--            <input type="email" name="email" class="email" id="email" placeholder="Email ID" required data-validation-required-message="Please specify your User Id!"/>-->
-				<input type="text" name="FullName" class="name" id="username"
-					placeholder="Full Name" required
-					data-validation-required-message="Please give your password" />
-				<textarea name="about" id="about" rows="2"
-					placeholder="A line about yourself"></textarea>
-				<button type="button" class="btn1" onclick="toggleSignform()">Login</button>
-				<button type="button" class="btn1" id="signup-button">SignUp</button>
-			</form>
-		</div>
-       
-	</div>
-    <br>
-    <hr style="height: 3px; margin: 10px 0 10px 0" color=brown>
-    <p align='center'>A Project by Praveen Vedha and Aswin Kuppusami</p>
-    <p align='center'>All Rights Reserved © </p>
-<!--
-    <div id="debug-div">
-	<button class="btn1" id="trythis-button">TryThis</button>
-	<button class="btn1" id="trythis2-button">TryThis2</button>
-    <button class="btn1" id="quick-login-debug" onClick='skipLogin()'>Quick login</button>
-	<div class="center-div" id="result-div" ></div>
-    </div>
--->
-
-</body>
+							placeholder="Your chat message..." class="form-control"></textarea>
+                				<button type="button" class="btn btn-success" id="newChat-submit-button">send</button>
+            </div>
+             
+           
+            <!--
+               <div class="col-md-4">
+                 <h2>Heading</h2>
+                 <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
+                 <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+               </div>
+               -->
+         </div>
+         <hr>
+          
+          
+         
+         <footer>
+            <p>A project by Praveen Vedha and Aswin Kuppusami, &copy; 2017 Cisco.</p>
+         </footer>
+      </div>
+      <!-- /container -->
+      <!-- Bootstrap core JavaScript
+         ================================================== -->
+      <!-- Placed at the end of the document so the pages load faster -->
+      <!--    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>-->
+      <!--    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>-->
+      <!--    <script src="js/bootstrap.min.js"></script>-->
+   </body>
 </html>

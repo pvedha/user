@@ -11,7 +11,10 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import com.blog.api.InvalidCommentException;
 import com.blog.biz.Blog;
+import com.blog.dto.ChatsDto;
+import com.blog.dto.NewChat;
 
 @Path("/")
 public class GenericController {
@@ -61,6 +64,24 @@ public class GenericController {
 		Blog blog = new Blog();
 		boolean result = blog.removeFavourite(userId, postId);
 		return Response.ok().entity(result + "").build();
+	}
+	
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/getChats")	
+	public Response getChats() {		
+		Blog blog = new Blog();
+		ArrayList<ChatsDto> posts = blog.readRecentChats();
+		return Response.ok().entity(posts).build();
+	}
+	
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Path("/newChat")
+	public Response newChat(NewChat chat) throws InvalidCommentException {
+		Blog blog = new Blog();
+		int number = blog.addChat(chat);
+		return Response.ok().entity(number + "").build();
 	}
 	
 }
