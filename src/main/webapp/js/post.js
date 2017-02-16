@@ -278,18 +278,23 @@ function displayPosts(response) {
 		htmlContent += "<a href='#' onClick=viewPost(" + response[i].postId
 				+ ")><p class='post-title'> " + post.title + "</p></a>";
 		htmlContent += "<p class='post-message'> ";
+        var postMessage = "";
 		if (post.message.length > 200) {
-			htmlContent += post.message.substring(0, 200)
+			postMessage = post.message.substring(0, 200)
 					+ ".....<a href='#' onClick=viewPost(" + response[i].postId
 					+ ")> read more </a>";
 		} else {
-			htmlContent += post.message;
+			postMessage = post.message;
 		}
-
+        htmlContent += postMessage;
 		htmlContent += "</p><p class='post-detail'> <span class='glyphicon glyphicon-user'></span>  <b>" + post.userName
 				+ "</b> ,<span>   </span> <span class='glyphicon glyphicon-time'></span> : " + post.postedOn + ", "
 				+ "<span class='glyphicon glyphicon-comment'></span> <span class='badge'>" + post.comments.length + "</span></p>";
-		htmlContent += "<hr style='height:0.5px; margin: 10px 0 10px 0' color=white >"
+		htmlContent += "<hr style='height:0.5px; margin: 10px 0 10px 0' color=white >";
+        //addPost("one","two");
+        //angular.element($('#BlogPostController-div')).scope().addPost("From Post.js","Using angular element");
+        angular.element($('#BlogPostController-Div')).scope().addPost(post.title ,postMessage, post.postId);
+        angular.element($('#BlogPostController-Div')).scope().$apply();
 	}
 	$("#post-contents").append(htmlContent);
 	$("#post-info").html("");

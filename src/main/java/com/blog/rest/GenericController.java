@@ -84,4 +84,12 @@ public class GenericController {
 		return Response.ok().entity(number + "").build();
 	}
 	
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Path("/initDB")
+	public Response initDB() {
+		Blog blog = new Blog();
+		int number = blog.initDB();
+		return Response.ok().entity(number + "").build();
+	}
 }

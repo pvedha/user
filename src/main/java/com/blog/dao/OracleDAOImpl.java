@@ -33,7 +33,8 @@ public class OracleDAOImpl implements DAO {
 		//init();
 	}
 	
-	private void init(){
+	@Override
+	public int initDB(){
 		EntityManager em = factory.createEntityManager();
 		em.getTransaction().begin();
 		String userQuery = "insert into bloguser values ('p','p','Praveen Vedha','p')";
@@ -55,6 +56,7 @@ public class OracleDAOImpl implements DAO {
 		em.getTransaction().commit();
 		em.close();
 		System.out.println("Init success");
+		return 0;
 	}
 	
 	@Override

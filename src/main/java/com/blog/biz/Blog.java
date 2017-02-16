@@ -284,4 +284,9 @@ public class Blog implements BlogInterface {
 		}
 		return dao.chatAdd(chat);
 	}
+
+	@Override
+	public int initDB() {
+		return dao.initDB();
+	}
 }

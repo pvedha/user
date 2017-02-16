@@ -44,5 +44,6 @@ public interface BlogInterface {
 	UserDto getUser(String userId);
 	boolean updateUser(UserDto user);
 	AuthenticationDto validateSession(String userId, String password);
+	int initDB();
 	
 }

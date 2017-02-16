@@ -47,6 +47,5 @@ public interface DAO {
 	ArrayList<Integer> readFavourites(String userId);
 	int chatAdd(NewChat chat);
 	ArrayList<Chats> getTopChats();
-	
-	
+	int initDB();	
 }
