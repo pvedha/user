@@ -35,7 +35,14 @@ $(document)
                     $("#search-text").keypress(function(event){	
                         var keycode = (event.keyCode ? event.keyCode : event.which);
                         if(keycode == '13'){
-                        	searchAllPosts();	
+                        	searchAllPosts($("#search-text").val());	
+                        }
+                    });
+                    
+                     $("#search-text1").keypress(function(event){	
+                        var keycode = (event.keyCode ? event.keyCode : event.which);
+                        if(keycode == '13'){
+                        	searchAllPosts($("#search-text1").val());	
                         }
                     });
                     
@@ -83,6 +90,7 @@ $(document)
                     });
                     
                    postControllerAngular = angular.element($('#BlogPostController-Div')).scope();
+                   $('[data-toggle="tooltip"]').tooltip();
                     
 				});
 

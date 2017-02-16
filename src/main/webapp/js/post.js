@@ -171,6 +171,7 @@ function displayChats(response) {
 		htmlContent +=  " : " + chat.postedon + "</p>";					
 	}
 	$("#show-chat-div").append(htmlContent);	
+    $("#show-chat-div").animate({ scrollTop: $('#show-chat-div').height() + 500}, 1000);
 }
 
 
@@ -242,9 +243,9 @@ function searchByCategory(category) {
     })
 }
 
-function searchAllPosts() {
+function searchAllPosts(searchString) {
 
-	var searchString = $("#search-text").val();
+	//var searchString = ;
 	if(searchString.trim().length === 0){
         console.log("search string cannot be empty");
         return;

@@ -15,7 +15,7 @@
       <link href="css/jumbotron.css" rel="stylesheet">
       <link href="css/blog.css" rel="stylesheet">
        <link href="css/main.css" rel="stylesheet">
-       
+      
       <script src="js/jquery-1.11.1.min.js"></script>
       <script src="js/bootstrap.min.js"></script>
        <script src='js/angular.js'></script>
@@ -38,6 +38,22 @@
     });    
 
        </script>
+       
+       <script>
+function allowDrop(ev) {
+    ev.preventDefault();
+}
+
+function drag(ev) {
+    ev.dataTransfer.setData("text", ev.target.id);
+}
+
+function drop(ev) {
+    ev.preventDefault();
+    var data = ev.dataTransfer.getData("text");
+    ev.target.appendChild(document.getElementById(data));
+}
+</script>
    </head>
    <body>       
       <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -61,7 +77,7 @@
 -->
                <form id="LoginForm" class="navbar-form navbar-right">
                   <div class="form-group">
-                      <input type="text" placeholder="Search ..." class="form-control search-box">
+                      <input id="search-text1" type="text" placeholder="Search ..." class=" search-box">
                    </div>
                   <div class="form-group">
                      <input id="loginId" type="text" placeholder="UserId" class="form-control">
@@ -73,10 +89,10 @@
                   <button id="showSignUp" type="button" class="btn btn-success">Sign Up</button>
                </form>                 
                 <form id="LoggedInForm" class="navbar-form navbar-right">        
-                    <input type="text" placeholder="Search ..." class="form-control search-box">
+                    <input id="search-text" type="text" placeholder="Search ..." class="form-control search-box">
                     
                    <button type="button" class="btn btn-success" onclick="showNewPost()">New Post</button>                    
-                  <button id="user-button" type="button" class="btn btn-info" onclick="viewProfile()"><span class="glyphicon glyphicon-user" ></span>User ID</button>
+                  <button id="user-button" data-toggle="tooltip" data-placement="bottom" title="Edit Your Profile!" type="button" class="btn btn-info" onclick="viewProfile()"><span class="glyphicon glyphicon-user" ></span>User ID</button>
                   <button type="button" class="btn btn-success" onclick="signOut()">Sign Out</button>
                </form>
                 
@@ -98,7 +114,8 @@
       <div class="container">
          <!-- Example row of columns -->
          <div class="row">
-            <div class="col-md-2 main-content-div">
+            <div ondrop="drop(event)" ondragover="allowDrop(event)" class="col-md-2 main-content-div">
+                <div id="quick-links-draggable-div"  ondragstart="drag(event)" draggable="true">
                <div>
                    <div class="panel panel-info">
                         <div class="panel-heading">
@@ -113,6 +130,7 @@
                   <h4>Favourite Posts</h4>
                   <div id="favourite-links"></div>                   
                </div>
+                </div>
             </div>
              <div id="post-div" class="col-md-8 main-content-div">   
             <div class="panel panel-info">
@@ -218,7 +236,8 @@
 			</div>
              
              
-            <div id="chat-div" class="col-md-2 main-content-div">
+            <div id="chat-div" ondrop="drop(event)" ondragover="allowDrop(event)" class="col-md-2 main-content-div">
+                <div id="chat-div-draggable" draggable="true"  ondragstart="drag(event)">
                   <div class="panel panel-info">
                         <div class="panel-heading">
                             <h3 class="panel-title">Blog Chat</h3>
@@ -229,6 +248,7 @@
 							placeholder="Your chat message..." class="form-control"></textarea>
                 				<button type="button" class="btn btn-success" id="newChat-submit-button">send</button>
              </div>
+                </div>
          </div>
          <hr>
           
