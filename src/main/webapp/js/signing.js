@@ -10,9 +10,10 @@ var appURL = url + "/blog" //http://hostname:8080/blog
 var readPostResponse;
 var currentPostId = 0;
 var currentPost;
-var currentUserFavouriteList;
+var currentUserFavouriteList = [];
 var userHasFavourites = false;
 var loadSamePost = false;
+var postControllerAngular;// = angular.element($('#BlogPostController-Div')).scope();
 
 $(document)
 		.ready(
@@ -86,6 +87,9 @@ $(document)
                             function() {
                             addComment();
                     });
+                    
+                   postControllerAngular = angular.element($('#BlogPostController-Div')).scope();
+                    
 				});
 
 function addUser() {
@@ -314,7 +318,7 @@ function loadContents(){
     retrieveCategory();
     readAllPosts();
     window.setInterval(function(){
-        readChats();
+       // readChats();
     }, 3000);
     //readChats();
 }
@@ -332,6 +336,12 @@ function showLoginPage(){
         $("#LoggedInForm").hide();
         $("#NotLogged").show();
         
+}
+
+function hideAllForms(){
+    $("#LoginForm").hide();
+    $("#LoggedInForm").hide();
+    $("#NotLogged").hide();
 }
 
 function skipLogin(){

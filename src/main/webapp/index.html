@@ -26,14 +26,14 @@
 	
     jQuery(document).ready(function($) {        
         console.log("Data from localStorage",localStorage.getItem("userId"));
-        
+        hideAllForms();
         if(localStorage.getItem("userId") !== null && localStorage.getItem("token")){
             validateSession();
         } else {
             showLoginPage();
         }                
         loadContents();
-        angular.element($('#BlogPostController-Div')).scope().addPost("Main","Entry");
+        //angular.element($('#BlogPostController-Div')).scope().addPost("Main","Entry");
         
     });    
 
@@ -110,24 +110,23 @@
              <div id="post-div" class="col-md-8 main-content-div">   
             <div class="panel panel-info">
                         <div class="panel-heading">
-                            <h3 class="panel-title center">Latest Posts</h3>
+                            <h3 id="posts-heading" class="panel-title center">Latest Posts</h3>
                         </div>
                    </div>
 				<h4 id="post-info"></h4>
-				<div id="post-contents" class="post-contents-div"></div> 
+<!--				<div id="post-contents" class="post-contents-div"></div> -->
                  <div id="BlogPostController-Div" ng-controller="BlogPostController">
-                 <form ng-submit='add()'>
-				Name <input ng-model="contact.name"> Phone Number <input ng-model="contact.phoneNumber"> <input type='submit' value='Add'><br/>
-				<div class='error'>{{error}}</div>
-			</form>
-			<hr/>
-			<h3>List of Contacts</h3>
-                <table class="table">
+                 
+			      <table class="table">
 <!--				<tr><th>Title</th><th>Message</th></tr>-->
 				<tr ng-repeat='p in posts'>
 					<td>                    
-                        <a href="#" onclick=viewPost('{{p.postId}}')><p class='post-title'>{{p.title}}</p></a>
+                        <a href="#" onclick=viewPost({{p.postId}})><p class='post-title'>{{p.title}}</p></a>
                         <p class='post-message'> {{p.message}} </p>
+                        <p class='post-detail'> <span class='glyphicon glyphicon-user'></span>  <b>{{p.userName}}</b> ,
+                        <span>   </span> <span class='glyphicon glyphicon-time'></span> : {{p.postedOn}} , 
+                        <span class='glyphicon glyphicon-comment'></span> <span class='badge'>{{p.commentsCount}}</span></p>
+<!--		htmlContent += "<hr style='height:0.5px; margin: 10px 0 10px 0' color=white >";-->
                     
 <!--
                     
@@ -149,7 +148,9 @@
                  </div>
              </div>
             <div id="view-post-div" class="col-md-8">               
-               <h2>View Post</h2>
+               <div class="panel panel-info"><div class="panel-heading">
+                            <h3 id="posts-heading" class="panel-title center">View Post</h3>
+                   </div></div>
                 <h4 id="view-post-info"></h4>
                 <p id="view-post-title" class="view-post-title">Title Comes here</p>
 				<p id="view-post-message" class="post-message">The post message comes here</p>

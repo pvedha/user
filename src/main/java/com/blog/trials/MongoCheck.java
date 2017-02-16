@@ -30,41 +30,41 @@ public class MongoCheck {
 	public boolean incrementSalary(int salary) {
 		System.out.println("Salary to increment " + salary);
 		MongoCollection<Document> collection = db.getCollection("users");
-		collection.find().forEach((Document d) -> {
-			Object salObj = d.get("salary");
-			if(salObj == null){
-				//d.append("salary", salary);
-				//Document temp = d.replace(key, oldValue, newValue);
-//				temp.remove("_id");
-//				temp.put("salary", salary);
-//				System.out.println("Added salary");
-////				collection.updateOne({"_Id" : d.get("_Id")},
-////						{ "sfds" : "SFDSF" });		
-//				d.append("new", "value");
-//				collection.updateOne(d, temp);
-//				collection.updateOne(
-//					      { "name" : "Pizza Rat's Pizzaria" },
-//					      { $set: {"_id" : 4, "violations" : 7, "borough" : "Manhattan" } }
-//					   );
-				
-				//collection.updateOne(d, d);
-				//collection.findon
-				Document temp = new Document();
-				temp.put("name", "via java");
-				temp.put("salary",salary);
-				//collection.insertOne(temp);
-				//collection.updateMany(d, temp);
-				
-			}else{
-				Integer currSalary = Integer.valueOf((String) salObj);
-				d.replace("salary", (currSalary + salary)+"");
-				d.replace("name", "got replaced");
-				d.put("new", "from java");
-				collection.deleteOne(d);
-				Document temp = d;
-				System.out.println("Total Salary " + (currSalary + salary));
-			}
-		});
+//		collection.find().forEach((Document d) -> {
+//			Object salObj = d.get("salary");
+//			if(salObj == null){
+//				//d.append("salary", salary);
+//				//Document temp = d.replace(key, oldValue, newValue);
+////				temp.remove("_id");
+////				temp.put("salary", salary);
+////				System.out.println("Added salary");
+//////				collection.updateOne({"_Id" : d.get("_Id")},
+//////						{ "sfds" : "SFDSF" });		
+////				d.append("new", "value");
+////				collection.updateOne(d, temp);
+////				collection.updateOne(
+////					      { "name" : "Pizza Rat's Pizzaria" },
+////					      { $set: {"_id" : 4, "violations" : 7, "borough" : "Manhattan" } }
+////					   );
+//				
+//				//collection.updateOne(d, d);
+//				//collection.findon
+//				Document temp = new Document();
+//				temp.put("name", "via java");
+//				temp.put("salary",salary);
+//				//collection.insertOne(temp);
+//				//collection.updateMany(d, temp);
+//				
+//			}else{
+//				Integer currSalary = Integer.valueOf((String) salObj);
+//				d.replace("salary", (currSalary + salary)+"");
+//				d.replace("name", "got replaced");
+//				d.put("new", "from java");
+//				collection.deleteOne(d);
+//				Document temp = d;
+//				System.out.println("Total Salary " + (currSalary + salary));
+//			}
+//		});
 		
 		Document tmp = new Document();
 		tmp.put("new", "from java");

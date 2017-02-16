@@ -29,9 +29,9 @@ public class OracleDAOImpl implements DAO {
 	static EntityManagerFactory factory = Persistence.createEntityManagerFactory("blog");
 
 	
-	public OracleDAOImpl() {
+	/*public OracleDAOImpl() {
 		//init();
-	}
+	}*/
 	
 	@Override
 	public int initDB(){
@@ -237,7 +237,7 @@ public class OracleDAOImpl implements DAO {
 		em.getTransaction().begin();
 		int result = em
 				.createNativeQuery("insert into comments values((select max(comment_id)+1 from comments),"
-						+ ":postid, :message,:userid,sysdate)")
+						+ " :message, :postid, sysdate, :userid)")
 				.setParameter("postid", newComment.getPostId()).setParameter("message", newComment.getMessage())
 				.setParameter("userid", newComment.getUserId()).executeUpdate();
 		em.getTransaction().commit();

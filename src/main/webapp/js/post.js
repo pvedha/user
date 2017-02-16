@@ -1,3 +1,5 @@
+
+
 function newPost() {
 
 	var userId = currentUserId;
@@ -79,7 +81,7 @@ function addComment(){
                     $("#new-comment-info").html("Successfully Posted.");
                     loadSamePost = true;
                     readAllPosts();
-                    
+                    $("#comment-textarea").val()="";
                     //$.when( readAllPosts() ).then(function() {
                     //	viewPost(postId);
                     //});                                    
@@ -192,6 +194,7 @@ function readAllPosts() {
                 viewPost(currentPostId);
                 loadSamePost = false;
             } else {
+                $("#posts-heading").html("Latests Posts");
                 displayPosts(response);
             }			
 
@@ -221,6 +224,7 @@ function searchByCategory(category) {
             // $("#viewForm").hide();
             console.log("successfully received posts for category "
                     + category);
+            $("#posts-heading").html("Latests posts, Category : " + category);
             showPostsView();
             displayPosts(response);
 
@@ -229,8 +233,8 @@ function searchByCategory(category) {
             console
                     .log("Error retrieving the posts search by category "
                             + category);
-            $("#post-info").html(
-                    "Posts not available for category : " + category);
+            //$("#post-info").html(
+                    //"Posts not available for category : " + category);
             showPostsView();
             // $("#login-message").css({ 'color': 'green', 'font-size':
             // '100%' });
@@ -272,31 +276,9 @@ function displayPosts(response) {
 	//readPostResponse = response; //redundant we did already in load ajax
 	console.log("Reading posts done.");
 	$("#post-contents").html("");
-	var htmlContent = "";
-	for (i = 0; i < response.length; i++) {
-		var post = response[i];
-		htmlContent += "<a href='#' onClick=viewPost(" + response[i].postId
-				+ ")><p class='post-title'> " + post.title + "</p></a>";
-		htmlContent += "<p class='post-message'> ";
-        var postMessage = "";
-		if (post.message.length > 200) {
-			postMessage = post.message.substring(0, 200)
-					+ ".....<a href='#' onClick=viewPost(" + response[i].postId
-					+ ")> read more </a>";
-		} else {
-			postMessage = post.message;
-		}
-        htmlContent += postMessage;
-		htmlContent += "</p><p class='post-detail'> <span class='glyphicon glyphicon-user'></span>  <b>" + post.userName
-				+ "</b> ,<span>   </span> <span class='glyphicon glyphicon-time'></span> : " + post.postedOn + ", "
-				+ "<span class='glyphicon glyphicon-comment'></span> <span class='badge'>" + post.comments.length + "</span></p>";
-		htmlContent += "<hr style='height:0.5px; margin: 10px 0 10px 0' color=white >";
-        //addPost("one","two");
-        //angular.element($('#BlogPostController-div')).scope().addPost("From Post.js","Using angular element");
-        angular.element($('#BlogPostController-Div')).scope().addPost(post.title ,postMessage, post.postId);
-        angular.element($('#BlogPostController-Div')).scope().$apply();
-	}
-	$("#post-contents").append(htmlContent);
+    //postControllerAngular.clear();
+    postControllerAngular.addPosts(response);	
+    postControllerAngular.$apply();
 	$("#post-info").html("");
     retrieveFavourites();
 }
@@ -405,6 +387,7 @@ function addFavourite(postId){
 		success : function(response) {
 			console.log("Added to favoutires");
             setRemoveFavourite(postId);
+            retrieveFavourites();
 			
 		}, 
 		error : function(XMLHttpRequest, textStatus, errorThrown) {
@@ -426,6 +409,7 @@ function removeFavourite(postId){
 		success : function(response) {
 			console.log("Removed from favoutires");
 			setAddFavourite(postId);
+            retrieveFavourites();
 		},
 		error : function(XMLHttpRequest, textStatus, errorThrown) {
 			console.log("Error adding to favourites");

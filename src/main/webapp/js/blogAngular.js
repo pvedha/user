@@ -28,11 +28,12 @@ $scope.add = function(){
 	//}
 };
 
-$scope.tryMe = function(){
-    alert('hello');
+$scope.clear = function(){
+    //alert('hello');
+    $scope.posts = [];
 };
     
-$scope.addPost = function(titleIn, messageIn, postIdIn){
+$scope.addPost = function(titleIn, messageIn, postIdIn, response){
 	//if($scope.contact.validate() == true){
 		//$scope.error = '';
         //alert("Content received as " + titleIn + ".." + messageIn);
@@ -42,12 +43,30 @@ $scope.addPost = function(titleIn, messageIn, postIdIn){
             postId: postIdIn
     	});
 		
-		//$scope.contacts.push($scope.contact);
-    	//$scope.contact.name = '';
-    	//$scope.contact.phoneNumber = '';
-	//}else{
-		//$scope.error = 'Invalid Contact';
-	//}
 };    
+    
+    
+$scope.addPosts = function(response){
+    $scope.posts = [];
+    for (i = 0; i < response.length; i++) {
+		var post = response[i];		
+        var postMessage = "";
+		if (post.message.length > 200) {
+			postMessage = post.message.substring(0, 200)
+					+ ".....<a href='#' onClick=viewPost(" + response[i].postId
+					+ ")> read more </a>";
+		} else {
+			postMessage = post.message;
+		}       
+        $scope.posts.push({
+    		title: post.title,
+    		message: postMessage,
+            postId: post.postId,
+            userName: post.userName,
+            postedOn: post.postedOn,
+            commentsCount: post.comments.length
+    	});
+	}
+};
 
 });
