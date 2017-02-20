@@ -209,6 +209,64 @@ function readAllPosts() {
 	})
 }
 
+
+
+function readLimitedPosts() {
+	showPostsView();
+	$("#post-info").html("Please wait, loading posts...");
+	$("#post-info").css({
+		'color' : 'green',
+		'font-size' : '100%'
+	});
+    log("Reading limited posts from offset : " + currentOffset);
+	$.ajax({
+		url : baseURL + '/post/offset/' + currentOffset,
+		type : 'get',
+		accept : 'application/json',
+		global : false,
+		success : function(response) {
+			// $("#viewForm").hide();
+            var receivedCount = response.length;
+            if(receivedCount > 0) {
+                if(readPostResponse.lenght === 0){
+                    readPostResponse = response;
+                } else {
+                    readPostResponse.push.apply(readPostResponse, response);
+                }
+                
+                currentOffset = currentOffset + receivedCount;
+                log("The posts received now " + readPostResponse.length + ".. current offset : " + currentOffset);                
+                if(loadSamePost){
+                    viewPost(currentPostId);
+                    loadSamePost = false;
+                } else {
+                    $("#posts-heading").html("Latests Posts");
+                    displayPosts(readPostResponse);
+                    log("New posts displayed");
+                    loadMoreContents = true;
+                    $("#loading-more").show();
+                }	
+            } else {
+                log("Thats all man, nothing more");
+                loadMoreContents = false;
+                $('#loading-more').hide();
+                $('#thats-all').show();
+            }
+
+		},
+		error : function(XMLHttpRequest, textStatus, errorThrown) {
+			console.log("Error Loading the posts read");
+			$("#post-info").html("Error Loading the posts, please try again");
+			// $("#login-message").css({ 'color': 'green', 'font-size': '100%'
+			// });
+            log("Thats all man, nothing more2");
+                loadMoreContents = false;
+                $('#loading-more').hide();
+                $('#thats-all').show();
+		}
+	})
+}
+
 function searchByCategory(category) {
 	$("#post-info").html("Please wait, loading posts...");
 	$("#post-info").css({
@@ -539,4 +597,9 @@ function getLinkTextFor(postId){
 			return readPostResponse[i].title;
 		}
 	}
+}
+
+function log(message){
+    if(debugMode)
+        console.log(message);
 }

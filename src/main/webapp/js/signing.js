@@ -7,13 +7,20 @@ var token = "";
 var url = 'http://' +  window.location.host;
 var baseURL = url + "/blog/blog"; //http://hostname:8080/blog/blog
 var appURL = url + "/blog" //http://hostname:8080/blog
-var readPostResponse;
+var readPostResponse = [];
 var currentPostId = 0;
 var currentPost;
 var currentUserFavouriteList = [];
 var userHasFavourites = false;
 var loadSamePost = false;
 var postControllerAngular;// = angular.element($('#BlogPostController-Div')).scope();
+
+//Dev settings
+var infiniteScroll = true;
+var currentOffset = 1;
+var debugMode = true;
+var loadMoreContents = true;
+
 
 $(document)
 		.ready(
@@ -92,7 +99,18 @@ $(document)
                    postControllerAngular = angular.element($('#BlogPostController-Div')).scope();
                    $('[data-toggle="tooltip"]').tooltip();
                     
-				});
+                    
+                    console.log("Data from localStorage",localStorage.getItem("userId"));
+        hideAllForms();
+        if(localStorage.getItem("userId") !== null && localStorage.getItem("token")){
+            validateSession();
+        } else {
+            showLoginPage();
+        }                
+        loadContents();
+        $('.affixed').affix({offset: {top: 50} });
+                    
+});
 
 function addUser() {
     if(!validUserId){
@@ -327,7 +345,12 @@ function loadMainPage(response){
 function loadContents(){
     retrieveFavourites();
     retrieveCategory();
-    readAllPosts();
+    if(infiniteScroll){
+        readLimitedPosts();
+    } else {
+        readAllPosts();
+    }
+    
     window.setInterval(function(){
        readChats();
     }, 3000);
@@ -356,6 +379,10 @@ function hideAllForms(){
     $("#new-chat-message").prop("disabled",true);
     $("#post-comment-button").prop("disabled",true);
     $("#comment-textarea").prop("disabled",true);
+    
+    $("#loading-more").hide();
+    $("#thats-all").hide();
+    
 }
 
 function skipLogin(){
@@ -369,3 +396,35 @@ function skipLogin(){
     readAllPosts();
     retrieveCategory();
 }
+
+function allowDrop(ev) {
+    ev.preventDefault();
+}
+
+function drag(ev) {
+    ev.dataTransfer.setData("text", ev.target.id);
+}
+
+function drop(ev) {
+    ev.preventDefault();
+    var data = ev.dataTransfer.getData("text");
+    ev.target.appendChild(document.getElementById(data));
+}
+
+ $(window).scroll(function(){
+  // This is then function used to detect if the element is scrolled into view
+          function elementScrolled(elem)
+          {
+            var docViewTop = $(window).scrollTop();
+            var docViewBottom = docViewTop + $(window).height();
+            var elemTop = $(elem).offset().top;
+            return ((elemTop <= docViewBottom) && (elemTop >= docViewTop));
+          }  
+          if(elementScrolled('#loading-more')) {
+              console.log("I am visible now" + loadMoreContents);
+                if(loadMoreContents){
+                    readLimitedPosts();
+                    loadMoreContents = false;
+                }
+          }
+});

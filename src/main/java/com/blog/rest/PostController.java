@@ -47,6 +47,15 @@ public class PostController {
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/offset/{offset}")
+	public Response readLimitedPosts(@PathParam("offset") int offset) {
+		Blog blog = new Blog();
+		ArrayList<PostDto> posts = blog.readLimitedPosts(offset);
+		return Response.ok().entity(posts).build();
+	}
+	
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/{no}")
 	public Response read(@PathParam("no") int number) {
 		Blog blog = new Blog();

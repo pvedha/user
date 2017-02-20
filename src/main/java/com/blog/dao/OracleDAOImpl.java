@@ -1,5 +1,6 @@
 package com.blog.dao;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 import javax.persistence.EntityManager;
@@ -28,23 +29,18 @@ import com.blog.trials.Favourite_Option;
 public class OracleDAOImpl implements DAO {
 	static EntityManagerFactory factory = Persistence.createEntityManagerFactory("blog");
 
-	
-	/*public OracleDAOImpl() {
-		//init();
-	}*/
-	
+	/*
+	 * public OracleDAOImpl() { //init(); }
+	 */
+
 	@Override
-	public int initDB(){
+	public int initDB() {
 		EntityManager em = factory.createEntityManager();
 		em.getTransaction().begin();
 		String userQuery = "insert into bloguser values ('p','p','Praveen Vedha','p')";
-		String categoryQuery = "insert all "
-				+ "into category values('Entertainment') "
-				+ "into category values('History')	"
-				+ "into category values('Politics')	"
-				+ "into category values('Finance')	"
-				+ "into category values('General') "
-				+ "select 1 from dual";
+		String categoryQuery = "insert all " + "into category values('Entertainment') "
+				+ "into category values('History')	" + "into category values('Politics')	"
+				+ "into category values('Finance')	" + "into category values('General') " + "select 1 from dual";
 		String postQuery = "insert into post values (1,'General', 'My message goes here', sysdate, 'General, Blog', 'First post title', 'p')";
 		String commentQuery = "insert into comments values (1, 'first comment', 1, sysdate, 'p')";
 		String chatQuery = "insert into chats values (1, 'One flew over something', sysdate, 'p')";
@@ -58,14 +54,14 @@ public class OracleDAOImpl implements DAO {
 		System.out.println("Init success");
 		return 0;
 	}
-	
+
 	@Override
 	public int postCreate(Post post) {
 		System.out.println("Creating post in DAO");
 		EntityManager em = factory.createEntityManager();
 		em.getTransaction().begin();
 		BlogUser user = em.find(BlogUser.class, post.getPostedBy().getUserid());
-		//em.merge(user);
+		// em.merge(user);
 		post.setPostedBy(user);
 		em.persist(post);
 		em.getTransaction().commit();
@@ -96,7 +92,7 @@ public class OracleDAOImpl implements DAO {
 		EntityManager em = factory.createEntityManager();
 		em.getTransaction().begin();
 		BlogUser blogUser = em.find(BlogUser.class, user.getUserId());
-		if(!user.getNewPassword().trim().isEmpty()){
+		if (!user.getNewPassword().trim().isEmpty()) {
 			blogUser.setPassword(user.getNewPassword());
 		}
 		blogUser.setAbout(user.getAbout());
@@ -123,8 +119,21 @@ public class OracleDAOImpl implements DAO {
 	@Override
 	public ArrayList<Post> readAllPost() {
 		EntityManager em = factory.createEntityManager();
-		ArrayList<Post> posts = (ArrayList<Post>) em.createNativeQuery("select * from post order by posted_on desc", Post.class)
-				.getResultList();
+		ArrayList<Post> posts = (ArrayList<Post>) em
+				.createNativeQuery("select * from post order by posted_on desc", Post.class).getResultList();
+		em.close();
+		return posts;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public ArrayList<Post> readLimitedPosts(int offset) throws SQLGrammarException {
+		EntityManager em = factory.createEntityManager();
+		ArrayList<Post> posts = (ArrayList<Post>) em
+				.createNativeQuery("select * from "
+						+ "(select rownum as rnum , p.* from (select * from post  order by POSTED_ON desc) p ) "
+						+ "where rnum  between :from and :to", Post.class)
+				.setParameter("from", offset).setParameter("to", offset + 9).getResultList();
 		em.close();
 		return posts;
 	}
@@ -252,13 +261,13 @@ public class OracleDAOImpl implements DAO {
 		String query = "select * from post where ";
 
 		for (String key : keys) {
-			query = query + "title like \'%" + key + "%\' or message like \'%" + key 
-					+ "%\' or tags like \'%" + key + "%\'";
+			query = query + "title like \'%" + key + "%\' or message like \'%" + key + "%\' or tags like \'%" + key
+					+ "%\'";
 			if (keys.indexOf(key) < keys.size() - 1) {
 				query = query + " or ";
 			}
 		}
-		
+
 		System.out.println("The query is " + query);
 		ArrayList<Post> posts = (ArrayList<Post>) em.createNativeQuery(query, Post.class).getResultList();
 
@@ -334,14 +343,15 @@ public class OracleDAOImpl implements DAO {
 	@Override
 	public ArrayList<Chats> getTopChats() {
 		EntityManager em = factory.createEntityManager();
-//		ArrayList<Chats> chats = (ArrayList<Chats>) em.createNativeQuery("select * from "
-//				+ "(select * from Chats order by POSTED_ON desc FETCH FIRST 20 ROWS ONLY) "
-//				+ "order by posted_on", Chats.class)
-//				.getResultList();
+		// ArrayList<Chats> chats = (ArrayList<Chats>)
+		// em.createNativeQuery("select * from "
+		// + "(select * from Chats order by POSTED_ON desc FETCH FIRST 20 ROWS
+		// ONLY) "
+		// + "order by posted_on", Chats.class)
+		// .getResultList();
 		String topChatsQuery = "select * from "
 				+ "(select * from Chats order by POSTED_ON desc) where rownum < 20 order by posted_on";
-		ArrayList<Chats> chats = (ArrayList<Chats>) em.createNativeQuery(topChatsQuery, Chats.class)
-				.getResultList();
+		ArrayList<Chats> chats = (ArrayList<Chats>) em.createNativeQuery(topChatsQuery, Chats.class).getResultList();
 		em.close();
 		return chats;
 	}

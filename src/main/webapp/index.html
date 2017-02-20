@@ -15,7 +15,7 @@
       <link href="css/jumbotron.css" rel="stylesheet">
       <link href="css/blog.css" rel="stylesheet">
        <link href="css/main.css" rel="stylesheet">
-      
+        
       <script src="js/jquery-1.11.1.min.js"></script>
       <script src="js/bootstrap.min.js"></script>
        <script src='js/angular.js'></script>
@@ -27,32 +27,21 @@
        <script type="application/javascript">
 	
     jQuery(document).ready(function($) {        
-        console.log("Data from localStorage",localStorage.getItem("userId"));
-        hideAllForms();
-        if(localStorage.getItem("userId") !== null && localStorage.getItem("token")){
-            validateSession();
-        } else {
-            showLoginPage();
-        }                
-        loadContents();
+                
     });    
 
        </script>
+   <script>
+//if(typeof(EventSource) !== "undefined") {
+//    var source = new EventSource("server-send.php");
+//    source.onmessage = function(event) {
+//        console.log(event.data);
+//    };
+//} else {
+//    console.log("Sorry, your browser does not support server-sent events...");
+//}
        
-       <script>
-function allowDrop(ev) {
-    ev.preventDefault();
-}
-
-function drag(ev) {
-    ev.dataTransfer.setData("text", ev.target.id);
-}
-
-function drop(ev) {
-    ev.preventDefault();
-    var data = ev.dataTransfer.getData("text");
-    ev.target.appendChild(document.getElementById(data));
-}
+      
 </script>
    </head>
    <body>       
@@ -114,8 +103,8 @@ function drop(ev) {
       <div class="container">
          <!-- Example row of columns -->
          <div class="row">
-            <div ondrop="drop(event)" ondragover="allowDrop(event)" class="col-md-2 main-content-div">
-                <div id="quick-links-draggable-div"  ondragstart="drag(event)" draggable="true">
+            <div id="quicklinks-div" ondrop="drop(event)" ondragover="allowDrop(event)" class="col-md-2 main-content-div">
+                <div id="quick-links-draggable-div"  ondragstart="drag(event)" draggable="true" class="affixed">
                <div>
                    <div class="panel panel-info">
                         <div class="panel-heading">
@@ -128,16 +117,19 @@ function drop(ev) {
                </div>
                <div>
                   <h4>Favourite Posts</h4>
-                  <div id="favourite-links"></div>                   
+                  <div id="favourite-links" ></div>                   
                </div>
                 </div>
             </div>
-             <div id="post-div" class="col-md-8 main-content-div">   
-            <div class="panel panel-info">
+             <div id="post-div" class="col-md-8">   
+            <div class="panel panel-info affixed">
                         <div class="panel-heading">
                             <h3 id="posts-heading" class="panel-title center">Latest Posts</h3>
                         </div>
                    </div>
+                 <h1>Some text to enable scrolling</h1><br><br><hr><br><h1>Some text to enable scrolling</h1><br><br><hr><br><h1>Some text to enable scrolling</h1><br><br><hr><br>
+                 <h1>Some text to enable scrolling</h1><br><br><hr><br><h1>Some text to enable scrolling</h1><br><br><hr><br><h1>Some text to enable scrolling</h1><br><br><hr><br>
+                                                                   
 				<h4 id="post-info"></h4>
 <!--				<div id="post-contents" class="post-contents-div"></div> -->
                  <div id="BlogPostController-Div" ng-controller="BlogPostController">
@@ -156,6 +148,18 @@ function drop(ev) {
 				</tr>
 			     </table>
                  </div>
+                 <div id="loading-more"  class="panel panel-info">
+                        <div class="panel-heading">                            
+                            <center><h3 class="panel-title">Loading More Posts .... <img style="width:24px;height:24px;" src="img/loading_128.gif"> </h3>
+                                </center>
+                        </div>              
+                   </div>   
+                   <div id="thats-all"  class="panel panel-info">
+                        <div class="panel-heading">                            
+                            <center><h3 class="panel-title">Thats all for now. Go get a life!</h3>
+                                </center>
+                        </div>              
+                   </div> 
              </div>
             <div id="view-post-div" class="col-md-8">               
                <div class="panel panel-info"><div class="panel-heading">
@@ -237,7 +241,7 @@ function drop(ev) {
              
              
             <div id="chat-div" ondrop="drop(event)" ondragover="allowDrop(event)" class="col-md-2 main-content-div">
-                <div id="chat-div-draggable" draggable="true"  ondragstart="drag(event)">
+                <div id="chat-div-draggable" draggable="true"  ondragstart="drag(event)" class="affixed">
                   <div class="panel panel-info">
                         <div class="panel-heading">
                             <h3 class="panel-title">Blog Chat</h3>

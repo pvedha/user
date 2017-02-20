@@ -46,6 +46,18 @@ public class Blog implements BlogInterface {
 		return getPostDto(posts, comments);
 	}
 
+	@Override
+	public ArrayList<PostDto> readLimitedPosts(int offset) {
+		try { 
+			ArrayList<Post> posts = dao.readLimitedPosts(offset);
+			ArrayList<Comments> comments = dao.readComments(getPostIds(posts));
+			return getPostDto(posts, comments);
+		} catch (Exception e) {
+			return null;
+		}
+		
+	}
+	
 	private ArrayList<PostDto> getPostDto(ArrayList<Post> posts, ArrayList<Comments> comments) {
 		ArrayList<PostDto> postDtos = new ArrayList<>();
 		for (Post post : posts) {

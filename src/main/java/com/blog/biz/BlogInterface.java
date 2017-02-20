@@ -45,5 +45,6 @@ public interface BlogInterface {
 	boolean updateUser(UserDto user);
 	AuthenticationDto validateSession(String userId, String password);
 	int initDB();
+	ArrayList<PostDto> readLimitedPosts(int offset);
 	
 }
