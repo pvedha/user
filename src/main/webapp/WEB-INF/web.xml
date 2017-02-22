@@ -3,6 +3,14 @@
 	xmlns="http://java.sun.com/xml/ns/javaee"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 	id="WebApp_ID" version="2.5">
+	<display-name>CMAD Blog Application</display-name>
+	
+  <description>
+    A protoype blog site application using HTML, CSS, JS, Angular JS, Jersey, REST,
+    Java, JPA, Oracle + MongoDB, placed in Docker that is placed in Google cloud, 
+    that connects to Amazon AWS.
+  </description>
+  
 	<servlet>
 		<servlet-name>jersey</servlet-name>
 		<servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>

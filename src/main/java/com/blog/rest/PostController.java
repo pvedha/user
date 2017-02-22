@@ -16,12 +16,11 @@ import javax.ws.rs.core.Response.Status;
 
 import com.blog.api.BlogUser;
 import com.blog.api.Comments;
-import com.blog.api.DuplicateUserException;
-
-import com.blog.api.InvalidCommentException;
-import com.blog.api.InvalidSearchKeyException;
-import com.blog.api.InvalidUserException;
 import com.blog.api.Post;
+import com.blog.api.Exceptions.DuplicateUserException;
+import com.blog.api.Exceptions.InvalidCommentException;
+import com.blog.api.Exceptions.InvalidSearchKeyException;
+import com.blog.api.Exceptions.InvalidUserException;
 import com.blog.biz.Blog;
 import com.blog.dto.ChatsDto;
 import com.blog.dto.NewChat;

@@ -1,7 +1,7 @@
-package com.blog.api;
+package com.blog.api.Exceptions;
 
 @SuppressWarnings("serial")
-public class InvalidUserException extends Exception {
+public class InvalidUserException extends BlogException {
 
 	public InvalidUserException() {
 		super();

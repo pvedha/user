@@ -352,7 +352,7 @@ function loadContents(){
     }
     
     window.setInterval(function(){
-       readChats();
+       //readChats();
     }, 3000);
     //readChats();
 }
@@ -362,7 +362,7 @@ function showLoginPage(){
         $("#result-div").hide();
         $("#mainPage").hide();
         //$("#loginPage").hide(); //to hide first
-        $("#post-div").hide();
+        //$("#post-div").hide(); //This is shown at all times
         $("#new-post-div").hide();
         $("#view-post-div").hide();   
         $("#user-profile-div").hide();

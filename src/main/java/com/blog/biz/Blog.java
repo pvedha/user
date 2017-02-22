@@ -8,12 +8,12 @@ import java.util.Arrays;
 import com.blog.api.BlogUser;
 import com.blog.api.Chats;
 import com.blog.api.Comments;
-import com.blog.api.DuplicateUserException;
-import com.blog.api.InvalidCommentException;
-import com.blog.api.InvalidPostException;
-import com.blog.api.InvalidSearchKeyException;
-import com.blog.api.InvalidUserException;
 import com.blog.api.Post;
+import com.blog.api.Exceptions.DuplicateUserException;
+import com.blog.api.Exceptions.InvalidCommentException;
+import com.blog.api.Exceptions.InvalidPostException;
+import com.blog.api.Exceptions.InvalidSearchKeyException;
+import com.blog.api.Exceptions.InvalidUserException;
 import com.blog.dao.DAO;
 import com.blog.dao.OracleDAOImpl;
 import com.blog.dto.AuthenticationDto;
@@ -26,10 +26,15 @@ import com.blog.dto.PostDto;
 import com.blog.dto.UserDto;
 
 public class Blog implements BlogInterface {
-	private DAO dao;
+	private DAO dao;// = new OracleDAOImpl();
 
 	public Blog() {
-		dao = new OracleDAOImpl();
+		try {
+			System.out.println("Initializing for OracleDAO");
+			dao = new OracleDAOImpl();
+		} catch (Exception e){
+			System.out.println("No class found most likely " + e.getMessage());
+		}
 	}
 
 	@Override

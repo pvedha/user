@@ -1,7 +1,7 @@
-package com.blog.api;
+package com.blog.api.Exceptions;
 
 @SuppressWarnings("serial")
-public class InvalidCommentException extends Exception {
+public class InvalidCommentException extends BlogException {
 
 	public InvalidCommentException() {
 		// TODO Auto-generated constructor stub

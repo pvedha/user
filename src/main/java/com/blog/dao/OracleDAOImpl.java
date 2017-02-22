@@ -27,11 +27,7 @@ import com.blog.trials.Favourite_Option;
 
 @SuppressWarnings("unchecked")
 public class OracleDAOImpl implements DAO {
-	static EntityManagerFactory factory = Persistence.createEntityManagerFactory("blog");
-
-	/*
-	 * public OracleDAOImpl() { //init(); }
-	 */
+	EntityManagerFactory factory = Persistence.createEntityManagerFactory("blog");
 
 	@Override
 	public int initDB() {

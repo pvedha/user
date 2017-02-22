@@ -4,12 +4,12 @@ import java.util.ArrayList;
 
 import com.blog.api.BlogUser;
 import com.blog.api.Comments;
-import com.blog.api.DuplicateUserException;
-import com.blog.api.InvalidCommentException;
-import com.blog.api.InvalidPostException;
-import com.blog.api.InvalidSearchKeyException;
-import com.blog.api.InvalidUserException;
 import com.blog.api.Post;
+import com.blog.api.Exceptions.DuplicateUserException;
+import com.blog.api.Exceptions.InvalidCommentException;
+import com.blog.api.Exceptions.InvalidPostException;
+import com.blog.api.Exceptions.InvalidSearchKeyException;
+import com.blog.api.Exceptions.InvalidUserException;
 import com.blog.dto.AuthenticationDto;
 import com.blog.dto.NewComment;
 import com.blog.dto.NewPost;

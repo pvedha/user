@@ -1,28 +1,27 @@
-package com.blog.api;
+package com.blog.api.Exceptions;
 
-@SuppressWarnings("serial")
-public class DuplicateUserException extends Exception {
+public class InvalidPostException extends BlogException {
 
-	public DuplicateUserException() {
+	public InvalidPostException() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public DuplicateUserException(String message) {
+	public InvalidPostException(String message) {
 		super(message);
 		// TODO Auto-generated constructor stub
 	}
 
-	public DuplicateUserException(Throwable cause) {
+	public InvalidPostException(Throwable cause) {
 		super(cause);
 		// TODO Auto-generated constructor stub
 	}
 
-	public DuplicateUserException(String message, Throwable cause) {
+	public InvalidPostException(String message, Throwable cause) {
 		super(message, cause);
 		// TODO Auto-generated constructor stub
 	}
 
-	public DuplicateUserException(String message, Throwable cause, boolean enableSuppression,
+	public InvalidPostException(String message, Throwable cause, boolean enableSuppression,
 			boolean writableStackTrace) {
 		super(message, cause, enableSuppression, writableStackTrace);
 		// TODO Auto-generated constructor stub

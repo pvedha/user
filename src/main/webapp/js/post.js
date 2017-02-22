@@ -228,8 +228,8 @@ function readLimitedPosts() {
 			// $("#viewForm").hide();
             var receivedCount = response.length;
             if(receivedCount > 0) {
-                if(readPostResponse.lenght === 0){
-                    readPostResponse = response;
+                if(readPostResponse.length === 0){
+                    readPostResponse = response; // Seems we dont need this, appending to empty array is possible
                 } else {
                     readPostResponse.push.apply(readPostResponse, response);
                 }
@@ -247,6 +247,13 @@ function readLimitedPosts() {
                     $("#loading-more").show();
                 }	
             } else {
+                log("Thats all man, nothing more");
+                loadMoreContents = false;
+                $('#loading-more').hide();
+                $('#thats-all').show();
+            }
+            
+            if(receivedCount < 10) {
                 log("Thats all man, nothing more");
                 loadMoreContents = false;
                 $('#loading-more').hide();

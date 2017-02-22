@@ -11,7 +11,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import com.blog.api.InvalidCommentException;
+import com.blog.api.Exceptions.InvalidCommentException;
 import com.blog.biz.Blog;
 import com.blog.dto.ChatsDto;
 import com.blog.dto.NewChat;
