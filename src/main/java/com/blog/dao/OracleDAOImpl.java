@@ -1,13 +1,11 @@
 package com.blog.dao;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
-import org.apache.derby.tools.sysinfo;
 import org.hibernate.exception.SQLGrammarException;
 
 import com.blog.api.BlogUser;
@@ -17,17 +15,14 @@ import com.blog.api.Comments;
 import com.blog.api.Favourite;
 import com.blog.api.FavouriteKey;
 import com.blog.api.Post;
-import com.blog.dto.ChatsDto;
 import com.blog.dto.NewChat;
 import com.blog.dto.NewComment;
 import com.blog.dto.NewPost;
 import com.blog.dto.UserDto;
-import com.blog.trials.FavouriteEmbeddable;
-import com.blog.trials.Favourite_Option;
 
 @SuppressWarnings("unchecked")
 public class OracleDAOImpl implements DAO {
-	EntityManagerFactory factory = Persistence.createEntityManagerFactory("blog");
+	static EntityManagerFactory factory = Persistence.createEntityManagerFactory("blog");
 
 	@Override
 	public int initDB() {
@@ -66,7 +61,6 @@ public class OracleDAOImpl implements DAO {
 		return post.getPostId();
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public Post readPost(int postId) {
 		EntityManager em = factory.createEntityManager();
@@ -111,7 +105,6 @@ public class OracleDAOImpl implements DAO {
 
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public ArrayList<Post> readAllPost() {
 		EntityManager em = factory.createEntityManager();
@@ -121,7 +114,6 @@ public class OracleDAOImpl implements DAO {
 		return posts;
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public ArrayList<Post> readLimitedPosts(int offset) throws SQLGrammarException {
 		EntityManager em = factory.createEntityManager();
@@ -154,7 +146,6 @@ public class OracleDAOImpl implements DAO {
 		return 0;
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public ArrayList<Comments> readComments(int postId) {
 		EntityManager em = factory.createEntityManager();
@@ -165,7 +156,6 @@ public class OracleDAOImpl implements DAO {
 		return comments;
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public ArrayList<Comments> readComments(ArrayList<Integer> postIds) {
 		EntityManager em = factory.createEntityManager();
@@ -175,7 +165,6 @@ public class OracleDAOImpl implements DAO {
 		return comments;
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public ArrayList<BlogUser> readAllUsers() {
 		EntityManager em = factory.createEntityManager();
@@ -185,7 +174,6 @@ public class OracleDAOImpl implements DAO {
 		return blogUsers;
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public ArrayList<String> readUserIds() {
 		EntityManager em = factory.createEntityManager();
@@ -250,7 +238,6 @@ public class OracleDAOImpl implements DAO {
 		return result;
 	}
 
-	@SuppressWarnings("null")
 	@Override
 	public ArrayList<Post> searchPost(ArrayList<String> keys) {
 		EntityManager em = factory.createEntityManager();
