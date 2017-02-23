@@ -399,20 +399,34 @@ function skipLogin(){
 
 function allowDrop(ev) {
     ev.preventDefault();
+    console.log("Allowdrop ID " +  ev.target.id);
 }
 
 function drag(ev) {
     ev.dataTransfer.setData("text", ev.target.id);
-}
+    console.log("Event Target ID " +  ev.target.id);
+} 
 
 function drop(ev) {
     ev.preventDefault();
+    log("Dropping on " +  ev.target.id);
     var data = ev.dataTransfer.getData("text");
+    log("Drag data is " + data);
     ev.target.appendChild(document.getElementById(data));
 }
 
+//function drop(ev,divId) {
+//    ev.preventDefault();
+//    
+//    //rowDiv.preventDefault();
+//    //log("Dropping on " +  document.getElementById(divId).target.id);
+//    var data = ev.dataTransfer.getData("text");
+//    log("Drag data is " + data);
+//    ev.target.appendChild(divId);
+//}
+
  $(window).scroll(function(){
-  // This is then function used to detect if the element is scrolled into view
+  // This is the function used to detect if the element is scrolled into view
           function elementScrolled(elem)
           {
             var docViewTop = $(window).scrollTop();
@@ -421,7 +435,7 @@ function drop(ev) {
             return ((elemTop <= docViewBottom) && (elemTop >= docViewTop));
           }  
           if(elementScrolled('#loading-more')) {
-              console.log("I am visible now" + loadMoreContents);
+              //console.log("I am visible now" + loadMoreContents);
                 if(loadMoreContents){
                     readLimitedPosts();
                     loadMoreContents = false;

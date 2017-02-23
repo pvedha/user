@@ -247,14 +247,14 @@ function readLimitedPosts() {
                     $("#loading-more").show();
                 }	
             } else {
-                log("Thats all man, nothing more");
+                //log("Thats all man, nothing more");
                 loadMoreContents = false;
                 $('#loading-more').hide();
                 $('#thats-all').show();
             }
             
             if(receivedCount < 10) {
-                log("Thats all man, nothing more");
+                //log("Thats all man, nothing more");
                 loadMoreContents = false;
                 $('#loading-more').hide();
                 $('#thats-all').show();
@@ -266,7 +266,7 @@ function readLimitedPosts() {
 			$("#post-info").html("Error Loading the posts, please try again");
 			// $("#login-message").css({ 'color': 'green', 'font-size': '100%'
 			// });
-            log("Thats all man, nothing more2");
+            //log("Thats all man, nothing more2");
                 loadMoreContents = false;
                 $('#loading-more').hide();
                 $('#thats-all').show();
@@ -520,9 +520,7 @@ function showViewPostView() {
 	$("#view-post-div").fadeIn(2000);
 }
 
-function retrieveCategory() {
-	console.log("Retrieving categories");
-	
+function retrieveCategory() {	
 	$.ajax({
         url : baseURL + '/category',
         type : 'get',
@@ -551,8 +549,7 @@ function retrieveCategory() {
     })
 }
 
-function retrieveFavourites() {
-	console.log("Retrieving Favourite Posts for " + currentUserId);
+function retrieveFavourites() {	
 	$("#favourite-links").html("");
 	$.ajax({
         url : baseURL + '/favourite/' + currentUserId,
