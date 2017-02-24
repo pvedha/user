@@ -19,9 +19,11 @@
       <script src="js/jquery-1.11.1.min.js"></script>
       <script src="js/bootstrap.min.js"></script>
        <script src='js/angular.js'></script>
+       
 				<script src='js/blogAngular.js'></script> 
        <script src="js/signing.js"></script>
 <script src="js/post.js"></script>
+       <script src="js/chat.js"></script>
        <script src="js/blogModal.js"></script>
        
        <script type="application/javascript">
@@ -104,8 +106,39 @@
          <!-- Example row of columns -->
          <div id="container-div" class="row">
              <div id="droppable-div"  ondrop="drop(event)" ondragover="allowDrop(event)" >
-            <div id="quicklinks-div"  class="col-md-2 main-content-div">
-                <div id="quick-links-draggable-div"  ondragstart="drag(event)" draggable="true" class="affixed">
+                 <div id="chat-div" draggable="true"  ondragstart="drag(event)" class="col-md-2 main-content-div">
+                <div id="chat-div-draggable" class="affixed">
+                  <div class="panel panel-info">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Blog Chat</h3>
+                        </div>
+                   </div>
+                  <div id="show-chat-div" class="sub-content-div"  >
+                    <p id="chat-connection"></p>
+                    <div id="BlogChatController-Div" ng-controller="BlogPostController">
+                    
+                    <table class="table">
+				<tr ng-repeat='c in chats'>
+					<td>                    
+                        <p class='chat-message'> {{c.message}} </p>
+                        <p class='chat-detail'> <span class='glyphicon glyphicon-user'></span>  <b>{{c.userName}},</b> 
+                            <span class='glyphicon glyphicon-time'></span>{{c.time}}
+                    </td>
+                    
+				</tr>
+			     </table>                       
+                    </div>                    
+                </div>    
+                    
+                    
+                    
+				<textarea name="new-chat-message" id="new-chat-message" rows="3"
+							placeholder="Your chat message..." class="form-control"></textarea>
+                				<button type="button" class="btn btn-success" id="newChat-submit-button">send</button>
+             </div>
+                </div>
+            <div id="quicklinks-div"   ondragstart="drag(event)" draggable="true" class="col-md-2 main-content-div">
+                <div id="quick-links-draggable-div" class="affixed">
                <div>
                    <div class="panel panel-info">
                         <div class="panel-heading">
@@ -122,8 +155,8 @@
                </div>
                 </div>
             </div>
-             <div id="main-contents-div" class="col-md-8">
-            <div id="main-content-draggable-div"  ondragstart="drag(event)" draggable="true">
+             <div id="main-contents-div"  ondragstart="drag(event)" draggable="true" class="col-md-8">
+            <div id="main-content-draggable-div" >
              <div id="post-div">   
                 <div class="panel panel-info affixed">
                         <div class="panel-heading">
@@ -240,19 +273,7 @@
           </div>
              </div>
              
-            <div id="chat-div" class="col-md-2 main-content-div">
-                <div id="chat-div-draggable" draggable="true"  ondragstart="drag(event)" class="affixed">
-                  <div class="panel panel-info">
-                        <div class="panel-heading">
-                            <h3 class="panel-title">Blog Chat</h3>
-                        </div>
-                   </div>
-                  <div id="show-chat-div" class="sub-content-div"></div>                
-				<textarea name="new-chat-message" id="new-chat-message" rows="3"
-							placeholder="Your chat message..." class="form-control"></textarea>
-                				<button type="button" class="btn btn-success" id="newChat-submit-button">send</button>
-             </div>
-                </div>
+            
          </div>
           </div>
          <hr>

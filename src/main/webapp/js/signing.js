@@ -15,6 +15,7 @@ var userHasFavourites = false;
 var loadSamePost = false;
 var postControllerAngular;// = angular.element($('#BlogPostController-Div')).scope();
 
+
 //Dev settings
 var infiniteScroll = true;
 var currentOffset = 1;
@@ -97,6 +98,7 @@ $(document)
                     });
                     
                    postControllerAngular = angular.element($('#BlogPostController-Div')).scope();
+                   
                    $('[data-toggle="tooltip"]').tooltip();
                     
                     
@@ -216,7 +218,7 @@ function validateSession() {
             console.log("user logged in already");
             //<img id='current-user-icon' src='img/48px-User_icon_2.svg.png'/> 
             //$("#current-user-icon").css("filter", "none");
-            loadMainPage(response);
+            loadMainPage(response);     
             
         },
         error : function(XMLHttpRequest, textStatus, errorThrown) {
@@ -310,6 +312,7 @@ function toggleSignform(){
     } 
 
 function signOut(){
+    Chat.loginMessage("Signing out");
     localStorage.setItem("userId", "");
     localStorage.setItem("token", "");
     window.location.href = appURL;
@@ -338,7 +341,8 @@ function loadMainPage(response){
     $("#post-comment-button").prop("disabled",false);
     $("#comment-textarea").prop("disabled",false);
     
-    
+    //Chat.initialize();
+    setTimeout(function(){Chat.loginMessage("Just logged in.")}, 3000);
 }
 
 
@@ -410,9 +414,28 @@ function drag(ev) {
 function drop(ev) {
     ev.preventDefault();
     log("Dropping on " +  ev.target.id);
+    console.log("Dropping on the parent " + ev.target.offsetParent.id);
     var data = ev.dataTransfer.getData("text");
     log("Drag data is " + data);
-    ev.target.appendChild(document.getElementById(data));
+    //ev.target.appendChild(document.getElementById(data));
+    //document.getElementById("droppable-div").appendChild(document.getElementById(data)); //This works but always append at end
+    //document.getElementById("droppable-div").insertBefore(document.getElementById(data),document.getElementById("chat-div")); //sort of works, identify before item dynamically.
+    var targetId = "";
+    var offsetParentItem = ev.target;
+    while(true){
+        targetId = offsetParentItem.id;
+        console.log("Current Offset Parent is " + targetId);
+        if(targetId == "main-contents-div" || targetId == "chat-div" || targetId == "quicklinks-div"){
+            document.getElementById("droppable-div").insertBefore(document.getElementById(data),document.getElementById(targetId)); //sort of works, identify before item dynamically.
+            break;
+        }
+        if(targetId == "body"){
+            break;
+        }
+        
+        offsetParentItem = offsetParentItem.offsetParent;
+    }
+    
 }
 
 //function drop(ev,divId) {

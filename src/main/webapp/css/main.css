@@ -56,6 +56,16 @@ h2 {
     text-align: right;
     margin: 0 40px 0 0;
 }
+
+.chat-message {
+    color: black;
+    font-size: 0.85em;
+    text-align: justify;
+    text-justify: inter-word;
+/*    text-indent: 50px;*/
+    /*margin: 0 40px 0 50px;*/
+}
+
 .view-post-title {
     color: darkblue;
     font-size: 1em;
