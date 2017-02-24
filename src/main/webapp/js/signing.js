@@ -78,10 +78,10 @@ $(document).ready(function () {
         function () {
             newPost();
         });
-    $('#newChat-submit-button').click(
-        function () {
-            newChat();
-        });
+//    $('#newChat-submit-button').click(
+         //        function () {
+         //            newChat();
+         //        });
     $('#search-button').click(
         function () {
             searchAllPosts();
@@ -346,7 +346,7 @@ function loadMainPage(response) {
     $("#LoggedInForm").show();
     $("#mainPage").show().fadeIn(50000); //to be removed in new version
     $("#mainPage").fadeIn(5000); // to be removed in new version.   
-    $("#newChat-submit-button").prop("disabled", false);
+    //$("#newChat - submit - button").prop("disabled", false);
     $("#new-chat-message").prop("disabled", false);
     $("#post-comment-button").prop("disabled", false);
     $("#comment-textarea").prop("disabled", false);
@@ -391,7 +391,7 @@ function hideAllForms() {
     $("#LoginForm").hide();
     $("#LoggedInForm").hide();
     $("#NotLogged").hide();
-    $("#newChat-submit-button").prop("disabled", true);
+    //$("#newChat-submit-button").prop("disabled", true);
     $("#new-chat-message").prop("disabled", true);
     $("#post-comment-button").prop("disabled", true);
     $("#comment-textarea").prop("disabled", true);
