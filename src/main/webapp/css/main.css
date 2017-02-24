@@ -66,6 +66,12 @@ h2 {
     /*margin: 0 40px 0 50px;*/
 }
 
+.chat-detail {
+    color: brown;
+    font-size: 0.85em;
+    text-align: right;    
+}
+
 .view-post-title {
     color: darkblue;
     font-size: 1em;
