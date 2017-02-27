@@ -7,6 +7,8 @@ var token = "";
 var url = 'http://' + window.location.host;
 var baseURL = url + "/blog/blog"; //http://hostname:8080/blog/blog
 var appURL = url + "/blog" //http://hostname:8080/blog
+var baseUserURL = url + "/user/user"; //http://hostname:8080/user/user
+var appUserURL = url + "/user" //http://hostname:8080/user
 var readPostResponse = [];
 var currentPostId = 0;
 var currentPost;
@@ -130,7 +132,7 @@ function addUser() {
     };
     $
         .ajax({
-            url: baseURL + '/user/addUser',
+            url: baseUserURL + '/addUser',
             type: 'post',
             contentType: 'application/json',
             success: function (response) {
@@ -151,7 +153,7 @@ function addUser() {
 function getUserIds() {
     console.log("receiving user ids");
     $.ajax({
-        url: baseURL + '/user/ids',
+        url: baseURL + '/ids',
         type: 'get',
         accept: 'application/json',
         global: false,
@@ -185,7 +187,7 @@ function login() {
 
 function authenticate(userId, password) {
     $.ajax({
-        url: baseURL + '/user/' + userId + '/' + password,
+        url: baseUserURL + '/' + userId + '/' + password,
         type: 'get',
         accept: 'application/json',
         global: false,
@@ -209,7 +211,7 @@ function validateSession() {
     var token = localStorage.getItem("token");
     $.ajax({
 
-        url: baseURL + '/user/validate',
+        url: baseUserURL + '/validate',
         type: 'get',
         accept: 'application/json',
         global: false,
@@ -256,7 +258,7 @@ function updateProfile() {
         about: about
     };
     $.ajax({
-        url: baseURL + '/user/update',
+        url: baseUserURL + '/update',
         type: 'post',
         contentType: 'application/json',
         success: function (response) {

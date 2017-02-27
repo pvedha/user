@@ -21,7 +21,7 @@ import com.user.biz.UserService;
 import com.user.dto.AuthenticationDto;
 import com.user.dto.UserDto;
 
-@Path("/usersvc")
+@Path("/")
 public class UserController {
 
 	public UserController() {
