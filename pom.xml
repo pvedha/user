@@ -65,6 +65,11 @@
 			<artifactId>derby</artifactId>
 			<version>${derby.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>org.mongodb</groupId>
+			<artifactId>mongo-java-driver</artifactId>
+			<version>3.4.0</version>
+		</dependency>
 		<!-- https://mvnrepository.com/artifact/com.oracle/ojdbc14 -->
 		<!-- https://mvnrepository.com/artifact/com.oracle/ojdbc14 -->
 		<!-- <dependency> -->

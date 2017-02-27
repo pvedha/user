@@ -9,7 +9,8 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.blog.dto.PostDto;
+import com.user.biz.BlogInterface;
+import com.user.dto.PostDto;
 
 
 public class BlogTest {
