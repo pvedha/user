@@ -113,13 +113,16 @@ public class MongoDAOImpl implements DAO {
 	public ArrayList<BlogUser> readAllUsers() {
 		MongoCollection<Document> collection = db.getCollection("users");
 		ArrayList<BlogUser> users = new ArrayList<BlogUser>();
-		collection.find().forEach((Document d) -> users.add(
+		FindIterable<Document> documents = collection.find();
+		for(Document d : documents) {
+		users.add(
 				new BlogUser(d.getString("userid"),
 						d.getString("name"),
 						d.getString("password"),
 						d.getString("about")
 						)
-				));		
+				);	
+		}
 		return users;
 	}
 
@@ -129,7 +132,10 @@ public class MongoDAOImpl implements DAO {
 		MongoCollection<Document> collection = db.getCollection("users");
 		ArrayList<String> userIds = new ArrayList<String>();
 		
-		collection.find().forEach((Document d) -> userIds.add(d.getString("userid")));		
+		FindIterable<Document> documents = collection.find();
+		for(Document d : documents) {
+			userIds.add(d.getString("userid"));		
+		}
 		return userIds;
 	}
 
