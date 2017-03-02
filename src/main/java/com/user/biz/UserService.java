@@ -62,10 +62,11 @@ public class UserService {
 		if (user == null || user.getUserid() == null || user.getName() == null || user.getPassword() == null) {
 			throw new InvalidUserException();
 		}
-
+		System.out.println("Validating user availability " + user.getUserid());
 		if (mongo.getUser(user.getUserid()) != null) {
 			throw new DuplicateUserException();
 		}
+		System.out.println("Creating new user");
 		return mongo.userCreate(user);
 	}
 	

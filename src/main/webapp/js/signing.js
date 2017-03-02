@@ -153,7 +153,7 @@ function addUser() {
 function getUserIds() {
     console.log("receiving user ids");
     $.ajax({
-        url: baseURL + '/ids',
+        url: baseUserURL + '/ids',
         type: 'get',
         accept: 'application/json',
         global: false,

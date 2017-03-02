@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import org.bson.Document;
 import static com.mongodb.client.model.Filters.eq;
+
+import com.mongodb.DBCursor;
 import com.mongodb.MongoClient;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
@@ -19,7 +21,9 @@ import com.user.dto.NewPost;
 import com.user.dto.UserDto;
 
 public class MongoDAOImpl implements DAO {
-	static MongoClient mongoClient = new MongoClient("localhost", 27017);
+	//static MongoClient mongoClient = new MongoClient("127.0.0.1", 27017);
+	static MongoClient mongoClient = new MongoClient("35.161.192.221", 27017);
+	
 	static MongoDatabase db = mongoClient.getDatabase("user-db");
 	
 	@Override
@@ -104,16 +108,29 @@ public class MongoDAOImpl implements DAO {
 		return 0;
 	}
 
+	@SuppressWarnings("null")
 	@Override
 	public ArrayList<BlogUser> readAllUsers() {
-		// TODO Auto-generated method stub
-		return null;
+		MongoCollection<Document> collection = db.getCollection("users");
+		ArrayList<BlogUser> users = new ArrayList<BlogUser>();
+		collection.find().forEach((Document d) -> users.add(
+				new BlogUser(d.getString("userid"),
+						d.getString("name"),
+						d.getString("password"),
+						d.getString("about")
+						)
+				));		
+		return users;
 	}
 
+	@SuppressWarnings("null")
 	@Override
 	public ArrayList<String> readUserIds() {
-		// TODO Auto-generated method stub
-		return null;
+		MongoCollection<Document> collection = db.getCollection("users");
+		ArrayList<String> userIds = new ArrayList<String>();
+		
+		collection.find().forEach((Document d) -> userIds.add(d.getString("userid")));		
+		return userIds;
 	}
 
 	@Override
@@ -138,7 +155,10 @@ public class MongoDAOImpl implements DAO {
 		MongoCollection<Document> collection = db.getCollection("users");
 		// We maintain just one user ID so searching for 1st instance is enough
 		Document d = collection.find(eq("userid", userId)).first();
-		
+		if (d == null){
+			System.out.println("User not found");
+			return null;
+		}
 		return new BlogUser(d.getString("userid"),
 				d.getString("name"),
 				d.getString("password"),
