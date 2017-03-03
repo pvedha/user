@@ -16,7 +16,6 @@ import javax.ws.rs.core.Response.Status;
 import com.user.api.BlogUser;
 import com.user.api.Exceptions.DuplicateUserException;
 import com.user.api.Exceptions.InvalidUserException;
-import com.user.biz.Blog;
 import com.user.biz.UserService;
 import com.user.dto.AuthenticationDto;
 import com.user.dto.UserDto;

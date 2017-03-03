@@ -9,7 +9,6 @@ import com.user.api.Exceptions.DuplicateUserException;
 import com.user.api.Exceptions.InvalidUserException;
 import com.user.dao.DAO;
 import com.user.dao.MongoDAOImpl;
-import com.user.dao.OracleDAOImpl;
 
 public class UserService {
 	private DAO mongo;// = new MongoDAOImpl(); 
