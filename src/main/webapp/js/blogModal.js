@@ -11,7 +11,7 @@ $(document)
                     $("#showSignUp").click( 
                             function() {
                                 getUserIds();
-                            console.log("Open form");
+                    //console.log("Open form");
     modal.style.display = "block";
                         });
                 $("#close-signup-form").click(

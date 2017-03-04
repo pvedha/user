@@ -102,7 +102,7 @@ jQuery(document).ready(function($) {
                 if(message == "Info: WebSocket connection opened."){
                     $("#chat-connection").html("Connected to live chat...");
                 }else{
-                    console.log("Process this from chat.js : " + message);
+            //console.log("Process this from chat.js : " + message);
                 }
             }
 //            chatContent.appendChild(p);
@@ -112,8 +112,10 @@ jQuery(document).ready(function($) {
             //chatControllerAngular.$apply(); //this not working in IE
             angular.element($('#BlogChatController-Div')).scope().$apply();
             //chatContent.scrollTop = console.scrollHeight;
-            console.log("show chat height" + $('#show-chat-div').height());
-            $("#show-chat-div").animate({ scrollTop: $('#show-chat-div').height() + 5000}, 100);
+    //console.log("show chat height" + $('#show-chat-div').height());
+    $("#show-chat-div").animate({
+        scrollTop: $('#show-chat-div').height() + 5000
+    }, 100);
         });
 
         Chat.initialize();

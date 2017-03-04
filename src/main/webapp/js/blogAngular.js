@@ -29,8 +29,7 @@ $scope.addPosts = function(response){
 		var post = response[i];		
         var postMessage = "";
 		if (post.message.length > 200) {
-			postMessage = post.message.substring(0, 200)
-					+ "....."; //<a href='#' onClick=viewPost(" + response[i].postId
+                postMessage = post.message.substring(0, 200) + "....."; //<a href='#' onClick=viewPost(" + response[i].postId
 					//+ ")> read more </a>";
             //Check to make this contents as html
 		} else {
@@ -50,13 +49,6 @@ $scope.addPosts = function(response){
     
     
 $scope.chats = [];
-//$scope.add = function(){
-//    	$scope.posts.push({
-//    		title: $scope.contact.name,
-//    		message: $scope.post.message
-//    	});
-//		$scope.addPost("Inside","addFunction");
-//};
 
 $scope.addChat = function(messageIn, userNameIn, timeIn){
     	$scope.chats.push({
@@ -66,29 +58,7 @@ $scope.addChat = function(messageIn, userNameIn, timeIn){
     	});		
 };       
     
-//$scope.addPosts = function(response){
-//    $scope.posts = [];
-//    for (i = 0; i < response.length; i++) {
-//		var post = response[i];		
-//        var postMessage = "";
-//		if (post.message.length > 200) {
-//			postMessage = post.message.substring(0, 200)
-//					+ "....."; //<a href='#' onClick=viewPost(" + response[i].postId
-//					//+ ")> read more </a>";
-//            //Check to make this contents as html
-//		} else {
-//			postMessage = post.message;
-//		}       
-//        $scope.posts.push({
-//    		title: post.title,
-//    		message: postMessage,
-//            postId: post.postId,
-//            userName: post.userName,
-//            postedOn: post.postedOn,
-//            commentsCount: post.comments.length
-//    	});
-//	}
-//};
+
     
     
     
