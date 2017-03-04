@@ -3,7 +3,7 @@
 function newPost() {
 
 	var userId = currentUserId;
-	console.log("Current User" + currentUserId);
+    //console.log("Current User" + currentUserId);
 	// userId = "bloguser";
 	var title = $("#new-post-title").val();
 	var message = $("#new-post-message").val();
@@ -15,13 +15,13 @@ function newPost() {
 	});
 	if (title.trim().length === 0 || message.trim().length === 0) {
 		$("#new-post-info").html("Title / Message cannot be empty");
-		console.log("Title / message cannot be empty");
+        //console.log("Title / message cannot be empty");
 		return;
 	}
 
 	$("#new-post-info").html("Please wait, submitting post...");
 	// $("#new-post-info").css({ 'color': 'green', 'font-size': '100%' });
-	console.log(userId + title + message + tags + category);
+    //    console.log(userId + title + message + tags + category);
 	var data = {
 		userId : userId,
 		title : title,
@@ -36,14 +36,14 @@ function newPost() {
 		contentType : 'application/json',
 		global : false,
 		success : function(response) {
-			console.log("Posting done");
+            //console.log("Posting done");
 			$("#new-post-info").html("Successfully Posted.");
 			showPostsView();
 			readAllPosts();
 
 		},
 		error : function(XMLHttpRequest, textStatus, errorThrown) {
-			console.log("Error submitting the post");
+            //console.log("Error submitting the post");
 			$("#new-post-info").html(
 					"Error submitting the post, please try again");
 		},
@@ -53,17 +53,17 @@ function newPost() {
 
 function addComment(){
 	var userId = currentUserId;
-    console.log("Current User" + currentUserId);
+    //    console.log("Current User" + currentUserId);
     var message = $("#comment-textarea").val();
     var postId = currentPostId;
     if(message.trim().length === 0){
         $("#new-comment-info").html("Comment cannot be empty");
-        console.log("Title / message cannot be empty");
+        //        console.log("Title / message cannot be empty");
         return;
     }
     $("#new-post-info").html("Please wait, submitting post...");
     //$("#new-post-info").css({ 'color': 'green', 'font-size': '100%' });
-    console.log(userId + postId + message);
+    //    console.log(userId + postId + message);
     var data = {    
         postId : postId,
         message : message,
@@ -87,7 +87,7 @@ function addComment(){
                     //});                                    
                 },
                 error : function(XMLHttpRequest, textStatus, errorThrown) {
-                    console.log("Error submitting the post");
+                //                    console.log("Error submitting the post");
                     $("#new-comment-info").html("Error submitting the post, please try again");
                     showViewPostView();
                     //$("#login-message").css({ 'color': 'green', 'font-size': '100%' });
@@ -106,7 +106,7 @@ function newChat(){
     
     if(message.trim().length === 0){
 //        $("#new-comment-info").html("chat cannot be empty");
-        console.log("chat msg cannot be empty");
+        //        console.log("chat msg cannot be empty");
         return;
     }
     var data = {    	
@@ -121,13 +121,13 @@ function newChat(){
                 success : function(response) {
                     //$("#viewForm").hide();
                     //displayPosts(response);
-                    console.log("Posting done");
+                //                    console.log("Posting done");
 //                    $("#new-chat-info").html("Successfully Posted.");
                      $("#new-chat-message").val("");
                     //showChatView();                
                 },
                 error : function(XMLHttpRequest, textStatus, errorThrown) {
-                    console.log("Error submitting the post");
+                //                    console.log("Error submitting the post");
 //                    $("#new-chat-info").html("Error submitting the post, please try again");
                     //showChatView();
                     //$("#login-message").css({ 'color': 'green', 'font-size': '100%' });
@@ -146,14 +146,17 @@ function readChats() {
 		type : 'get',
 		accept : 'application/json',
 		global : false,
-        headers: {"token": token, "userId": currentUserId},
+        headers: {
+            "token": token,
+            "userId": currentUserId
+        },
 		success : function(response) {
 			// $("#viewForm").hide();
 			displayChats(response);
 			//window.setTimeout(update, 10000);
 		},
 		error : function(XMLHttpRequest, textStatus, errorThrown) {
-			console.log("Error reading the chats");
+            log("Error reading the chats");
 			//$("#post-info").html("Error Loading the posts, please try again");
 			// $("#login-message").css({ 'color': 'green', 'font-size': '100%'
 			// });
@@ -171,7 +174,9 @@ function displayChats(response) {
 		htmlContent +=  " : " + chat.postedon + "</p>";					
 	}
 	$("#show-chat-div").append(htmlContent);	
-    $("#show-chat-div").animate({ scrollTop: $('#show-chat-div').height() + 500}, 1000);
+    $("#show-chat-div").animate({
+        scrollTop: $('#show-chat-div').height() + 500
+    }, 1000);
 }
 
 
@@ -198,10 +203,10 @@ function readAllPosts() {
                 $("#posts-heading").html("Latests Posts");
                 displayPosts(response);
             }			
-
+            stopLoadingMore();
 		},
 		error : function(XMLHttpRequest, textStatus, errorThrown) {
-			console.log("Error Loading the posts read");
+            log("Error Loading the posts read");
 			$("#post-info").html("Error Loading the posts, please try again");
 			// $("#login-message").css({ 'color': 'green', 'font-size': '100%'
 			// });
@@ -248,21 +253,18 @@ function readLimitedPosts() {
                 }	
             } else {
                 //log("Thats all man, nothing more");
-                loadMoreContents = false;
-                $('#loading-more').hide();
-                $('#thats-all').show();
+                stopLoadingMore();
             }
             
             if(receivedCount < 10) {
                 //log("Thats all man, nothing more");
-                loadMoreContents = false;
-                $('#loading-more').hide();
-                $('#thats-all').show();
+                stopLoadingMore();
+
             }
 
 		},
 		error : function(XMLHttpRequest, textStatus, errorThrown) {
-			console.log("Error Loading the posts read");
+            log("Error Loading the posts read");
 			$("#post-info").html("Error Loading the posts, please try again");
 			// $("#login-message").css({ 'color': 'green', 'font-size': '100%'
 			// });
@@ -274,13 +276,18 @@ function readLimitedPosts() {
 	})
 }
 
+function stopLoadingMore() {
+    loadMoreContents = false;
+    $('#loading-more').hide();
+    $('#thats-all').show();
+}
 function searchByCategory(category) {
 	$("#post-info").html("Please wait, loading posts...");
 	$("#post-info").css({
 		'color' : 'green',
 		'font-size' : '100%'
 	});
-	console.log("Searching for category " + category);
+    //    console.log("Searching for category " + category);
 	$.ajax({
         url : baseURL + '/post/category/' + category,
         type : 'get',
@@ -288,17 +295,16 @@ function searchByCategory(category) {
         global : false,
         success : function(response) {
             // $("#viewForm").hide();
-            console.log("successfully received posts for category "
-                    + category);
+            //            console.log("successfully received posts for category " + category);
             $("#posts-heading").html("Latests posts, Category : " + category);
             showPostsView();
             displayPosts(response);
+            stopLoadingMore();
 
         },
         error : function(XMLHttpRequest, textStatus, errorThrown) {
             console
-                    .log("Error retrieving the posts search by category "
-                            + category);
+                .log("Error retrieving the posts search by category " + category);
             //$("#post-info").html(
                     //"Posts not available for category : " + category);
             showPostsView();
@@ -312,11 +318,14 @@ function searchAllPosts(searchString) {
 
 	//var searchString = ;
 	if(searchString.trim().length === 0){
-        console.log("search string cannot be empty");
+        //        console.log("search string cannot be empty");
         return;
     }
     $("#post-info").html("Please wait, loading posts for search string '" + searchString + "'");
-    $("#post-info").css({ 'color': 'green', 'font-size': '100%' });
+    $("#post-info").css({
+        'color': 'green',
+        'font-size': '100%'
+    });
     $.ajax({
                 
                 url : baseURL + '/post/search/' + searchString,
@@ -327,7 +336,11 @@ function searchAllPosts(searchString) {
                     showPostsView();
                     displayPosts(response);
                     $("#post-info").html("Posts for search string '" + searchString + "'");
-                    $("#post-info").css({ 'color': 'green', 'font-size': '100%' });
+            $("#post-info").css({
+                'color': 'green',
+                'font-size': '100%'
+            });
+            stopLoadingMore();
                     
                 },
                 error : function(XMLHttpRequest, textStatus, errorThrown) {           
@@ -340,7 +353,7 @@ function searchAllPosts(searchString) {
 
 function displayPosts(response) {
 	//readPostResponse = response; //redundant we did already in load ajax
-	console.log("Reading posts done.");
+    //    console.log("Reading posts done.");
 	$("#post-contents").html("");
     //postControllerAngular.clear();
     postControllerAngular.addPosts(response);	
@@ -352,7 +365,7 @@ function displayPosts(response) {
 function viewPost(postId) {
 
 	if (readPostResponse.length === 0) {
-		console.log("Couldnt display the selected post");
+        //        console.log("Couldnt display the selected post");
 		$("#view-post-info").html("Couldnt display the selected post");
 		$("#view-post-info").css({
 			'color' : 'green',
@@ -370,37 +383,8 @@ function viewPost(postId) {
 	}   
 	
 	loadSelectedPost(currentPost);
+    stopLoadingMore();
 }
-
-
-
-//function viewPostByTitle(postTitle) {
-//
-//    console.log("View post by title " + postTitle);
-//	if (readPostResponse.length === 0) {
-//		console.log("Couldnt display the selected post");
-//		$("#view-post-info").html("Couldnt display the selected post");
-//		$("#view-post-info").css({
-//			'color' : 'green',
-//			'font-size' : '100%'
-//		});
-//		return;
-//	}
-//	
-//    console.log("end view post by title " + postTitle);
-//    
-//	for (i = 0; i < readPostResponse.length; i++) {
-//		if (postTitle === readPostResponse[i].title) {
-//			currentPost = readPostResponse[i];
-//			break;
-//		}
-//	}   
-//	
-//	loadSelectedPost(currentPost);
-//    console.log("end view post by title " + postTitle);
-//}
-
-
 
 function loadSelectedPost(currentPost){    
     currentPostId = currentPost.postId;
@@ -431,13 +415,9 @@ function loadSelectedPost(currentPost){
 	var htmlContent = "";
 	for (i = 0; i < currentPostComments.length; i++) {
 		var comment = currentPostComments[i];
-		htmlContent += "<hr style='height:0.5px; margin: 10px 0 10px 0' color=white ><p class='post-message'>"
-				+ comment.message + "</p>";
+        htmlContent += "<hr style='height:0.5px; margin: 10px 0 10px 0' color=white ><p class='post-message'>" + comment.message + "</p>";
 
-		htmlContent += "<p class='post-detail'>By : <b>" + comment.userId
-				+ "</b> ,<span>   </span> On : " + comment.postedOn + "</p>";
-		// htmlContent += "<hr style='height:0.5px; margin: 10px 0 10px 0'
-		// color=white >"
+        htmlContent += "<p class='post-detail'>By : <b>" + comment.userId + "</b> ,<span>   </span> On : " + comment.postedOn + "</p>";
 	}
 	$("#view-post-comments-div").html(htmlContent);
 	showViewPostView();
@@ -451,13 +431,13 @@ function addFavourite(postId){
 		contentType : 'application/json',
 		global : false,
 		success : function(response) {
-			console.log("Added to favoutires");
+            //            console.log("Added to favoutires");
             setRemoveFavourite(postId);
             retrieveFavourites();
 			
 		}, 
 		error : function(XMLHttpRequest, textStatus, errorThrown) {
-			console.log("Error adding to favourites");
+            //            console.log("Error adding to favourites");
 			$("#add-favourite-div").html(
 					"<p class='quicklink-title'>Error : </p><a href='#' onClick=addFavourite(" + postId + ")> Try again </a>");
 		},
@@ -473,12 +453,12 @@ function removeFavourite(postId){
 		contentType : 'application/json',
 		global : false,
 		success : function(response) {
-			console.log("Removed from favoutires");
+            //            console.log("Removed from favoutires");
 			setAddFavourite(postId);
             retrieveFavourites();
 		},
 		error : function(XMLHttpRequest, textStatus, errorThrown) {
-			console.log("Error adding to favourites");
+            log("Error adding to favourites");
 			$("#add-favourite-div").html(
 					"<p class='quicklink-title'>Error : </p><a href='#' onClick=removeFavourite(" + postId + ")> Try again </a>");
 		},
@@ -487,8 +467,7 @@ function removeFavourite(postId){
 }
 
 function setAddFavourite(postId){
-    $("#add-favourite-div").html("<p class='quicklink-title'> <img src='img/22xFavourite.png' class='img-grayed'> "
-                                 + "<a href='#' onClick=addFavourite(" + postId + ")> Add Favourite Post </a>");
+    $("#add-favourite-div").html("<p class='quicklink-title'> <img src='img/22xFavourite.png' class='img-grayed'> " + "<a href='#' onClick=addFavourite(" + postId + ")> Add Favourite Post </a>");
 }
 
 function setRemoveFavourite(postId){
@@ -535,15 +514,14 @@ function retrieveCategory() {
                 var option = document.createElement("option");
                 option.text = response[i];
                 postCategory.add(option);
-                categoryLinks += "<a class='quicklink-links' href='#' onClick=searchByCategory('"
-                        + response[i] + "')>" + response[i] + "</a><br>";
+                categoryLinks += "<a class='quicklink-links' href='#' onClick=searchByCategory('" + response[i] + "')>" + response[i] + "</a><br>";
             }
             $("#category-links").append(categoryLinks);
-            console.log("added items");
+            //            console.log("added items");
 
         },
         error : function(XMLHttpRequest, textStatus, errorThrown) {
-            console.log("Error Loading categories");
+            log("Error Loading categories");
             $("#category-links").html("Error Loading categories");
         }
     })
@@ -581,14 +559,13 @@ function retrieveFavourites() {
                     }
                 }
                 
-                favouriteLinks += "<a class='quicklink-links' href='#' onClick=viewPost("
-                        + response[i] + ")>" + linkText + "</a><br>"; //May be trim needed. ??
+                favouriteLinks += "<a class='quicklink-links' href='#' onClick=viewPost(" + response[i] + ")>" + linkText + "</a><br>"; //May be trim needed. ??
             }
             $("#favourite-links").append(favouriteLinks);
-            console.log("added items");
+            //            console.log("added items");
         },
         error : function(XMLHttpRequest, textStatus, errorThrown) {
-            console.log("Error Loading favourites");
+            log("Error Loading favourites");
             $("#favourite-links").html("No favourite posts");
         }
     })
