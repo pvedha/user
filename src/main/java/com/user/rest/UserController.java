@@ -34,7 +34,11 @@ public class UserController {
 	public Response readAllUsers() {
 		UserService svc = new UserService(); 
 		ArrayList<BlogUser> blogUsers = svc.readAllUsers();
-		return Response.ok().entity(blogUsers).build();
+		if (blogUsers != null) {
+			return Response.ok().entity(blogUsers).build();
+		} else {
+			return Response.ok().entity(Status.NO_CONTENT).build();
+		}
 	}
 
 	@GET
@@ -43,7 +47,11 @@ public class UserController {
 	public Response readUserIds() {
 		UserService svc = new UserService();
 		ArrayList<String> userNames = svc.readUserIds();
-		return Response.ok().entity(userNames).build();
+		if (userNames != null) {
+			return Response.ok().entity(userNames).build();
+		} else {
+			return Response.ok().entity(Status.NO_CONTENT).build();
+		}
 	}
 
 	@GET
@@ -53,7 +61,11 @@ public class UserController {
 		UserService svc = new UserService();
 		System.out.println("hit rest for view");
 		UserDto user = svc.getUser(userId);
-		return Response.ok().entity(user).build();
+		if (user != null) {
+	 	    return Response.ok().entity(user).build();
+		} else {
+			return Response.status(Status.NOT_FOUND).build();
+		}		
 	}
 
 	@POST
@@ -62,7 +74,11 @@ public class UserController {
 	public Response updateUser(UserDto user) {
 		UserService svc = new UserService();
 		boolean result = svc.updateUser(user);
-		return Response.ok().entity(result + "").build();
+		if (result) {
+			return Response.ok().entity(result).build();
+		} else {
+			return Response.status(Status.NOT_MODIFIED).build();
+		}
 	}
 
 	@GET
@@ -81,26 +97,34 @@ public class UserController {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("/addUser")
-	public Response addUser(BlogUser user) throws InvalidUserException, DuplicateUserException {
+	public Response addUser(BlogUser user)  {
 		UserService svc = new UserService();
 		try {
 			int number = svc.createUser(user);
 			return Response.ok().entity(number + "").build();
-		} catch (Exception e) {
-			return Response.status(Status.CONFLICT).entity("Invalid User Details").build();
+		} catch (DuplicateUserException e) {
+			return Response.status(Status.CONFLICT).entity("Duplicate User Details").build();
+		} catch (InvalidUserException e) {
+			return Response.status(Status.FORBIDDEN).entity("Invalid User Details").build();
 		}
+		
 	}
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("/addUser/{userid}/{name}/{password}/{about}")
 	public Response addUser(@PathParam("userid") String userId, @PathParam("name") String name,
-			@PathParam("password") String password, @PathParam("about") String about)
-			throws InvalidUserException, DuplicateUserException {
+			@PathParam("password") String password, @PathParam("about") String about) {
 		UserService svc = new UserService();
 		BlogUser user = new BlogUser(userId, name, password, about);
-		int number = svc.createUser(user);
-		return Response.ok().entity(number + "").build();
+		try{
+			int number = svc.createUser(user);
+			return Response.ok().entity(number + "").build();
+		} catch (DuplicateUserException e) {
+			return Response.status(Status.CONFLICT).entity("Duplicate User Details").build();
+		} catch (InvalidUserException e) {
+			return Response.status(Status.FORBIDDEN).entity("Invalid User Details").build();
+		}
 	}
 
 	@GET

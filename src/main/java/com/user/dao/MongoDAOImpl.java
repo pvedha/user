@@ -39,7 +39,6 @@ public class MongoDAOImpl implements DAO {
 		return 0;
 	}
 
-	@SuppressWarnings("null")
 	@Override
 	public ArrayList<BlogUser> readAllUsers() {
 		MongoCollection<Document> collection = db.getCollection("users");
@@ -57,7 +56,6 @@ public class MongoDAOImpl implements DAO {
 		return users;
 	}
 
-	@SuppressWarnings("null")
 	@Override
 	public ArrayList<String> readUserIds() {
 		MongoCollection<Document> collection = db.getCollection("users");
